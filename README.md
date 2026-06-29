@@ -1,5 +1,10 @@
 # Downstream Fish Passage Injury and Mortality Knowledge Base
 
+[![Live interactive dashboard](https://img.shields.io/badge/Live_interactive_dashboard-Open_in_browser-2ea44f?style=for-the-badge)](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/)
+
+> 📊 **[Open the interactive dashboard →](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/)** — browse the evidence, charts and reproducibility tiers in your browser. No download or GitHub account needed.
+> *(Clicking `docs/index.html` inside the repo only shows its source code — use this link to actually run it.)*
+
 A community knowledge base on **how fish are injured and killed during downstream
 passage** through hydropower turbines, pumps, Archimedean screws, weirs,
 spillways and bypasses — and on **how reliably we actually know it**.
@@ -13,7 +18,7 @@ It has two jobs:
 2. **Document a rigorous, repeatable methodology** for how the base is built,
    maintained and updated, so anyone can reproduce or extend it.
 
-> **Status:** v0.8.0. Three mechanism modules (barotrauma, collision, shear)
+> **Status:** v0.8.1. Three mechanism modules (barotrauma, collision, shear)
 > with reproducibility scorecards; a three-axis framework (mechanism × exposure
 > pathway × outcome timing) coded and **fully verified across all 229 analysed
 > papers**; a cross-mechanism synthesis and gap matrix; and a literature-discovery
@@ -97,7 +102,7 @@ structures. Injury mechanisms follow the controlled vocabulary in
 barotrauma, shear, cavitation, turbulence, grinding/abrasion, gas
 supersaturation, and entrainment/impingement.
 
-## Coverage at a glance (v0.8.0)
+## Coverage at a glance (v0.8.1)
 
 - 246 catalogued publications (1928–2026); 229 analysed across Review / Lab /
   Field / Numerical / Guidelines.
@@ -119,9 +124,9 @@ supersaturation, and entrainment/impingement.
 - Literature discovery: 72 candidate works cited by the collection but missing
   from it, ranked and theme-tagged in `data/candidate_additions.csv` (11 High
   priority), with **ISO 4 / LTWA** short titles, via the
-  `passage-literature-discovery` skill. The 11 High-priority candidates are
-  resolved to canonical titles + ISO-4 short titles (3 with verified DOIs);
-  Medium/Low await resolution.
+  `passage-literature-discovery` skill. The 26 High + Medium candidates are
+  resolved to canonical titles + ISO-4 short titles (17 with verified DOIs); the
+  46 Low-priority await resolution.
 
 ## Publishing the dashboard (GitHub Pages)
 
