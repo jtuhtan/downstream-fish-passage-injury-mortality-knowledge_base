@@ -97,7 +97,7 @@ Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
 
 # 4. VERSION-AWARE TAG ------------------------------------------------------
 $ver = $null
-foreach ($l in (Get-Content (Join-Path $RepoPath 'CHANGELOG.md'))) {
+foreach ($l in (Get-Content -Encoding UTF8 (Join-Path $RepoPath 'CHANGELOG.md'))) {
   if ($l -match '^\#\#\s*\[(\d+\.\d+\.\d+)\]') { $ver = $matches[1]; break }
 }
 $newTag = $false; $tag = $null
@@ -119,7 +119,7 @@ Log ("PUSH: main{0}" -f $(if ($newTag) { " + $tag" } else { "" }))
 if ($newTag -and -not $NoRelease -and $gh) {
   $notes = New-Object System.Collections.Generic.List[string]
   $inSec = $false
-  foreach ($l in (Get-Content (Join-Path $RepoPath 'CHANGELOG.md'))) {
+  foreach ($l in (Get-Content -Encoding UTF8 (Join-Path $RepoPath 'CHANGELOG.md'))) {
     if ($l -match '^\#\#\s*\[') {
       if ($inSec) { break }
       if ($l -match ("\[{0}\]" -f [regex]::Escape($ver))) { $inSec = $true; continue }
