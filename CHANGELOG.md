@@ -3,6 +3,25 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.8.0] - 2026-06-29
+Added an interactive dashboard (GitHub Pages) and native README diagrams.
+
+### Added
+- `docs/index.html` — a self-contained interactive dashboard built from the CSVs:
+  KPI cards, publications-by-decade, papers-by-mechanism, live-fish
+  reproducibility tiers, outcome-timing coverage, study-type and study-environment
+  charts, plus a filterable/sortable evidence table (229 studies) and the top
+  candidate-additions table. Data embedded as JSON; Chart.js via CDN; no PDFs.
+- `scripts/build_dashboard.py` + `scripts/dashboard_template.html` — reproducible
+  generator (`python scripts/build_dashboard.py` rebuilds `docs/index.html`).
+- README "Visual overview": natively-rendered **Mermaid** pipeline + study-type
+  diagrams, a link to the dashboard, and a **GitHub Pages** publishing guide
+  (Deploy from a branch → `/docs`).
+
+### Changed
+- `CITATION.cff` `repository-code` corrected to the actual repo URL
+  (`…-injury-mortality-knowledge_base`).
+
 ## [0.7.0] - 2026-06-29
 Adopted the ISO 4 / LTWA short title as the local PDF filename convention.
 

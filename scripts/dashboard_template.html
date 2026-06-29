@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downstream Fish Passage Injury & Mortality — Knowledge Base</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
+<style>
+:root{--bg:#0e2a3b;--bg2:#13374d;--card:#ffffff;--page:#eef3f6;--ink:#16313f;--muted:#5b7383;
+--c1:#1f7a8c;--c2:#2e8b57;--c3:#c45a3b;--c4:#5a6fb0;--c5:#d39a2d;--c6:#7a9e9f;--c7:#8c5a7a;--c8:#b0654e;
+--high:#2e8b57;--med:#d39a2d;--low:#c45a3b;--rad:10px;--gap:16px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--page);color:var(--ink);line-height:1.5}
+.wrap{max-width:1320px;margin:0 auto;padding:var(--gap)}
+header.top{background:linear-gradient(135deg,var(--bg),var(--bg2));color:#fff;padding:22px 26px;border-radius:var(--rad);margin-bottom:var(--gap)}
+header.top h1{font-size:21px;font-weight:650;letter-spacing:.2px}
+header.top p{font-size:13.5px;color:#bcd4dd;margin-top:6px;max-width:880px}
+header.top a{color:#9fe3f0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--gap);margin-bottom:var(--gap)}
+.kpi{background:var(--card);border-radius:var(--rad);padding:16px 20px;box-shadow:0 1px 3px rgba(0,0,0,.08);border-left:4px solid var(--c1)}
+.kpi .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.kpi .v{font-size:30px;font-weight:740;margin-top:2px}
+.kpi .s{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:var(--gap);margin-bottom:var(--gap)}
+.card{background:var(--card);border-radius:var(--rad);padding:16px 20px 20px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.card h3{font-size:13.5px;font-weight:650;margin-bottom:4px}
+.card .sub{font-size:11.5px;color:var(--muted);margin-bottom:10px}
+.cv{position:relative;height:260px}
+.full{grid-column:1/-1}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.controls select,.controls input{padding:7px 10px;border:1px solid #cdd9df;border-radius:6px;font-size:13px;background:#fff;color:var(--ink)}
+.controls input[type=search]{min-width:220px;flex:1}
+.controls .count{font-size:12px;color:var(--muted);margin-left:auto}
+.tbl-wrap{overflow-x:auto;max-height:560px;overflow-y:auto;border:1px solid #eceff1;border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead th{position:sticky;top:0;background:#f4f7f9;text-align:left;padding:9px 11px;border-bottom:2px solid #dde5e9;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);cursor:pointer;white-space:nowrap}
+tbody td{padding:8px 11px;border-bottom:1px solid #f0f3f5;vertical-align:top}
+tbody tr:hover{background:#f6fafb}
+.pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:10.5px;font-weight:600;white-space:nowrap}
+.p-Verified{background:#dff0e6;color:#1d6b40}.p-Mined{background:#eef1f3;color:#64777f}
+.p-High{background:#dff0e6;color:#1d6b40}.p-Medium{background:#fbf0d8;color:#9a6c10}
+.tier{font-weight:700}.t-High{color:var(--high)}.t-Medium{color:var(--med)}.t-Low{color:var(--low)}
+.tt{max-width:430px}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:7px;border:1px solid #cdd9df;background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted)}
+.tab.on{background:var(--bg);color:#fff;border-color:var(--bg)}
+footer{font-size:12px;color:var(--muted);text-align:center;padding:14px 0 4px}
+@media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>Downstream Fish Passage — Injury &amp; Mortality Knowledge Base</h1>
+  <p>An interactive view of a structured literature review on how fish are injured and killed during downstream passage through hydropower turbines, pumps, screws, weirs and bypasses — and how reliably we know it. Static snapshot built from the repository CSVs; no source PDFs. <a href="https://github.com/jtuhtan/downstream-fish-passage-injury-mortality-knowledge_base">Repository &rarr;</a></p>
+</header>
+
+<section class="kpis" id="kpis"></section>
+
+<section class="grid">
+  <div class="card"><h3>Publications by decade</h3><div class="sub">Catalogued corpus (n=246)</div><div class="cv"><canvas id="cDecade"></canvas></div></div>
+  <div class="card"><h3>Papers by injury mechanism</h3><div class="sub">Multi-mechanism papers counted once per mechanism</div><div class="cv"><canvas id="cMech"></canvas></div></div>
+  <div class="card"><h3>Reproducibility of live-fish studies</h3><div class="sub">Tier by mechanism module (reporting-completeness score)</div><div class="cv"><canvas id="cRepro"></canvas></div></div>
+  <div class="card"><h3>Outcome-timing coverage</h3><div class="sub">How many studies report each outcome window (n=229)</div><div class="cv"><canvas id="cTiming"></canvas></div></div>
+  <div class="card"><h3>Study type</h3><div class="sub">Analysed papers (n=229)</div><div class="cv"><canvas id="cCat"></canvas></div></div>
+  <div class="card"><h3>Study environment</h3><div class="sub">Where the study was conducted</div><div class="cv"><canvas id="cEnv"></canvas></div></div>
+</section>
+
+<section class="card full">
+  <div class="tabs">
+    <div class="tab on" data-tab="evidence">Evidence table (229)</div>
+    <div class="tab" data-tab="cands">Candidate additions (top 26)</div>
+  </div>
+
+  <div id="evidence">
+    <div class="controls">
+      <select id="fMech"><option value="">All mechanisms</option></select>
+      <select id="fCat"><option value="">All study types</option></select>
+      <select id="fConf"><option value="">All confidence</option><option>Verified</option><option>Mined</option></select>
+      <input type="search" id="fSearch" placeholder="Search author, title, species…">
+      <span class="count" id="evCount"></span>
+    </div>
+    <div class="tbl-wrap"><table id="evTable"><thead><tr>
+      <th data-k="year">Year</th><th data-k="author">Author</th><th data-k="cat">Type</th>
+      <th data-k="title">Title</th><th data-k="mech">Mechanism(s)</th>
+      <th data-k="species">Species</th><th data-k="conf">Conf.</th>
+    </tr></thead><tbody></tbody></table></div>
+  </div>
+
+  <div id="cands" style="display:none">
+    <div class="controls">
+      <select id="cPri"><option value="">All priority</option><option>High</option><option>Medium</option></select>
+      <input type="search" id="cSearch" placeholder="Search author, theme, short title…">
+      <span class="count" id="cdCount"></span>
+    </div>
+    <div class="tbl-wrap"><table id="cdTable"><thead><tr>
+      <th data-k="rank">Rank</th><th data-k="priority">Priority</th><th data-k="author">Author</th>
+      <th data-k="year">Year</th><th data-k="cited">Cited by</th>
+      <th data-k="themes">Themes</th><th data-k="short">ISO-4 short title</th>
+    </tr></thead><tbody></tbody></table></div>
+  </div>
+</section>
+
+<footer>Static snapshot · built from <code>data/*.csv</code> · no PDFs · cite the original publications (DOIs in <code>corpus.csv</code>).</footer>
+</div>
+
+<script>
+const DATA = __DATA__;
+const PAL=['#1f7a8c','#2e8b57','#c45a3b','#5a6fb0','#d39a2d','#7a9e9f','#8c5a7a','#b0654e'];
+const baseOpts=(extra={})=>Object.assign({responsive:true,maintainAspectRatio:false,animation:false,
+  plugins:{legend:{display:false}}},extra);
+
+// KPIs
+const k=DATA.kpis;
+document.getElementById('kpis').innerHTML=[
+ ['Catalogued',k.catalogued,'publications (1920s–2020s)'],
+ ['Analysed',k.analysed,'one row per study'],
+ ['Mechanism modules',k.modules,'barotrauma · collision · shear'],
+ ['Candidate works',k.candidates,'cited but not yet in collection'],
+ ['Verified rows',k.verified,'read & checked vs source'],
+].map(([l,v,s])=>`<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${s}</div></div>`).join('');
+
+const bar=(id,d,horiz,fmtPct)=>new Chart(document.getElementById(id),{type:'bar',
+ data:{labels:d.labels,datasets:[{data:d.data,backgroundColor:d.labels.map((_,i)=>PAL[i%PAL.length]+'cc'),borderColor:d.labels.map((_,i)=>PAL[i%PAL.length]),borderWidth:1,borderRadius:4}]},
+ options:baseOpts({indexAxis:horiz?'y':'x',scales:{x:{beginAtZero:true,grid:{display:horiz}},y:{beginAtZero:!horiz,grid:{display:!horiz}}}})});
+
+bar('cDecade',DATA.byDecade,false);
+bar('cMech',DATA.byMech,true);
+bar('cTiming',DATA.byTiming,true);
+bar('cEnv',DATA.byEnv,true);
+
+new Chart(document.getElementById('cCat'),{type:'doughnut',
+ data:{labels:DATA.byCat.labels,datasets:[{data:DATA.byCat.data,backgroundColor:PAL.map(c=>c+'cc'),borderColor:'#fff',borderWidth:2}]},
+ options:baseOpts({cutout:'58%',plugins:{legend:{position:'right',labels:{usePointStyle:true,padding:12,font:{size:11}}}}})});
+
+// reproducibility grouped
+const rk=['barotrauma','collision','shear'];
+new Chart(document.getElementById('cRepro'),{type:'bar',
+ data:{labels:rk.map(s=>s[0].toUpperCase()+s.slice(1)),datasets:[
+  {label:'High',data:rk.map(m=>DATA.repro[m].High),backgroundColor:'#2e8b57cc'},
+  {label:'Medium',data:rk.map(m=>DATA.repro[m].Medium),backgroundColor:'#d39a2dcc'},
+  {label:'Low',data:rk.map(m=>DATA.repro[m].Low),backgroundColor:'#c45a3bcc'}]},
+ options:baseOpts({plugins:{legend:{display:true,position:'top',labels:{usePointStyle:true,boxWidth:8,font:{size:11}}}},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true}}})});
+
+// ---- Evidence table ----
+const mechSet=[...new Set(DATA.table.flatMap(r=>r.mech.split(';').map(s=>s.trim()).filter(Boolean)))].sort();
+const fMech=document.getElementById('fMech');mechSet.forEach(m=>fMech.add(new Option(m,m)));
+const fCat=document.getElementById('fCat');DATA.byCat.labels.forEach(c=>fCat.add(new Option(c,c)));
+let evSort={k:'year',dir:'desc'};
+function evFilter(){
+ const m=fMech.value,c=fCat.value,cf=document.getElementById('fConf').value,q=document.getElementById('fSearch').value.toLowerCase();
+ let rows=DATA.table.filter(r=>(!m||r.mech.includes(m))&&(!c||r.cat===c)&&(!cf||r.conf===cf)&&
+   (!q||(r.author+' '+r.title+' '+r.species).toLowerCase().includes(q)));
+ rows.sort((a,b)=>{let x=a[evSort.k],y=b[evSort.k];if(evSort.k==='year'){x=+x||0;y=+y||0;}
+   let cmp=x<y?-1:x>y?1:0;return evSort.dir==='asc'?cmp:-cmp;});
+ document.getElementById('evCount').textContent=rows.length+' of '+DATA.table.length;
+ document.querySelector('#evTable tbody').innerHTML=rows.map(r=>`<tr>
+  <td>${r.year}</td><td>${r.author}</td><td>${r.cat}</td>
+  <td class="tt">${r.title}</td><td>${r.mech||'<span style="color:#aab">—</span>'}</td>
+  <td>${r.species||''}</td><td><span class="pill p-${r.conf}">${r.conf}</span></td></tr>`).join('');
+}
+['fMech','fCat','fConf','fSearch'].forEach(id=>document.getElementById(id).addEventListener('input',evFilter));
+document.querySelectorAll('#evTable thead th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;
+ evSort.dir=(evSort.k===k&&evSort.dir==='asc')?'desc':'asc';evSort.k=k;evFilter();});
+evFilter();
+
+// ---- Candidates table ----
+let cdSort={k:'rank',dir:'asc'};
+function cdFilter(){
+ const p=document.getElementById('cPri').value,q=document.getElementById('cSearch').value.toLowerCase();
+ let rows=DATA.cands.filter(r=>(!p||r.priority===p)&&(!q||(r.author+' '+r.themes+' '+r.short).toLowerCase().includes(q)));
+ rows.sort((a,b)=>{let x=a[cdSort.k],y=b[cdSort.k];let cmp=x<y?-1:x>y?1:0;return cdSort.dir==='asc'?cmp:-cmp;});
+ document.getElementById('cdCount').textContent=rows.length+' of '+DATA.cands.length;
+ document.querySelector('#cdTable tbody').innerHTML=rows.map(r=>`<tr>
+  <td>${r.rank}</td><td><span class="pill p-${r.priority}">${r.priority}</span></td>
+  <td>${r.author}</td><td>${r.year}</td><td>${r.cited}</td>
+  <td class="tt">${r.themes}</td><td class="tt">${r.short}</td></tr>`).join('');
+}
+['cPri','cSearch'].forEach(id=>document.getElementById(id).addEventListener('input',cdFilter));
+document.querySelectorAll('#cdTable thead th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;
+ cdSort.dir=(cdSort.k===k&&cdSort.dir==='asc')?'desc':'asc';cdSort.k=k;cdFilter();});
+cdFilter();
+
+// tabs
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');
+ document.getElementById('evidence').style.display=t.dataset.tab==='evidence'?'':'none';
+ document.getElementById('cands').style.display=t.dataset.tab==='cands'?'':'none';});
+</script>
+</body>
+</html>

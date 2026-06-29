@@ -7,7 +7,7 @@ authors:
     given-names: Jeffrey Andrew
     affiliation: Tallinn University of Technology
     email: jtuhtan@gmail.com
-repository-code: "https://github.com/jtuhtan/downstream-fish-passage-injury-mortality-kb"
+repository-code: "https://github.com/jtuhtan/downstream-fish-passage-injury-mortality-knowledge_base"
 abstract: >-
   A community knowledge base on fish injury and mortality during downstream
   passage through hydropower turbines, pumps, screws, weirs and spillways.
@@ -23,5 +23,5 @@ keywords:
   - turbine mortality
   - reproducibility
 license: CC-BY-4.0
-version: 0.7.0
+version: 0.8.0
 date-released: 2026-06-29
