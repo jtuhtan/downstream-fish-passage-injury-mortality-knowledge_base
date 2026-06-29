@@ -6,6 +6,17 @@ The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology
 ## [0.4.0] - 2026-06-29
 Added the two cross-cutting framework axes (exposure pathway, outcome timing).
 
+### Changed
+- `data/vocab/species.csv` now carries `family` (precise taxonomic family) and
+  `family_group` (coarser grouping, e.g. "Cyprinids (s.l.)") so findings can be
+  aggregated by taxon, not just species. Decision: recently-split cyprinid
+  families (Cyprinidae, Leuciscidae, Gobionidae) keep their precise `family` but
+  share the `family_group` "Cyprinids (s.l.)"; Alosa kept under Clupeidae.
+  Documented in `methodology/04_extraction_schema_and_vocab.md`.
+- `skill/SKILL.md`: documentation updating is now an explicit, REQUIRED workflow
+  step and principle — every data-processing rule/decision must be recorded in
+  methodology + CHANGELOG + vocab in the same change.
+
 ### Added
 - `data/axes_exposure_timing.csv` - one row per study coding **exposure
   pathway** (`study_environment` + `location_during_passage`) and **outcome

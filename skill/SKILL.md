@@ -78,6 +78,17 @@ then refined by reading the papers that matter most.
    vs. dynamic barotrauma models), present the disagreement rather than
    averaging it away.
 
+6. **Update the documentation in the SAME change (REQUIRED).** Documentation is
+   a first-class deliverable, not an afterthought. Whenever you add or change
+   data, a controlled vocabulary, a coding rule, a schema column, or make any
+   processing/classification decision, record it in the same step:
+   - the relevant `methodology/` file (the rule or definition),
+   - the `CHANGELOG.md` (what changed and why), and
+   - the controlled vocab / schema files affected.
+   A change is not "done" until its rationale is written down. The goal is that
+   anyone can reconstruct *every* data-processing decision from the docs alone.
+   When the rule being changed lives in this skill, update the skill too.
+
 ## Reference files (read as needed)
 
 - `references/mechanisms.md` — the injury-mechanism taxonomy with the physical
@@ -128,3 +139,7 @@ ALWAYS use this template so successive reviews stay comparable:
   geometry). Capture the study type and its parameters, not just the result.
 - **Preserve disagreement.** This is an active field; surfacing contested
   assumptions is more useful than a false consensus.
+- **Document continuously and consistently.** Every data-processing rule and
+  decision must be written down as it is made (methodology + CHANGELOG + vocab),
+  so the knowledge base is fully reconstructible from its documentation. Coding
+  the data and documenting how it was coded are the same task, never separate.

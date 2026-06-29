@@ -1,0 +1,18 @@
+# Normalize line endings across platforms.
+# Store LF in the repository and check out LF everywhere (clean, consistent
+# diffs on Linux/macOS/Windows; silences the "LF will be replaced by CRLF" nag).
+* text=auto eol=lf
+
+# Binary assets: no end-of-line conversion, no textual diff.
+*.xlsx binary
+*.docx binary
+*.pptx binary
+*.pdf  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.zip  binary
+
+# CSV data is text; keep it normalized to LF.
+*.csv  text eol=lf

@@ -27,7 +27,10 @@ reported — do not guess. Prefer what the study itself tested over what it cite
 - `data/vocab/mechanisms.csv` — injury mechanisms + definitions.
 - `data/vocab/metrics.csv` — metrics, formulas and units.
 - `data/vocab/species.csv` — taxa with swim-bladder type (physostome / physoclist /
-  absent), which matters for barotrauma susceptibility.
+  absent), which matters for barotrauma susceptibility. Also carries `family`
+  (precise taxonomic family) and `family_group` (a coarser grouping, e.g.
+  "Cyprinids (s.l.)") — these are the keys for rolling findings up by taxon, not
+  just by species.
 
 ## Extraction procedure
 1. **Breadth (automated).** `scripts/extract_passage_data.py` runs `pdftotext`
