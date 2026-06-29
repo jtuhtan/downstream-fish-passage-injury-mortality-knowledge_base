@@ -38,8 +38,8 @@ PDFs or extend it with new papers.
 - **Two-tier confidence.** Every extracted row is `Mined` (automated first pass)
   or `Verified` (read and checked against the source).
 - **No PDFs in the repo.** Only metadata, derived data and original summaries.
-- **Tooling is reproducible.** The extraction logic lives in `scripts/` and in
-  the `skill/` bundle, not only in prose.
+- **Tooling is reproducible.** The extraction and discovery logic lives in
+  `scripts/` and in the `skills/` bundles, not only in prose.
 - **Document continuously.** Every rule or decision is recorded in
   `methodology/`, `CHANGELOG.md` and the affected vocab in the same change —
   coding the data and documenting how it was coded are one task.

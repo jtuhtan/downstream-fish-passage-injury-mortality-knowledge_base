@@ -47,7 +47,14 @@ then refined by reading the papers that matter most.
    study type (review / lab / field / numerical), record that — it is a useful
    column and a sanity check on the mined "methodology" field. Note that
    cloud-only files (e.g. OneDrive placeholders) must be downloaded locally
-   before their text can be read.
+   before their text can be read. **Name/rename PDFs with the standard
+   convention** `YYYY_FirstAuthor_StudyType_ShortTitle.pdf`, where `ShortTitle`
+   is the ISO 4 / LTWA short title made filename-safe — generate it with
+   `../passage-literature-discovery/scripts/iso4_abbreviate.py` and the
+   sanitising rules in `methodology/01_corpus_acquisition_and_naming.md`. For a
+   bulk rename, build an old→new manifest, review it, rename in place, then sync
+   `local_filename` in `data/corpus.csv`. New additions must follow this naming
+   from the outset.
 
 2. **Mine structured fields (breadth).** Run
    `scripts/extract_passage_data.py <folder> -o extraction.csv`. It runs

@@ -3,6 +3,99 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.7.0] - 2026-06-29
+Adopted the ISO 4 / LTWA short title as the local PDF filename convention.
+
+### Changed
+- Local PDF naming convention is now
+  `YYYY_FirstAuthor_StudyType_ShortTitle.pdf`, where `ShortTitle` is the
+  **ISO 4 / LTWA** short title (via `iso4_abbreviate.py`) rendered filename-safe
+  (ASCII transliteration; periods/colons removed; spaces and hyphens → `_`).
+  This aligns filenames with the `short_title_iso4` field used for candidates, so
+  titles are abbreviated by one standard everywhere. Documented in
+  `methodology/01_corpus_acquisition_and_naming.md`.
+- Renamed all 246 catalogued PDFs in place across the six study-type folders and
+  updated `data/corpus.csv` `local_filename` accordingly (data↔file link intact).
+
+### Added / refreshed
+- `Barotrauma/title_abbreviation_rename_manifest.csv` — the reviewed old→new map
+  (status `renamed`); `Barotrauma/_reorganization_manifest.csv` "New location"
+  basenames updated to current names.
+
+### Verification
+- Post-rename: 246/246 PDFs present; per-folder counts unchanged; every corpus
+  row resolves on disk; zero residual spaced (old-style) names; zero duplicates;
+  exact corpus↔disk set match per folder.
+
+## [0.6.2] - 2026-06-29
+Resolved the High-priority candidates and filled their ISO-4 short titles.
+
+### Changed
+- `data/candidate_additions.csv`: the 11 **High**-priority candidates resolved to
+  canonical titles; `short_title_iso4` recomputed via `scripts/iso4_abbreviate.py`
+  (no longer "(pending canonical resolution)"). DOIs verified for 3 (Rummer 2005
+  `10.1577/T04-235.1`; Mathur 1996 `10.1139/f95-206` — journal is CJFAS, not
+  Hydrobiologia; Larinier 2008 `10.1007/s10750-008-9398-9`). The other 8 are
+  pre-DOI / grey literature (Turnpenny 1998 book chapter; Harvey 1963 dissertation;
+  Carlson 2008 PNNL report — likely duplicate of 2008_Deng; von Raben 1957; etc.),
+  each annotated in `notes` with canonical title + DOI status. Medium/Low rows
+  unchanged.
+
+### Notes
+- The Crossref/OpenAlex REST resolution pass was attempted but those JSON APIs are
+  unreachable from this build's sandbox (Crossref timed out; OpenAlex empty), so
+  resolution used `WebSearch` to confirm titles/DOIs, then the abbreviator.
+  Provenance recorded in `skills/passage-literature-discovery/references/candidate_schema.md`.
+
+## [0.6.1] - 2026-06-29
+Standardised title abbreviation on ISO 4 / LTWA.
+
+### Added
+- `skills/passage-literature-discovery/references/title_abbreviation.md` — adopts
+  **ISO 4:1997** and the **LTWA** (ISSN International Centre; the journal-
+  abbreviation standard) as the fixed schema for short titles, with rules,
+  citations, the canonical-resolution-first workflow, and worked examples.
+- `skills/passage-literature-discovery/scripts/iso4_abbreviate.py` (ISO 4
+  abbreviator) and `assets/ltwa_subset.csv` (verifiable LTWA subset; upgrade path
+  to the full official LTWA / AbbrevIso / abbrevr).
+
+### Changed
+- `data/candidate_additions.csv`: replaced ad-hoc `title_snippet_approx` with
+  `title_as_cited` (verbatim parse) + `short_title_iso4` (ISO-4/LTWA short title,
+  provisional until DOI-resolved). Updated the discovery script, candidate schema,
+  SKILL.md and reviews note accordingly.
+
+### Rationale
+- Short titles now follow an established, citeable standard rather than home-grown
+  truncation — reusing the same vocabulary as journal abbreviations for rigour and
+  reproducibility. ISO 4's native scope is serial titles; applying its LTWA word
+  list to article titles is a documented extension (see the reference file).
+
+## [0.6.0] - 2026-06-29
+Added a literature-discovery skill and a ranked candidate-additions list.
+
+### Added
+- New skill `skills/passage-literature-discovery/` — gap-driven discovery of works
+  MISSING from the collection, via citation snowballing (works cited by many
+  included papers but not in the corpus), ranked by in-collection citation
+  frequency and tagged to mechanism themes. Includes `SKILL.md`, a ranking rubric,
+  a candidate schema, and `scripts/discover_candidates.py`.
+- `data/candidate_additions.csv` — 72 candidate works (>=5 citing collection
+  papers; 11 High / 15 Medium / 46 Low priority) with theme tags and approximate
+  titles, plus `reviews/candidate_additions.md` summarising the top items and
+  caveats.
+
+### Changed
+- Reorganised skills under a `skills/` directory: the existing skill moved to
+  `skills/passage-injury-mortality-review/` (was `skill/`). Updated references in
+  `README.md` and `methodology/README.md`.
+
+### Notes
+- Candidate titles are approximate (parsed from reference text); author+year are
+  reliable. Resolve full citations + DOIs before adding. Several High items are
+  field classics (e.g. Turnpenny 1992/1998, Cada 1990/1997, Cramer 1964, von
+  Raben 1957, MontEn 1985 — already in the library as a .zip but uncatalogued).
+
 ## [0.5.2] - 2026-06-29
 Documentation sync to current status.
 
@@ -95,47 +188,4 @@ Added the fluid-shear (strain-rate) module.
 ### Added
 - Shear deep-dive defining shear as fluid-shear / strain-rate injury (submerged
   jets, shear layers, draft-tube and spillway-plunge turbulence), distinct from
-  collision and barotrauma.
-- `data/shear_register.csv` (36 shear papers),
-  `data/shear_reproducibility_scorecard.csv` (12 live-fish lab jet/flume
-  studies), `data/shear_metrics_catalogue.csv`.
-- `reviews/shear_overview.md` and generated artefacts in `outputs/`
-  (`Shear_metrics_reproducibility.xlsx`, `Shear_state_of_the_art_overview.docx`).
-
-### Notes
-- Live-fish shear reporting completeness was the highest of the three mechanisms
-  (mean 94% among 11 machine-readable studies; 11 High). But the base is small
-  and LAB-ONLY: there is effectively no field live-fish shear set, and external
-  reproducibility is untested. One foundational study (Neitzel 2004) is a scanned
-  PDF that could not be machine-assessed and is flagged for manual scoring.
-
-## [0.2.0] - 2026-06-29
-Added the collision (blade strike & impact) module.
-
-### Added
-- Collision deep-dive defining collision as any mechanical impact/contact event
-  (turbine blade strike, impeller/pump, Archimedean-screw/structure contact,
-  wall/draft-tube/plunge-pool impact, pinch/grinding), covering simulated and
-  field-observed events.
-- `data/collision_register.csv` (48 collision papers),
-  `data/collision_reproducibility_scorecard.csv` (25 live-fish studies: 10
-  simulated-strike + 15 field-observed), `data/collision_metrics_catalogue.csv`.
-- `reviews/collision_overview.md` and generated artefacts in `outputs/`
-  (`Collision_metrics_reproducibility.xlsx`,
-  `Collision_state_of_the_art_overview.docx`).
-
-### Notes
-- Mean reporting completeness for live-fish collision studies was 81% (20 High /
-  4 Medium / 1 Low). Largest gaps: explicit collision metric (60%), injury-
-  scoring protocol (64%), statistics/dose-response (64%).
-
-## [0.1.0] - 2026-06-29
-Initial public release.
-
-### Added
-- Bibliographic corpus of 246 publications (1928–2026) with DOIs where found
-  (`data/corpus.csv`).
-- Structured extraction table for 229 analysed papers across Review / Lab /
-  Field / Numerical / Guidelines (`data/extraction.csv`).
-- Barotrauma deep-dive: register of 61 barotrauma papers
-  (`data/barotrauma_register.csv`), reproducib
+  collision an

@@ -13,20 +13,21 @@ It has two jobs:
 2. **Document a rigorous, repeatable methodology** for how the base is built,
    maintained and updated, so anyone can reproduce or extend it.
 
-> **Status:** v0.5.2. Three mechanism modules (barotrauma, collision, shear)
+> **Status:** v0.7.0. Three mechanism modules (barotrauma, collision, shear)
 > with reproducibility scorecards; a three-axis framework (mechanism × exposure
 > pathway × outcome timing) coded and **fully verified across all 229 analysed
-> papers**; plus a first cross-mechanism synthesis and gap matrix. See
-> [CHANGELOG.md](CHANGELOG.md). Not yet pushed to GitHub.
+> papers**; a cross-mechanism synthesis and gap matrix; and a literature-discovery
+> skill with a ranked candidate-additions list. See [CHANGELOG.md](CHANGELOG.md).
+> Not yet pushed to GitHub.
 
 ## What's inside
 
 | Path | Contents |
 |---|---|
-| [`data/`](data/) | **Machine-readable source of truth (CSV).** Bibliography, extraction table, barotrauma, collision & shear registers & reproducibility scorecards, metrics catalogues, the cross-cutting exposure/timing axes table, controlled vocabularies. No PDFs. |
+| [`data/`](data/) | **Machine-readable source of truth (CSV).** Bibliography, extraction table, barotrauma, collision & shear registers & reproducibility scorecards, metrics catalogues, the cross-cutting exposure/timing axes table, the candidate-additions (discovery) list, controlled vocabularies. No PDFs. |
 | [`reviews/`](reviews/) | Human-readable synthesis: state-of-the-art review; focused barotrauma / collision / shear overviews; and the cross-mechanism synthesis. |
 | [`methodology/`](methodology/) | The documented, repeatable pipeline (corpus → screening → extraction → reproducibility → axes → updates). |
-| [`skill/`](skill/) | The `passage-injury-mortality-review` skill that operationalises the extraction method. |
+| [`skills/`](skills/) | Reusable skills: **passage-injury-mortality-review** (extraction & synthesis) and **passage-literature-discovery** (gap-driven discovery of works to add). |
 | [`scripts/`](scripts/) | Extraction and build scripts. |
 | [`outputs/`](outputs/) | Generated artefacts (Excel/Word) built from `data/` + `reviews/`. |
 
@@ -51,6 +52,9 @@ original publication.
   `data/shear_reproducibility_scorecard.csv`) and the matching `reviews/` overviews.
 - **See the big picture & gaps:** `reviews/cross_mechanism_synthesis.md` and
   `outputs/Cross_mechanism_gap_matrix.xlsx`.
+- **Find what to add next:** `data/candidate_additions.csv` and
+  `reviews/candidate_additions.md` — ranked, theme-tagged works missing from the
+  collection (from the `passage-literature-discovery` skill).
 - **Reproduce / extend:** follow [`methodology/`](methodology/) and run
   `scripts/extract_passage_data.py` on a folder of PDFs.
 
@@ -62,7 +66,7 @@ structures. Injury mechanisms follow the controlled vocabulary in
 barotrauma, shear, cavitation, turbulence, grinding/abrasion, gas
 supersaturation, and entrainment/impingement.
 
-## Coverage at a glance (v0.5.1)
+## Coverage at a glance (v0.7.0)
 
 - 246 catalogued publications (1928–2026); 229 analysed across Review / Lab /
   Field / Numerical / Guidelines.
@@ -74,12 +78,19 @@ supersaturation, and entrainment/impingement.
   studies (lab jet/flume) scored. Field live-fish shear evidence is effectively
   absent (shear is studied almost entirely in the laboratory).
 - Three-axis framework: every study is described by **mechanism** x **exposure
-  pathway** (study environment + location during passage) x **outcome timing**. The two cross-cutting axes are
-  coded once per study in `data/axes_exposure_timing.csv` (all 229 papers, fully
-  Verified; see `methodology/07_axes_exposure_and_timing.md`).
+  pathway** (study environment + location during passage) x **outcome timing**.
+  The two cross-cutting axes are coded once per study in
+  `data/axes_exposure_timing.csv` (all 229 papers, fully Verified; see
+  `methodology/07_axes_exposure_and_timing.md`).
 - Cross-mechanism synthesis & gap matrix: `reviews/cross_mechanism_synthesis.md`
   and `outputs/Cross_mechanism_gap_matrix.xlsx` (coverage by mechanism x family
   group x environment x outcome timing, with explicit data gaps).
+- Literature discovery: 72 candidate works cited by the collection but missing
+  from it, ranked and theme-tagged in `data/candidate_additions.csv` (11 High
+  priority), with **ISO 4 / LTWA** short titles, via the
+  `passage-literature-discovery` skill. The 11 High-priority candidates are
+  resolved to canonical titles + ISO-4 short titles (3 with verified DOIs);
+  Medium/Low await resolution.
 
 ## How to cite
 
@@ -93,7 +104,7 @@ The golden rule: **never commit PDFs**; add a bibliographic row + extracted data
 
 ## Licensing
 
-- **Code** (`scripts/`, `skill/`): [MIT](LICENSE-CODE)
+- **Code** (`scripts/`, `skills/`): [MIT](LICENSE-CODE)
 - **Data & documentation** (`data/`, `methodology/`, `reviews/`, docs):
   [CC BY 4.0](LICENSE-DATA)
 

@@ -21,6 +21,11 @@ Human-readable syntheses, generated from the structured data and reviewed.
   timing and exposure-pathway gaps, and evidence-based next steps. Pairs with
   `outputs/Cross_mechanism_gap_matrix.xlsx`.
 
+- **`candidate_additions.md`** — gap-driven discovery: works cited by the
+  collection but missing from it, ranked and theme-tagged (from the
+  `passage-literature-discovery` skill). Full list in
+  `../data/candidate_additions.csv`.
+
 Formatted Word versions are in [`../outputs/`](../outputs/). Quantitative claims
 attributed to a named study are verified against that source; corpus-level
 counts are close estimates (see each document's method note).
