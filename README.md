@@ -13,17 +13,19 @@ It has two jobs:
 2. **Document a rigorous, repeatable methodology** for how the base is built,
    maintained and updated, so anyone can reproduce or extend it.
 
-> **Status:** v0.1.0 — initial public release. Structured data is a reviewed
-> first pass; a subset of quantitative claims is independently verified
-> (`Confidence = Verified` in the data). See [CHANGELOG.md](CHANGELOG.md).
+> **Status:** v0.5.2. Three mechanism modules (barotrauma, collision, shear)
+> with reproducibility scorecards; a three-axis framework (mechanism × exposure
+> pathway × outcome timing) coded and **fully verified across all 229 analysed
+> papers**; plus a first cross-mechanism synthesis and gap matrix. See
+> [CHANGELOG.md](CHANGELOG.md). Not yet pushed to GitHub.
 
 ## What's inside
 
 | Path | Contents |
 |---|---|
 | [`data/`](data/) | **Machine-readable source of truth (CSV).** Bibliography, extraction table, barotrauma, collision & shear registers & reproducibility scorecards, metrics catalogues, the cross-cutting exposure/timing axes table, controlled vocabularies. No PDFs. |
-| [`reviews/`](reviews/) | Human-readable synthesis: state-of-the-art review, plus focused barotrauma, collision and shear overviews. |
-| [`methodology/`](methodology/) | The documented, repeatable pipeline (corpus → screening → extraction → reproducibility → updates). |
+| [`reviews/`](reviews/) | Human-readable synthesis: state-of-the-art review; focused barotrauma / collision / shear overviews; and the cross-mechanism synthesis. |
+| [`methodology/`](methodology/) | The documented, repeatable pipeline (corpus → screening → extraction → reproducibility → axes → updates). |
 | [`skill/`](skill/) | The `passage-injury-mortality-review` skill that operationalises the extraction method. |
 | [`scripts/`](scripts/) | Extraction and build scripts. |
 | [`outputs/`](outputs/) | Generated artefacts (Excel/Word) built from `data/` + `reviews/`. |
@@ -40,8 +42,15 @@ original publication.
 
 - **Browse the evidence:** open `data/extraction.csv` (one row per study) and
   filter by mechanism, species, life stage or study type.
-- **Assess barotrauma rigour:** see `data/reproducibility_scorecard.csv` and
-  `reviews/barotrauma_overview.md`.
+- **Query the three axes:** join `data/axes_exposure_timing.csv` (mechanism ×
+  exposure pathway × outcome timing) on `citation_key`; roll taxa up via
+  `family` / `family_group` in `data/vocab/species.csv`.
+- **Assess reproducibility:** see the per-mechanism scorecards
+  (`data/barotrauma_reproducibility_scorecard.csv`,
+  `data/collision_reproducibility_scorecard.csv`,
+  `data/shear_reproducibility_scorecard.csv`) and the matching `reviews/` overviews.
+- **See the big picture & gaps:** `reviews/cross_mechanism_synthesis.md` and
+  `outputs/Cross_mechanism_gap_matrix.xlsx`.
 - **Reproduce / extend:** follow [`methodology/`](methodology/) and run
   `scripts/extract_passage_data.py` on a folder of PDFs.
 
@@ -53,7 +62,7 @@ structures. Injury mechanisms follow the controlled vocabulary in
 barotrauma, shear, cavitation, turbulence, grinding/abrasion, gas
 supersaturation, and entrainment/impingement.
 
-## Coverage at a glance (v0.1.0)
+## Coverage at a glance (v0.5.1)
 
 - 246 catalogued publications (1928–2026); 229 analysed across Review / Lab /
   Field / Numerical / Guidelines.
@@ -66,8 +75,11 @@ supersaturation, and entrainment/impingement.
   absent (shear is studied almost entirely in the laboratory).
 - Three-axis framework: every study is described by **mechanism** x **exposure
   pathway** (study environment + location during passage) x **outcome timing**. The two cross-cutting axes are
-  coded once per study in `data/axes_exposure_timing.csv` (120 studies so far;
-  see `methodology/07_axes_exposure_and_timing.md`).
+  coded once per study in `data/axes_exposure_timing.csv` (all 229 papers, fully
+  Verified; see `methodology/07_axes_exposure_and_timing.md`).
+- Cross-mechanism synthesis & gap matrix: `reviews/cross_mechanism_synthesis.md`
+  and `outputs/Cross_mechanism_gap_matrix.xlsx` (coverage by mechanism x family
+  group x environment x outcome timing, with explicit data gaps).
 
 ## How to cite
 

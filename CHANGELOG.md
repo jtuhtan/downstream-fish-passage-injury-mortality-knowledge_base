@@ -3,6 +3,60 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.5.2] - 2026-06-29
+Documentation sync to current status.
+
+### Changed
+- Renamed `data/reproducibility_scorecard.csv` →
+  `data/barotrauma_reproducibility_scorecard.csv` so all three mechanism
+  scorecards share the `<mechanism>_reproducibility_scorecard.csv` convention;
+  updated references in `methodology/` and `README.md`/`CONTRIBUTING.md`.
+
+### Documentation
+- Updated `README.md` (status v0.1.0 → v0.5.1; coverage; "how to use" now covers
+  all three mechanisms, the three axes, family roll-ups and the cross-mechanism
+  synthesis), `CONTRIBUTING.md` (documentation-as-you-go rule; per-mechanism
+  registers; an explicit axes-coding step), `reviews/README.md` (fixed ordering;
+  cross-mechanism synthesis listed) and `methodology/README.md` (documentation
+  principle). No data changed.
+
+## [0.5.1] - 2026-06-29
+Verification pass on the cross-cutting axes.
+
+### Changed
+- All 97 Field/Numerical rows in `data/axes_exposure_timing.csv` reviewed
+  per-paper and flipped from `Mined` to `Verified` (66 corrected). The axes
+  table is now 229/229 Verified. Corrections fixed mis-tagged structures,
+  removed spurious Indirect/Latent timing tags, and set Sensor-Fish exposure
+  studies to outcome timing "Not reported". Documented in
+  `methodology/07_axes_exposure_and_timing.md`.
+- Regenerated `outputs/Cross_mechanism_gap_matrix.xlsx` and updated the timing
+  table in `reviews/cross_mechanism_synthesis.md` to the verified counts.
+
+## [0.5.0] - 2026-06-29
+Consolidation + first cross-mechanism synthesis.
+
+### Added
+- `reviews/cross_mechanism_synthesis.md` (+ `outputs/Cross_mechanism_synthesis.docx`)
+  comparing the three mechanisms across reproducibility, taxonomy, outcome timing
+  and exposure pathway.
+- `outputs/Cross_mechanism_gap_matrix.xlsx` - coverage matrices (mechanism x
+  family group / environment / outcome timing) with data-gap highlighting.
+
+### Changed
+- `data/axes_exposure_timing.csv` extended from the 120-study union to ALL 229
+  analysed papers; added a `confidence` verification rule (132 Verified =
+  lab/model/review/guideline; 97 Mined = field/numerical). Documented in
+  `methodology/07_axes_exposure_and_timing.md`.
+
+### Key findings
+- Reproducibility and scope are inversely related (shear 94% but ~12 lab studies;
+  barotrauma 74% but the broadest base).
+- Evidence is concentrated on salmonids and eels; gobies, sculpins and livebearers
+  have ZERO studies across all three mechanisms.
+- Latent/long-term and quantified indirect (predation) mortality are the least-
+  measured outcomes field-wide.
+
 ## [0.4.0] - 2026-06-29
 Added the two cross-cutting framework axes (exposure pathway, outcome timing).
 
@@ -84,16 +138,4 @@ Initial public release.
 - Structured extraction table for 229 analysed papers across Review / Lab /
   Field / Numerical / Guidelines (`data/extraction.csv`).
 - Barotrauma deep-dive: register of 61 barotrauma papers
-  (`data/barotrauma_register.csv`), reproducibility scorecard for 38 live-fish
-  studies (`data/reproducibility_scorecard.csv`), and a metrics catalogue
-  (`data/barotrauma_metrics_catalogue.csv`).
-- Controlled vocabularies for mechanisms, metrics and species (`data/vocab/`).
-- Documented methodology (`methodology/`) and the `passage-injury-mortality-review`
-  skill (`skill/`) plus extraction script (`scripts/`).
-- Human-readable reviews (`reviews/`) and generated Excel/Word artefacts
-  (`outputs/`).
-
-### Notes
-- Categorical/structured fields are a reviewed first pass; 37 quantitative
-  claims and 38 reproducibility scores have been checked against sources.
-- Source PDFs are intentionally excluded for copyright reasons.
+  (`data/barotrauma_register.csv`), reproducib

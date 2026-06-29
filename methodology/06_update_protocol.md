@@ -11,7 +11,7 @@ How to keep the knowledge base current and re-cut releases.
    - add corresponding rows to `data/corpus.csv` (with DOI).
 4. Verify the high-value rows (set `Confidence = Verified`).
 5. If barotrauma-relevant, update `data/barotrauma_register.csv` and (if
-   live-fish) `data/reproducibility_scorecard.csv`.
+   live-fish) `data/<mechanism>_reproducibility_scorecard.csv`.
 
 ## Re-building artefacts
 - Excel/Word in `outputs/` and the synthesis in `reviews/` are generated from

@@ -16,6 +16,11 @@ Human-readable syntheses, generated from the structured data and reviewed.
   (and why the field evidence is absent), problems & gaps, and a proposed minimum
   reporting standard.
 
+- **`cross_mechanism_synthesis.md`** — first synthesis across barotrauma,
+  collision and shear: reproducibility vs scope, taxonomic coverage, outcome-
+  timing and exposure-pathway gaps, and evidence-based next steps. Pairs with
+  `outputs/Cross_mechanism_gap_matrix.xlsx`.
+
 Formatted Word versions are in [`../outputs/`](../outputs/). Quantitative claims
 attributed to a named study are verified against that source; corpus-level
 counts are close estimates (see each document's method note).

@@ -81,3 +81,29 @@ primary endpoint.
 Add new studies to `data/axes_exposure_timing.csv` with the same vocab; when a
 new mechanism module is added, its register's `citation_key`s are folded in so
 every study carries all three axes.
+
+## Verification rule (added v0.5.0)
+The axes are now coded corpus-wide (all 229 analysed papers, not just the
+3-mechanism union). Each row carries `confidence`:
+- **Verified** - rows whose `study_environment` is rule-deterministic and whose
+  `location_during_passage` follows directly from it: all Lab apparatus,
+  Physical model, Review and Guideline rows. Their environment/location coding is
+  stable and has been cross-checked against the study-type folders.
+- **Mined** - Field and Numerical/CFD rows, where `location_during_passage`
+  (whole-route vs. specific component) and outcome-timing tags are heuristic and
+  still need per-paper review.
+Outcome-timing tags are heuristic for ALL rows (they flag that a study *addresses*
+a timing class, not that it is the primary endpoint); `Indirect` counts are upper
+bounds. This rule is intentionally conservative so "Verified" never overstates.
+
+## Verification pass outcome (v0.5.1)
+The 97 Field and Numerical/CFD rows (previously `Mined`) were reviewed
+per-paper against abstracts and methods. 66 were corrected and all 97 flipped to
+`Verified`; the axes table is now fully Verified (229/229). Typical corrections:
+mis-tagged structures (e.g. a spillbay study coded as whole-route -> Spillway; a
+waterfall study -> Plunge pool; Archimedean-screw and pump studies re-homed to
+the right environment/location); spurious `Indirect`/`Latent` timing tags removed
+where they came from background mentions; and Sensor-Fish *exposure* studies
+(which characterise conditions, not live-fish injury) set to outcome timing
+"Not reported". This dropped the heuristic over-counts (e.g. Indirect:
+barotrauma 22->17, collision 10->6, shear 20->14).

@@ -23,7 +23,7 @@ PDFs or extend it with new papers.
         │   one row per study  ->  data/extraction.csv
         ▼
  5. Reproducibility scoring          05_reproducibility_rubric.md
-        │   live-fish studies  ->  data/reproducibility_scorecard.csv
+        │   live-fish studies  ->  data/<mechanism>_reproducibility_scorecard.csv
         ▼
  6. Build artefacts & update         06_update_protocol.md
    +  Cross-cutting axes (exposure pathway, outcome timing)
@@ -40,10 +40,11 @@ PDFs or extend it with new papers.
 - **No PDFs in the repo.** Only metadata, derived data and original summaries.
 - **Tooling is reproducible.** The extraction logic lives in `scripts/` and in
   the `skill/` bundle, not only in prose.
+- **Document continuously.** Every rule or decision is recorded in
+  `methodology/`, `CHANGELOG.md` and the affected vocab in the same change —
+  coding the data and documenting how it was coded are one task.
 
 ## Reproducibility of THIS method
 
 The pipeline was executed with `pdftotext` (Poppler) for text extraction,
-Python (regex + controlled vocabularies) for mining, and openpyxl/python-docx
-for artefacts. Automated steps are deterministic given the same inputs;
-human verification is logged via the `Confidence` field and the CHANGELOG.
+Python (regex 

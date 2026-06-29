@@ -3,7 +3,7 @@
 A transparent, auditable checklist that measures **reporting completeness** —
 whether a study reports enough to be reproduced. It is not a verdict on
 scientific quality. Applied to live-fish studies and recorded in
-`data/reproducibility_scorecard.csv`.
+`data/<mechanism>_reproducibility_scorecard.csv`.
 
 ## Criteria (C1–C10)
 
