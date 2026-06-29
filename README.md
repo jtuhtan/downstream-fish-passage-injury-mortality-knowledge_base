@@ -21,8 +21,8 @@ It has two jobs:
 
 | Path | Contents |
 |---|---|
-| [`data/`](data/) | **Machine-readable source of truth (CSV).** Bibliography, extraction table, barotrauma + collision registers & reproducibility scorecards, metrics catalogues, controlled vocabularies. No PDFs. |
-| [`reviews/`](reviews/) | Human-readable synthesis: state-of-the-art review, plus focused barotrauma and collision overviews. |
+| [`data/`](data/) | **Machine-readable source of truth (CSV).** Bibliography, extraction table, barotrauma, collision & shear registers & reproducibility scorecards, metrics catalogues, the cross-cutting exposure/timing axes table, controlled vocabularies. No PDFs. |
+| [`reviews/`](reviews/) | Human-readable synthesis: state-of-the-art review, plus focused barotrauma, collision and shear overviews. |
 | [`methodology/`](methodology/) | The documented, repeatable pipeline (corpus → screening → extraction → reproducibility → updates). |
 | [`skill/`](skill/) | The `passage-injury-mortality-review` skill that operationalises the extraction method. |
 | [`scripts/`](scripts/) | Extraction and build scripts. |
@@ -61,6 +61,13 @@ supersaturation, and entrainment/impingement.
   reproducibility of reporting.
 - Collision (blade strike & impact) deep-dive: 48 collision papers; 25 live-fish
   studies (10 simulated-strike + 15 field-observed) scored.
+- Shear (fluid shear / strain rate) deep-dive: 36 shear papers; 12 live-fish
+  studies (lab jet/flume) scored. Field live-fish shear evidence is effectively
+  absent (shear is studied almost entirely in the laboratory).
+- Three-axis framework: every study is described by **mechanism** x **exposure
+  pathway** (study environment + location during passage) x **outcome timing**. The two cross-cutting axes are
+  coded once per study in `data/axes_exposure_timing.csv` (120 studies so far;
+  see `methodology/07_axes_exposure_and_timing.md`).
 
 ## How to cite
 

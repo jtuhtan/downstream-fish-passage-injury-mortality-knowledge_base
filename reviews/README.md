@@ -11,6 +11,10 @@ Human-readable syntheses, generated from the structured data and reviewed.
   metrics & calculation, simulated and field protocols, the live-fish
   reproducibility assessment, problems & gaps, and a proposed minimum reporting
   standard.
+- **`shear_overview.md`** — focused fluid-shear / strain-rate review: metrics &
+  calculation, lab jet/flume protocols, the live-fish reproducibility assessment
+  (and why the field evidence is absent), problems & gaps, and a proposed minimum
+  reporting standard.
 
 Formatted Word versions are in [`../outputs/`](../outputs/). Quantitative claims
 attributed to a named study are verified against that source; corpus-level

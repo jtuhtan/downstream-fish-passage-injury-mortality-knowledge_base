@@ -1,0 +1,37 @@
+citation_key,year,first_author,title,role,metric,reproducibility_pct,reproducibility_tier
+1983_Ruggles,1983,Ruggles,Fish response to spillways,Review,shear (described),,
+1999_Cada,1999,Cada,Exploring the Role of Shear Stress and Severe Turbulence in Downstream Fish Passage,Review,shear stress (Pa),,
+1999_Odeh,1999,Odeh,A summary of environmentally friendly turbine design concepts,Review,strain rate (s-1); shear stress (Pa); CFD shear field; velocity gradient,,
+2000_DOE,2000,DOE,Shear on fish,Report (DOE version of Neitzel 2000),strain rate (s-1); shear stress (Pa); Sensor Fish exposure; velocity gradient,,
+2000_Neitzel,2000,Neitzel,Laboratory Studies on the Effects of Shear on Fish,live-fish simulated (lab jet/flume),strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration; no-observed-effect strain rate,90,High
+2002_Odeh,2002,Odeh,Evaluation of the effects of turbulence on the behavior of migratory fish,live-fish simulated (lab jet/flume),strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration,90,High
+2004_Neitzel,2004,Neitzel,Survival estimates for juvenile fish subjected to a laboratory-generated shear environment,live-fish simulated (lab jet/flume),(low-text PDF; not minable),0,Low
+2005_Deng,2005,Deng,Evaluation of fish-injury mechanisms during exposure to turbulent shear flow,live-fish simulated (lab jet/flume),strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration,100,High
+2006_Cada,2006,Cada,Efforts to Reduce Mortality to Hydroelectric Turbine-Passed Fish Locating and Quantifying Damaging Shear Stresses,Review,strain rate (s-1); shear stress (Pa); CFD shear field,,
+2009_Dobriloff,2009,Dobriloff,Surface Pressure and Wall Shear Stress Measurements on a Wall Mounted Cylinder,Engineering/measurement,shear stress (Pa),,
+2009_Richmond,2009,Richmond,Response relationships between juvenile salmon and an autonomous sensor in turbulent flow,live-fish simulated (lab jet/flume),jet/nozzle velocity (m/s); shear stress (Pa); acceleration,90,High
+2010_Deng,2010,Deng,Injury and mortality of juvenile salmon entrained in a submerged jet entering still water,live-fish simulated (lab jet/flume),strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration,90,High
+2012_Jacobsen,2012,Jacobsen,Environmental effects of hydrokinetic turbines on fish desktop and laboratory flume studies,live-fish simulated (lab jet/flume),strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration,100,High
+2013_Chamorrow,2013,Chamorrow,Three-dimensional flow visualization in the wake of a miniature axial-flow hydrokinetic turbin,Modeling/flow-visualisation,shear stress (Pa); CFD shear field; velocity gradient,,
+2014_Boys,2014,Boys,Downstream fish passage criteria for hydropower and irrigation infrastructure in the Murray–Darling Basin,Guideline,strain rate (s-1); shear stress (Pa); CFD shear field; Sensor Fish exposure,,
+2015_Xiao,2015,Xiao,Movement characteristics offish in a jetfish pump,Modeling (CFD),strain rate (s-1); shear stress (Pa); CFD shear field; velocity gradient,,
+2016_Fu,2016,Fu,Assessing hydraulic conditions through Francis turbines using an autonomous sensor device,Field exposure (Sensor Fish),shear stress (Pa); Sensor Fish exposure,,
+2016_Long,2016,Long,Impact of the internal flow in a jet fish pump on the fish,Modeling (CFD),strain rate (s-1); shear stress (Pa); CFD shear field,,
+2018_Boys,2018,Boys,Physical and hydraulic forces experienced by fish passing through three different low-head hydropower turbines,Field exposure (Sensor Fish),CFD shear field; Sensor Fish exposure,,
+2018_Colotelo,2018,Colotelo,Injury and mortality of two Mekong River species exposed to turbulent shear forces,live-fish simulated (lab jet/flume),strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration,100,High
+2018_Hou,2018,Hou,A Hydropower Biological Evaluation Toolset (HBET) for Characterizing Hydraulic Conditions and Impacts of,Modeling (tool/HBET),shear stress (Pa); CFD shear field; Sensor Fish exposure,,
+2019_Klopries,2019,Klopries,Mortality assessment for adult European eels (Anguilla Anguilla) during turbine passage using CFD modelling,Modeling (CFD),strain rate (s-1); shear stress (Pa); CFD shear field; Sensor Fish exposure,,
+2019_Martinezc,2019,Martinez,In situ characterization of turbine hydraulic environment to support development of fish-friendly hydropower,Field exposure (Sensor Fish),shear stress (Pa); CFD shear field; Sensor Fish exposure,,
+2020_Doyle,2020,Doyle,"Gambusia holbrooki Survive Shear Stress, Pressurization and Avoid Blade Strike in a Simulated Pumped Hydroelectric Scheme",live-fish simulated (lab jet/flume),strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa),90,High
+2020_Martinez,2020,Martinez,In situ characterization of the biological performance of a Francis turbine retrofitted with a modular guide vane,Field exposure (Sensor Fish),shear stress (Pa); CFD shear field; Sensor Fish exposure,,
+2020_Pflugrath,2020,Pflugrath,The Susceptibility of Juvenile American Shad to rapid decompression and fluid shear exposure,live-fish simulated (lab jet/flume),strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration,100,High
+2020_Pflugrathc,2020,Pflugrath,Biological Response Models,Modeling/synthesis,strain rate (s-1); shear stress (Pa); CFD shear field; Sensor Fish exposure,,
+2021_Pflugrath,2021,Pflugrath,American eel resilience to simulated fluid shear associated with passage through hydroelectric turbines,live-fish simulated (lab jet/flume),strain rate (s-1); jet/nozzle velocity (m/s); acceleration,80,High
+2022_Doyle,2022,Doyle,Survival estimates across five life stages of redfin (Perca fluviatilis) exposed to simulated pumped-storage hydropower,live-fish simulated (lab jet/flume),strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa),100,High
+2022_Yang,2022,Yang,Effects of operating condition on fish behavior and fish injury in an axial pump,Modeling (CFD),strain rate (s-1); shear stress (Pa); CFD shear field; Sensor Fish exposure,,
+2022_Zhu,2022,Zhu,Analysis and reduction of the pressure and shear damage probability of fish in a Francis turbine,Modeling (CFD),strain rate (s-1); shear stress (Pa); CFD shear field; Sensor Fish exposure; velocity gradient,,
+2023_Cox,2023,Cox,Fish Injury from Movements across Hydraulic Structures,Review,strain rate (s-1); shear stress (Pa),,
+2023_Yang,2023,Yang,Fish damage due to tubular turbine Experiments and CFD simulations,Modeling (CFD+exp),strain rate (s-1); shear stress (Pa); CFD shear field; Sensor Fish exposure,,
+2024_Canada,2024,Canada,Risk to fish from very low head turbine installations,Guideline,shear stress (Pa); CFD shear field; Sensor Fish exposure; velocity gradient,,
+2024_Kaminski,2024,Kaminski,Computational fluid dynamics simulation of passive downstream fish passage over a weir with OpenFOAM,Modeling (CFD),strain rate (s-1); shear stress (Pa); CFD shear field; Sensor Fish exposure; velocity gradient,,
+2025_Kan,2025,Kan,Fish-friendly optimization of low-head axial-flow turbines,Modeling (CFD),strain rate (s-1); shear stress (Pa); CFD shear field,,

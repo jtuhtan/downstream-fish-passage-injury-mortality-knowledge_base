@@ -1,0 +1,7 @@
+value,definition,typical_window
+Immediate,Survival/injury assessed at or shortly after passage/exposure,<= ~1 h
+Delayed,Survival assessed after a defined holding window,~24-120 h (record delayed_window_h)
+Latent / long-term,Effects assessed beyond ~1 week,> ~1 week
+Sublethal,Non-lethal endpoints (injury, physiological stress, descaling, behaviour)
+Indirect,Secondary mortality (e.g. increased predation after disorientation/injury)
+Not reported,Outcome timing not stated

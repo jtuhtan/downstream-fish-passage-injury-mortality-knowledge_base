@@ -1,0 +1,23 @@
+value,definition,hydraulic_order
+Approach / forebay,Upstream approach to the intake,1
+Intake,Turbine/pump intake,2
+Trash rack / screen,Trash rack or fish screen in front of the intake,3
+Penstock,Pressurised conduit feeding the turbine,4
+Spiral / scroll case,Spiral (scroll) casing distributing flow to the runner,5
+Stay vanes,Fixed stay vanes,6
+Wicket / guide gates,Adjustable wicket (guide) gates / distributor,7
+Turbine runner,Rotating runner / blades (or pump impeller),8
+Draft tube,Diffuser downstream of the runner,9
+Tailrace,Outflow channel below the draft tube,10
+Spillway,Spillway / overflow surface,11
+Plunge pool / stilling basin,Plunge or stilling basin below a drop,12
+Bypass / sluice / gate,Dedicated bypass, sluice or gate route,13
+Archimedean screw flight,Within an Archimedean screw flight/trough,14
+Pump impeller / casing,Within a pump impeller or casing,15
+Remained in barochamber,Fish held/exposed in a pressure chamber (no real location),90
+In shear jet/flume,Exposed in a submerged jet or shear flume,91
+At strike plate / blade (rig),Exposed at a blade-strike rig impactor,92
+In lab apparatus (other),Exposed in another lab apparatus,93
+Whole-route (not localised),Real passage but injury not localised to a component (e.g. balloon-tag survival),95
+Modelled flow path,Component(s) represented in a numerical model,96
+Various / not applicable,Review/guideline; multiple or unspecified,97

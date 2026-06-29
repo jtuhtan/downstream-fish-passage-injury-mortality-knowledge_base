@@ -1,0 +1,13 @@
+citation_key,year,first_author,title,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,reproducibility_pct,tier,metric
+2005_Deng,2005,Deng,Evaluation of fish-injury mechanisms during exposure to turbulent shear flow,1,1,1,1,1,1,1,1,1,1,100,High,strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration
+2018_Colotelo,2018,Colotelo,Injury and mortality of two Mekong River species exposed to turbulent shear forces,1,1,1,1,1,1,1,1,1,1,100,High,strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration
+2020_Pflugrath,2020,Pflugrath,The Susceptibility of Juvenile American Shad to rapid decompression and fluid shear exposure,1,1,1,1,1,1,1,1,1,1,100,High,strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration
+2022_Doyle,2022,Doyle,Survival estimates across five life stages of redfin (Perca fluviatilis) exposed to simulated pumped-storage hydropower,1,1,1,1,1,1,1,1,1,1,100,High,strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa)
+2012_Jacobsen,2012,Jacobsen,Environmental effects of hydrokinetic turbines on fish desktop and laboratory flume studies,1,1,1,1,1,1,1,1,1,1,100,High,strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration
+2000_Neitzel,2000,Neitzel,Laboratory Studies on the Effects of Shear on Fish,1,0,1,1,1,1,1,1,1,1,90,High,strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration; no-observed-effect strain rate
+2010_Deng,2010,Deng,Injury and mortality of juvenile salmon entrained in a submerged jet entering still water,1,0,1,1,1,1,1,1,1,1,90,High,strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration
+2009_Richmond,2009,Richmond,Response relationships between juvenile salmon and an autonomous sensor in turbulent flow,1,1,1,1,1,1,1,1,0,1,90,High,jet/nozzle velocity (m/s); shear stress (Pa); acceleration
+2002_Odeh,2002,Odeh,Evaluation of the effects of turbulence on the behavior of migratory fish,1,0,1,1,1,1,1,1,1,1,90,High,strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa); acceleration
+2020_Doyle,2020,Doyle,"Gambusia holbrooki Survive Shear Stress, Pressurization and Avoid Blade Strike in a Simulated Pumped Hydroelectric Scheme",1,1,1,1,1,1,0,1,1,1,90,High,strain rate (s-1); jet/nozzle velocity (m/s); shear stress (Pa)
+2021_Pflugrath,2021,Pflugrath,American eel resilience to simulated fluid shear associated with passage through hydroelectric turbines,1,1,1,1,1,1,1,1,0,0,80,High,strain rate (s-1); jet/nozzle velocity (m/s); acceleration
+2004_Neitzel,2004,Neitzel,Survival estimates for juvenile fish subjected to a laboratory-generated shear environment,0,0,0,0,0,0,0,0,0,0,0,Low,(low-text PDF; not minable)

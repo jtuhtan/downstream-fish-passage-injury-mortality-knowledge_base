@@ -26,6 +26,8 @@ PDFs or extend it with new papers.
         │   live-fish studies  ->  data/reproducibility_scorecard.csv
         ▼
  6. Build artefacts & update         06_update_protocol.md
+   +  Cross-cutting axes (exposure pathway, outcome timing)
+                                       07_axes_exposure_and_timing.md
             reviews/, outputs/, releases
 ```
 

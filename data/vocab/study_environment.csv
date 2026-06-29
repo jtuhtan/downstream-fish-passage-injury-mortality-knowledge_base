@@ -1,0 +1,19 @@
+value,definition
+Lab - barotrauma chamber,Hyper/hypobaric pressure chamber simulating decompression
+Lab - shear jet/flume,Submerged-jet or flume delivering controlled fluid shear
+Lab - blade-strike rig,Mechanical apparatus delivering a controlled blade/impactor strike
+Lab - other apparatus,Other controlled laboratory apparatus (e.g. behaviour flume)
+Physical model / test rig,Scaled physical model or pilot-scale turbine/pump test rig
+Field - Kaplan turbine,Full-scale Kaplan turbine installation
+Field - Francis turbine,Full-scale Francis turbine installation
+Field - bulb/propeller turbine,Full-scale bulb or propeller turbine
+Field - VLH turbine,Full-scale very-low-head turbine
+Field - pump / pumping station,Operating pump or pumping station
+Field - Archimedean screw,Operating Archimedean hydrodynamic screw
+Field - weir,Operating weir
+Field - spillway / bypass,Spillway or bypass route at a real facility
+Field - shaft hydropower,Shaft hydropower plant
+Field - hydropower structure (other),Other/unspecified full-scale structure
+Numerical / CFD model,Computational model; no physical environment
+Review / synthesis,Literature review or synthesis
+Guideline / standard,Standard or guidance document
