@@ -1,0 +1,29 @@
+common_name,scientific_name,swim_bladder_type
+Chinook salmon,Oncorhynchus tshawytscha,physostome
+Atlantic salmon,Salmo salar,physostome
+Rainbow trout/steelhead,Oncorhynchus mykiss,physostome
+Masu salmon,Oncorhynchus masou,physostome
+Brown trout,Salmo trutta,physostome
+Bull trout,Salvelinus confluentus,physostome
+Lake trout,Salvelinus namaycush,physostome
+American shad,Alosa sapidissima,physostome
+Blueback herring,Alosa aestivalis,physostome
+Alewife,Alosa pseudoharengus,physostome
+American eel,Anguilla rostrata,physostome
+European eel,Anguilla anguilla,physostome
+Pacific/brook lamprey,Entosphenus/Lampetra spp.,absent
+Murray cod,Maccullochella peelii,physoclist
+Golden perch,Macquaria ambigua,physoclist
+Silver perch,Bidyanus bidyanus,physoclist
+Redfin perch,Perca fluviatilis,physoclist
+Common nase,Chondrostoma nasus,physostome
+Roach,Rutilus rutilus,physostome
+Crucian carp,Carassius carassius,physostome
+Common carp,Cyprinus carpio,physostome
+Pictus catfish,Pimelodus pictus,physostome (variable)
+Pimelodus maculatus,Pimelodus maculatus,physostome (variable)
+White sturgeon,Acipenser transmontanus,physostome
+Round goby,Neogobius melanostomus,absent/reduced
+Bullhead,Cottus gobio,absent/reduced
+Gudgeon,Gobio gobio,physostome
+Mosquitofish,Gambusia holbrooki,physoclist

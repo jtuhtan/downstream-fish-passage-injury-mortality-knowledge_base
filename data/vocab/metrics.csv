@@ -1,0 +1,13 @@
+metric,definition,formula,units
+RPC (ratio of pressure change),Severity of decompression relative to acclimation,P_acclimation / P_nadir (state direction explicitly),dimensionless
+LRP (log ratio of pressure),Log transform used in logistic mortal-injury models,ln(P_acclimation / P_nadir),dimensionless (log)
+Nadir pressure,Lowest absolute pressure during exposure/passage,min of pressure-time trace,kPa (absolute)
+Acclimation/neutral-buoyancy pressure,Baseline pressure/depth the fish equilibrated to,holding depth or neutral-buoyancy test,kPa or m
+Mortal-injury index,Binary classification from a defined injury set,mortally injured if any of N injuries present,binary
+Injury-specific dose-response,Probability of a specific injury vs dose,logistic P(injury) ~ RPC/LRP/nadir,probability 0-1
+Injury severity score,Count/grade of injury types per fish,sum/grade from necropsy/X-ray/observation,count or ordinal
+Decompression rate,Speed of pressure drop to nadir,dP/dt or time-to-nadir,kPa/s or s
+Strain rate,Shear exposure metric (shear mechanism),mean dU/dy in shear field,s^-1
+Strike probability,Modeled likelihood of blade contact,f(fish length, blade count, blade speed, axial velocity),probability 0-1
+Strike velocity,Impact speed of blade on fish,measured/modeled blade-fish relative speed,m/s
+TDG (total dissolved gas),Gas supersaturation (gas-bubble trauma),percent gas saturation,% saturation

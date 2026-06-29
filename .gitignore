@@ -1,0 +1,23 @@
+# ---- Copyright: never commit the source PDFs or the literature library ----
+*.pdf
+Barotrauma/
+Literature/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Build scratch
+/tmp/
+*.log

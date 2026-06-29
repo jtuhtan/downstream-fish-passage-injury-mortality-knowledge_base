@@ -1,0 +1,9 @@
+mechanism,definition,typical_evidence
+Blade strike,Direct mechanical impact by a runner blade/vane/structure; includes leading-edge contact,Strike-probability/velocity models; strike-rig tests; lacerations/bruising/severed bodies
+Barotrauma/pressure,Injury from rapid pressure change (nadir) over-expanding swim-bladder gas,Pressure-chamber dose-response; nadir/RPC metrics; swim-bladder rupture/exophthalmia/emboli
+Shear,Injury from steep velocity gradients (shear layers/jets/draft tube),Jet/flume strain-rate exposure; eye/operculum/gill damage
+Cavitation,Vapour-bubble formation and collapse at low local pressure,Mostly turbine-engineering detection/avoidance studies
+Turbulence,Chaotic flow disorienting fish and raising strike/shear exposure,Flume behaviour; turbulence-intensity metrics
+Grinding/abrasion/pinch,Fish crushed/abraded in narrow gaps (runner-hub; screw-trough),Gap studies; Archimedean-screw contact
+Gas supersaturation/GBT,Total dissolved gas supersaturation causing gas-bubble trauma,TDG % saturation; gas-bubble disease signs
+Entrainment/impingement/screen,Exposure pathway: drawn toward intakes or pinned on screens/racks,Entrainment rates; trash-rack/screen studies

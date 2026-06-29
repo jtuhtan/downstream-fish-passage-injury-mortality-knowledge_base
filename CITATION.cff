@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: Downstream Fish Passage Injury and Mortality Knowledge Base
+message: "If you use this knowledge base, please cite it as below."
+type: dataset
+authors:
+  - family-names: Tuhtan
+    given-names: Jeffrey Andrew
+    affiliation: Tallinn University of Technology
+    email: jtuhtan@gmail.com
+repository-code: "https://github.com/jtuhtan/downstream-fish-passage-injury-mortality-kb"
+abstract: >-
+  A community knowledge base on fish injury and mortality during downstream
+  passage through hydropower turbines, pumps, screws, weirs and spillways.
+  It provides an up-to-date, structured literature review (mechanisms,
+  thresholds, species, life stages, study parameters), a focused barotrauma
+  metrics-and-reproducibility assessment, and a rigorous, repeatable,
+  documented methodology for building, maintaining and updating the base.
+keywords:
+  - fish passage
+  - hydropower
+  - barotrauma
+  - blade strike
+  - turbine mortality
+  - reproducibility
+license: CC-BY-4.0
+version: 0.1.0
+date-released: 2026-06-29

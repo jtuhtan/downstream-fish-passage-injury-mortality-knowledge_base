@@ -1,0 +1,17 @@
+# Reviews
+
+Human-readable syntheses, generated from the structured data and reviewed.
+
+- **`state_of_the_art.md`** — mechanism-based synthesis of the whole corpus
+  (mechanisms, thresholds, species/life-stage/size, methods landscape, gaps).
+- **`barotrauma_overview.md`** — focused barotrauma review: metrics & how they
+  are calculated, protocols, the live-fish reproducibility assessment, problems
+  & gaps, and a proposed minimum reporting standard.
+- **`collision_overview.md`** — focused collision (blade strike & impact) review:
+  metrics & calculation, simulated and field protocols, the live-fish
+  reproducibility assessment, problems & gaps, and a proposed minimum reporting
+  standard.
+
+Formatted Word versions are in [`../outputs/`](../outputs/). Quantitative claims
+attributed to a named study are verified against that source; corpus-level
+counts are close estimates (see each document's method note).

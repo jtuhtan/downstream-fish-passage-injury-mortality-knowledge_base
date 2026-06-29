@@ -1,0 +1,5 @@
+# Text extraction relies on the system tool `pdftotext` (Poppler).
+#   Debian/Ubuntu: apt-get install poppler-utils
+#   macOS:        brew install poppler
+openpyxl>=3.1
+python-docx>=1.1

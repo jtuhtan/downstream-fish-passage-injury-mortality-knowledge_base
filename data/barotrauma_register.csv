@@ -1,0 +1,62 @@
+citation_key,Year,First author,Title,Source folder,Role,Metric(s) used,Reproducibility %,Tier
+1928_Evans,1928,Evans,Observations on the Physiology of the Swim Bladder in Cyprinoid Fishes,Lab,Foundational,neutral-buoyancy/acclimation depth,n/a,
+1983_Feathers,1983,Feathers,Effects of Depressurization Upon Largemouth Bass,Lab,Live-fish LAB,,30,Low
+2000_Abernethy,2000,Abernethy,Laboratory Studies of the Effects of pressure and dissolved gases on fish,Lab,Live-fish LAB,nadir pressure,70,Medium
+2002_Abernathy,2002,Abernathy,Simulated passage through a modified Kaplan turbine pressure regime,Lab,Live-fish LAB,nadir pressure,60,Medium
+2003_Abernethy,2003,Abernethy,Fish Passage Through a Simulated Bulb Turbine Pressure Regime,Lab,Live-fish LAB,nadir pressure,70,Medium
+2003_Becker,2003,Becker,Idendifying the effects on fish of changes in water pressure during turbine passage,Lab,Live-fish LAB,nadir pressure,70,Medium
+2007_Brown,2007,Brown,Assessment of Barotrauma Resulting from Rapid Decompression of Depth Acclimated Juvenile Chinook Salmon Bearing Radio,Lab,Live-fish LAB,nadir pressure,70,Medium
+2007_McKinstry,2007,McKinstry,Derivation of a Mortal Injury Metric for Studies of Rapid Decompression of Depth-Acclimated Physostomous Fish,Lab,Live-fish LAB,nadir pressure; mortal-injury index,50,Medium
+2009_Brown,2009,Brown,Assessment of barotrauma from rapid decompression of depth-acclimated juvenile chinook salmon bearing radtiotelemetry,Lab,Live-fish LAB,nadir pressure,70,Medium
+2009_Normandeau,2009,Normandeau,Shad movement and mortality,Field,Live-fish FIELD,,62,Medium
+2010_Stephenson,2010,Stephenson,Assessing barotrauma in neutrally and negatively buoyant juvenile salmonids exposed to simulated hydro-turbine,Lab,Live-fish LAB,nadir pressure; mortal-injury index,90,High
+2011_Boyd,2011,Boyd,Efficacy of Single‐Suture Incision Closures in Tagged Juvenile Chinook Salmon Exposed to Simulated Turbine Passage,Lab,Live-fish LAB,nadir pressure; mortal-injury index,80,High
+2012_Brownb,2012,Brown,Quantifying Mortal Injury of Juvenile Chinook Salmon Exposed to Simulated Hydro-Turbine Passage,Lab,Live-fish LAB,RPC; LRP; nadir pressure; mortal-injury index,100,High
+2012_Brown,2012,Brown,Pathways of barotrauma in juvenile salmonids exposed to simulated hydroturbine passage Boyle's law vs. Henry's law,Lab,Live-fish LAB,RPC; LRP; nadir pressure; mortal-injury index,90,High
+2012_Carlsonb,2012,Carlson,The Influence of Tag Presence on the Mortality of Juvenile Chinook Salmon Exposed to Simulated Hydroturbine Passage,Lab,Live-fish LAB,RPC; LRP; nadir pressure; mortal-injury index,100,High
+2012_Carlson,2012,Carlson,Barotrauma in Fish and Barotrauma Metrics,Review,Review,LRP; nadir pressure; mortal-injury index; dose-response model,n/a,
+2012_Colotelo,2012,Colotelo,The effect of rapid and sustained decompression on barotrauma in juvenile brook lamprey and Pacific lamprey,Lab,Live-fish LAB,RPC; nadir pressure; mortal-injury index,80,High
+2012_Normandeau,2012,Normandeau,Estimation of survival of adult American shad passed through Francis and Kaplan turbines,Field,Live-fish FIELD,,75,Medium
+2012_Pflugrath,2012,Pflugrath,Maximum Neutral Buoyancy Depth of Juvenile Chinook Salmon Implications for Survival during Hydroturbine Passage,Lab,Live-fish LAB,mortal-injury index,50,Medium
+2014_Boys,2014,Boys,Downstream fish passage criteria for hydropower and irrigation infrastructure in the Murray–Darling Basin,Guidelines,Guideline,RPC; nadir pressure; dose-response model,n/a,
+2014_Brown,2014,Brown,Understanding Barotrauma in Fish Passing Hydro,Review,Review,RPC; LRP; nadir pressure; mortal-injury index; neutral-buoyancy/acclimation depth,n/a,
+2014_Richmondc,2014,Richmond,Quantifying barotrauma risk to juvenile fish during hydro-turbine passage,Numerical,Modeling (CFD),LRP; nadir pressure; mortal-injury index; neutral-buoyancy/acclimation depth,n/a,
+2014_Trumbo,2014,Trumbo,Improving hydroturbine pressures to enhance salmon passage survival and recovery,Review,Review,RPC; nadir pressure; mortal-injury index; neutral-buoyancy/acclimation depth,n/a,
+2015_Beirao,2015,Beirao,Avaliação e desenvolvimento de método para estudo de barotrauma em peixes em turbinas de usinas hidrelétricas,Review,Review,mortal-injury index; neutral-buoyancy/acclimation depth,n/a,
+2015_Richmond,2015,Richmond,Comparative Study of Barotrauma Risk during Fish Passage through Kaplan Turbines,Numerical,Modeling (CFD),LRP; nadir pressure; mortal-injury index; dose-response model; neutral-buoyancy/acclimation depth,n/a,
+2016_Boys,2016,Boys,A piecewise regression approach for determining biologically relevant hydraulic thresholds for the protection of fishes,Lab,Live-fish LAB,RPC; nadir pressure; mortal-injury index,80,High
+2016_Boysb,2016,Boys,How low can they go with the flow,Lab,Live-fish LAB,RPC; nadir pressure; mortal-injury index,80,High
+2016_Brown,2016,Brown,A preliminary assessment of barotrauma injuries and acclimation studies for three fish species,Lab,Live-fish LAB,RPC; LRP; nadir pressure; mortal-injury index,100,High
+2017_Crew,2017,Crew,Literature Review - Fish mortality risks and international regulations associated with downstream passage through,Review,Review,RPC; LRP; nadir pressure; mortal-injury index,n/a,
+2018_Beirao,2018,Beirao,"Determining barotrauma in the Pictus catfus, Pimelodus pictus experimentally exposed to simulated hydropower turbine",Lab,Live-fish LAB,RPC; nadir pressure; mortal-injury index,80,High
+2018_Boys,2018,Boys,Physical and hydraulic forces experienced by fish passing through three different low-head hydropower turbines,Field,Field exposure (Sensor Fish),RPC; nadir pressure; mortal-injury index,n/a,
+2018_Geist,2018,Geist,Juvenile Chinook Salmon Survival When Exposed to Simulated Dam Passage after Being Implanted with a New Microacoustic,Lab,Live-fish LAB,nadir pressure; mortal-injury index,80,High
+2018_Hou,2018,Hou,A Hydropower Biological Evaluation Toolset (HBET) for Characterizing Hydraulic Conditions and Impacts of,Numerical,Modeling (tool/HBET),LRP; nadir pressure; mortal-injury index,n/a,
+2018_Normandeau,2018,Normandeau,"Biological Fish Injury and Survival Evaluation at the Regulating Outlet of Cougar Dam, Oregon",Field,Live-fish FIELD,,75,Medium
+2018_Pflugrath,2018,Pflugrath,Predicting hydraulic structure-induced barotrauma in Australian fish species,Lab,Live-fish LAB,RPC; nadir pressure; mortal-injury index,80,High
+2018_Silva,2018,Silva,It’s a catfish Novel approaches are needed to study the effects of rapid decompression on benthic species,Review,Review/perspective,RPC; nadir pressure; mortal-injury index; neutral-buoyancy/acclimation depth,n/a,
+2019_Klopries,2019,Klopries,Mortality assessment for adult European eels (Anguilla Anguilla) during turbine passage using CFD modelling,Numerical,Modeling (CFD),RPC; nadir pressure; mortal-injury index; dose-response model,n/a,
+2019_Martinezc,2019,Martinez,In situ characterization of turbine hydraulic environment to support development of fish-friendly hydropower,Field,Field exposure (Sensor Fish),RPC; nadir pressure; mortal-injury index; dose-response model,n/a,
+2019_Meng,2019,Meng,Experimental evaluation of the effect of decompression on crucian carps injury during turbine passage,Lab,Live-fish LAB,nadir pressure,30,Low
+2019_Pflugrath,2019,Pflugrath,American eel state of buoyancy and barotrauma susceptibility,Lab,Live-fish LAB,RPC; nadir pressure; mortal-injury index,80,High
+2019_Pflugrathb,2019,Pflugrath,Over or under Autonomous sensor fish reveals why overshot weirs may be safer than undershot weirs for fish passage,Field,Field exposure (Sensor Fish),RPC; nadir pressure; mortal-injury index; dose-response model,n/a,
+2019_Serkowski,2019,Serkowski,Nadir Pressure Exposure Estimates at the McNeary Dam,Numerical,Modeling (CFD),nadir pressure; dose-response model,n/a,
+2020_Doyle,2020,Doyle,"Gambusia holbrooki Survive Shear Stress, Pressurization and Avoid Blade Strike in a Simulated Pumped Hydroelectric Scheme",Lab,Live-fish LAB,mortal-injury index,60,Medium
+2020_Mueller,2020,Mueller,Assessing turbine passage effects on internal fish injury and delayed mortality using X-ray imaging,Field,Live-fish FIELD,,62,Medium
+2020_Pauwels,2020,Pauwels,"Multi-Species Assessment of Injury, Mortality, and Physical Conditions during Downstream Passage through a Large",Field,Live-fish FIELD,RPC; nadir pressure,88,High
+2020_Pflugrath,2020,Pflugrath,The Susceptibility of Juvenile American Shad to rapid decompression and fluid shear exposure,Lab,Live-fish LAB,RPC; LRP; nadir pressure; mortal-injury index,100,High
+2020_Pflugrathb,2020,Pflugrath,Using transparent fish to observe barotrauma associated with downstream passage through hydropower turbines,Lab,Live-fish LAB,RPC; nadir pressure; mortal-injury index,80,High
+2020_Pflugrathc,2020,Pflugrath,Biological Response Models,Numerical,Modeling/synthesis,RPC; LRP; nadir pressure; mortal-injury index; dose-response model,n/a,
+2020_Reckendorfer,2020,Reckendorfer,Druckverhältnisse in großen Kaplan-Turbinen,Field,Field exposure (pressure),nadir pressure; mortal-injury index,n/a,
+2022_Doyle,2022,Doyle,Survival estimates across five life stages of redfin (Perca fluviatilis) exposed to simulated pumped-storage hydropower,Lab,Live-fish LAB,mortal-injury index,60,Medium
+2022_Mueller,2022,Mueller,Experimental comparison of fish mortality and injuries at innovative and conventional small hydropower plants,Field,Live-fish FIELD,RPC,88,High
+2022_Romero-Gomezc,2022,Romero-Gomez,The bio-hill chart of a Kaplan turbine,Numerical,Modeling (CFD),nadir pressure; mortal-injury index,n/a,
+2023_Cox,2023,Cox,Fish Injury from Movements across Hydraulic Structures,Review,Review,RPC,n/a,
+2023_Kerrb,2023,Kerr,The effects of simulated hydropower turbine rapid decompression on two Neotropical fish species,Lab,Live-fish LAB,RPC; nadir pressure; mortal-injury index,90,High
+2023_Pedron,2023,Pedron,Fish injuries resulting from transient operating conditions in a Brazilian hydropower plant,Field,Live-fish FIELD,mortal-injury index,38,Low
+2024_Canada,2024,Canada,Risk to fish from very low head turbine installations,Guidelines,Guideline,RPC; nadir pressure; mortal-injury index; dose-response model,n/a,
+2025_Huang,2025,Huang,Velocity- and pressure-based metrics for estimating strike injuries during fish passage through hydro turbines,Numerical,Modeling (metrics),nadir pressure; mortal-injury index; dose-response model; neutral-buoyancy/acclimation depth,n/a,
+2025_Martinez,2025,Martinez,A scientific framework for sustainable hydropower with improved fish passage,Review,Review,LRP; nadir pressure; mortal-injury index; neutral-buoyancy/acclimation depth,n/a,
+2025_Schneider,2025,Schneider,A barotrauma chamber for the systematic assessment of barotrauma-related injuries in potamodromous European fish,Lab,Live-fish LAB,nadir pressure,70,Medium
+2025_Zitek,2025,Zitek,Untersuchung von druckänderungsbedingten,Lab,Live-fish LAB,nadir pressure; mortal-injury index,70,Medium
+2026_Zitek,2026,Zitek,Sensitivity of larval and juvenile fish with different swim bladder morphology to barotrauma with a special focus on,Lab,Live-fish LAB,RPC; LRP; nadir pressure; mortal-injury index,100,High

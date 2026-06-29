@@ -1,0 +1,49 @@
+citation_key,year,first_author,title,role,metric,reproducibility_pct,reproducibility_tier
+2000_Coutant,2000,Coutant,Fish Behavior in Relation to Passage through Hydropower Turbines A Review,Review (behaviour/strike),collision/strike (described),,
+2004_Ploskey,2004,Ploskey,Comparison of blade-strike modeling results with empirical data,Modeling (blade-strike model),strike probability; strike velocity; leading-edge geometry; blade-strike model; mutilation rate,,
+2005_Dengb,2005,Deng,Evaluation of blade strike models for estimating the biological peformance of large kaplan hydro turbines,Modeling (blade-strike model),strike probability; leading-edge geometry; blade-strike model; mutilation rate,,
+2007_Dauble,2007,Dauble,"Biological assessment of the advanced turbine design at Wanapum Dam, 2005",live-fish field,strike probability; blade/leading-edge geometry (L/t); mutilation/injury rate,80,High
+2007_Dengb,2007,Deng,Evaluation of blade-strike models for estimating the biological performance of Kaplan turbines,Modeling (blade-strike model),strike probability; particle/DEM collision model; leading-edge geometry; blade-strike model; mutilation rate,,
+2008_Ferguson,2008,Ferguson,Combining turbine blade-strike and life cycle models to assess mitigation strategies for fish passing dams,Modeling (blade-strike + life cycle),strike probability; leading-edge geometry; blade-strike model,,
+2009_Normandeau,2009,Normandeau,Shad movement and mortality,live-fish field,blade/leading-edge geometry (L/t),80,High
+200x_Dixon,200x,Dixon,EPRI-Designing-leading-edges-of-turbine-blades-to-increase-fish-survival-from-blade-strike,live-fish simulated,strike probability; strike velocity; blade/leading-edge geometry (L/t),50,Medium
+2011_Amaralb,2011,Amaral,Designing leading edges of turbine blades to increase fish survival from blade strike,live-fish simulated,strike probability; strike velocity; blade/leading-edge geometry (L/t),50,Medium
+2011_Amaral,2011,Amaral,Estimating total passage survival for fish migrating downstream at hydropower projects-amaral,Review (passage-survival estimation),strike probability; strike velocity; leading-edge geometry; blade-strike model,,
+2011_EPRI,2011,EPRI,Evaluation of Fish Injury and Mortality Associated with Hydrokinetic Turbines,Review (hydrokinetic injury),strike probability; strike velocity; leading-edge geometry; blade-strike model,,
+2012_Normandeau,2012,Normandeau,Estimation of survival of adult American shad passed through Francis and Kaplan turbines,live-fish field,blade/leading-edge geometry (L/t),90,High
+2012_vanEsch,2012,vanEsch,Fish injury and mortality during passage through pumping stations,Modeling (strike+shear CFD),strike probability; strike velocity; leading-edge geometry; blade-strike model; mutilation rate,,
+2013_Richmond,2013,Richmond,Simulating Collisions for Hydrokinetic Turbines,Modeling (collision/DEM),strike probability; particle/DEM collision model; strike velocity; leading-edge geometry; blade-strike model,,
+2014_Richmondb,2014,Richmond,Fish passage through hydropower turbines Simulating blade strike using the discrete element method,Modeling (collision/DEM),strike probability; particle/DEM collision model; strike velocity; leading-edge geometry; blade-strike model,,
+2014_Romero-Gomez,2014,Romero-Gomez,Simulating blade-strike on fish passing through marine hydrokinetic turbines,Modeling (blade-strike CFD),strike probability; particle/DEM collision model; strike velocity; leading-edge geometry; blade-strike model,,
+2014_vanEsch,2014,vanEsch,Validation of a model to predict fish passage mortality in pumping stations,Modeling (strike+shear model),strike probability; strike velocity; leading-edge geometry; blade-strike model; mutilation rate,,
+2017_Bevelheimer,2017,Bevelheimer,An overview of experimental efforts to understand the mechanisms of fish injury and mortality caused by,Review (strike mechanisms),leading-edge geometry; blade-strike model,,
+2018_Amaral,2018,Amaral,Survival of fish passing downstream at a small hydropower facility,live-fish field,strike probability; strike velocity; blade/leading-edge geometry (L/t),40,Low
+2018_Brackley,2018,Brackley,Comparison of damage to live v. euthanized Atlantic salmon Salmo salar smolts from passage through an Archimedean,live-fish field,blade/leading-edge geometry (L/t),80,High
+2018_Normandeau,2018,Normandeau,"Biological Fish Injury and Survival Evaluation at the Regulating Outlet of Cougar Dam, Oregon",live-fish field,survival/injury rate,80,High
+2019_Bevelheimer,2019,Bevelheimer,Mortality and Injury Assessment for Three Species of Fish Exposed to Simulated Turbine Blade Strike,live-fish simulated,strike probability; strike velocity; blade/leading-edge geometry (L/t); dose-response,100,High
+2019_Romero-Gomez,2019,Romero-Gomez,Particle-based evaluations of fish-friendliness in Kaplan turbine,Modeling (particle CFD),strike probability; particle/DEM collision model; strike velocity; leading-edge geometry,,
+2019_Saylor,2019,Saylor,Quantifying mortality and injury susceptibility for two morphologically disparate fishes exposed to simulated turbine,live-fish simulated,strike velocity; blade/leading-edge geometry (L/t),100,High
+2020_Amaral,2020,Amaral,Improving survival injury and mortality of fish struck by blades with slanted blunt leading edges,live-fish simulated,strike probability; strike velocity; blade/leading-edge geometry (L/t),90,High
+2020_Doyle,2020,Doyle,"Gambusia holbrooki Survive Shear Stress, Pressurization and Avoid Blade Strike in a Simulated Pumped Hydroelectric Scheme",live-fish simulated,strike probability; blade/leading-edge geometry (L/t); mutilation/injury rate,90,High
+2020_Mueller,2020,Mueller,Assessing turbine passage effects on internal fish injury and delayed mortality using X-ray imaging,live-fish field,survival/injury rate,80,High
+2020_Pauwels,2020,Pauwels,"Multi-Species Assessment of Injury, Mortality, and Physical Conditions during Downstream Passage through a Large",live-fish field,strike velocity; blade/leading-edge geometry (L/t),90,High
+2020_Pflugrathc,2020,Pflugrath,Biological Response Models,Modeling/synthesis,strike velocity; leading-edge geometry; blade-strike model,,
+2020_Saylor,2020,Saylor,Within and Among Fish Species Differences in Simulated Turbine Blade Strike Mortality Limits on the Use of Surrogacy,live-fish simulated,strike velocity; blade/leading-edge geometry (L/t),100,High
+2020_Tuononen,2020,Tuononen,Extent of injury and mortality arising from entrainment of fish through a Very Low Head hydropower turbine in,live-fish field,survival/injury rate,80,High
+2021_Saylorb,2021,Saylor,Susceptibility of Riverine Fishes to Anthropogenically-linked Trauma Strikes from Hydropower Turbine Blades,live-fish simulated,strike velocity; blade/leading-edge geometry (L/t); dose-response,100,High
+2021_Saylor,2021,Saylor,Creation of a prototype biomimetic fish to better understand impact trauma caused by hydropower turbine blade strikes,Method (biomimetic sensor),strike velocity,,
+2021_Wood,2021,Wood,Leading edge topography of blades–a critical review,Review (leading-edge),strike velocity; leading-edge geometry,,
+2022_Doyle,2022,Doyle,Survival estimates across five life stages of redfin (Perca fluviatilis) exposed to simulated pumped-storage hydropower,live-fish simulated,strike probability; blade/leading-edge geometry (L/t); mutilation/injury rate,90,High
+2022_Meng,2022,Meng,Turbine blade strike tests for evaluation,live-fish simulated,blade/leading-edge geometry (L/t); modeled collision probability,80,High
+2022_Mueller,2022,Mueller,Experimental comparison of fish mortality and injuries at innovative and conventional small hydropower plants,live-fish field,survival/injury rate,90,High
+2022_Pan,2022,Pan,"Analysis, Design, and Validation of a Vaned Diffuser for Improved Fish Friendliness",Modeling (CFD design),strike probability; strike velocity; leading-edge geometry; blade-strike model; mutilation rate,,
+2022_Watsonb,2022,Watson,Safe passage of American Eels through a novel hydropower turbine,live-fish field,strike probability; blade/leading-edge geometry (L/t),80,High
+2022_Watson,2022,Watson,Juvenile Alewife Passage through a Compact Hydropower Turbine,live-fish field,strike velocity; blade/leading-edge geometry (L/t),70,Medium
+2022_Yang,2022,Yang,Effects of operating condition on fish behavior and fish injury in an axial pump,Modeling (CFD collision),particle/DEM collision model; strike velocity; leading-edge geometry; blade-strike model; mutilation rate,,
+2023_Cox,2023,Cox,Fish Injury from Movements across Hydraulic Structures,Review (collision/injury),collision/strike (described),,
+2023_Knott,2023,Knott,Ecological assessment of the world's first shaft hydropower plant,live-fish field,survival/injury rate,80,High
+2023_Pedron,2023,Pedron,Fish injuries resulting from transient operating conditions in a Brazilian hydropower plant,live-fish field,survival/injury rate,70,Medium
+2024_Canada,2024,Canada,Risk to fish from very low head turbine installations,Guideline,strike velocity,,
+2025_Huang,2025,Huang,Velocity- and pressure-based metrics for estimating strike injuries during fish passage through hydro turbines,Modeling (strike metrics),blade-strike model,,
+2025_Zillig,2025,Zillig,Comparison of juvenile white sturgeon blade strike survival through a conventional and a novel hydropower turbine,live-fish field,strike probability; blade/leading-edge geometry (L/t),90,High
+2026_Pan,2026,Pan,A novel fish-friendly-twisted blade towards low-head pumped hydro storage assessment of flow distortion-induced,Modeling (CFD design),strike probability; particle/DEM collision model; strike velocity; leading-edge geometry; blade-strike model; mutilation rate,,
