@@ -1,0 +1,5 @@
+date,rank,first_author,year,reason
+2026-06-30,52,Associates,2005,"Invalid/garbled reference - not a real publication. Mangled cite of Deng et al. 2005 'Evaluation of fish-injury mechanisms during exposure to turbulent shear flow' (CJFAS, 10.1139/F05-091) = already in corpus as 2005_Deng. 'Associates'/'18' are parse artifacts."
+2026-06-30,62,McEwen,1992,"Reviewer marked 'Not valid' (candidate_link). NPCOOl national engineering report; not a valid/locatable publication."
+2026-06-30,63,Bell,1991,"Reviewer marked 'Not valid' (candidate_link). USACE report; superseded/duplicate compendium, not retained."
+2026-06-30,68,Johnson,1972,"Reviewer marked 'Not valid' (candidate_link). USACE report fragment ('high-velocity flow through four-inch nozzle'); not a valid/locatable publication."

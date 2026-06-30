@@ -1,7 +1,7 @@
 **Collision (Blade Strike & Impact) in Downstream Fish Passage  
 Metrics, Protocols & the Reproducibility of Live-Fish Studies**
 
-*A state-of-the-art assessment of 47 collision papers (24 live-fish
+*A state-of-the-art assessment of 53 collision papers (25 live-fish
 studies scored)  
 Companion to the workbook 'Collision\_metrics\_reproducibility.xlsx'*
 
@@ -24,12 +24,12 @@ pinch/grinding contact. We cover both SIMULATED collisions (controlled
 strike rigs) and FIELD-OBSERVED collisions (injuries on fish passed
 through real structures).
 
-Scope. All 228 analysed papers were screened for collision relevance
+Scope. All 255 analysed papers were screened for collision relevance
 (full-text density of blade-strike / strike / collision / impact /
-leading-edge terms plus title screening); 47 collision-relevant papers
-were retained. Of these, 25 are live-fish studies — 10 controlled
-simulated-strike experiments and 15 field-observed passage studies — and
-these form the reproducibility assessment. The remaining 23
+leading-edge terms plus title screening); 53 collision-relevant papers
+were retained. Of these, 25 are live-fish studies — 9 controlled
+simulated-strike experiments and 16 field-observed passage studies — and
+these form the reproducibility assessment. The remaining 28
 (strike-probability / CFD / DEM models, one biomimetic-sensor method,
 reviews and a guideline) are catalogued for metric coverage but not
 scored.
@@ -106,7 +106,7 @@ screws (Brackley; Pauwels), compact and novel fish-friendly turbines
 
 # 5\. Reproducibility assessment
 
-Method. Each of the 24 live-fish studies was scored against a 10-element
+Method. Each of the 25 live-fish studies was scored against a 10-element
 collision reporting checklist (C1-C10; see workbook 'Legend'). Score =
 reported / 10; tiers High (\>=80%), Medium (50-79%), Low (\<50%). All
 ten criteria apply to both simulated and field studies (field studies
@@ -123,12 +123,12 @@ High / 2 Medium / 1 Low. Criterion-by-criterion reporting:
 | C3 Strike velocity / operating condition       | 96%          | Strong     |
 | C4 Impactor geometry / structure               | 96%          | Strong     |
 | C5 Strike location / orientation               | 88%          | Strong     |
-| C8 Holding / recovery & delayed mortality      | 84%          | Strong     |
-| C9 Controls (handling/tag; live-vs-euthanized) | 84%          | Strong     |
-| C2 Sample size (n) per treatment               | 80%          | Adequate   |
-| C7 Injury-scoring protocol                     | 64%          | Gap        |
-| C10 Statistical / dose-response model          | 64%          | Gap        |
-| C6 Collision metric explicitly defined         | 60%          | Major gap  |
+| C8 Holding / recovery & delayed mortality      | 88%          | Strong     |
+| C9 Controls (handling/tag; live-vs-euthanized) | 88%          | Strong     |
+| C2 Sample size (n) per treatment               | 84%          | Strong     |
+| C7 Injury-scoring protocol                     | 68%          | Gap        |
+| C10 Statistical / dose-response model          | 68%          | Gap        |
+| C6 Collision metric explicitly defined         | 56%          | Major gap  |
 
 Collision studies report the physical strike conditions (velocity,
 geometry, location) well, but four in ten do not explicitly define a
@@ -221,7 +221,7 @@ and the statistical model — limiting cross-study synthesis.
   - Standardize live-vs-euthanized and tag-control practice, and always
     report delayed mortality.
 
-*Method note: the 48-paper collision set and per-criterion scores were
+*Method note: the 53-paper collision set and per-criterion scores were
 produced by full-text screening and automated detection of reporting
 elements, then reviewed. Quantitative landmarks attributed to a named
 study were read from that source. Reproducibility tiers index reporting

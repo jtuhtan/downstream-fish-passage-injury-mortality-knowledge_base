@@ -1,7 +1,7 @@
 **Barotrauma in Downstream Fish Passage  
 Metrics, Protocols & the Reproducibility of Live-Fish Studies**
 
-*A state-of-the-art assessment of 61 barotrauma papers (38 live-fish
+*A state-of-the-art assessment of 66 barotrauma papers (39 live-fish
 studies scored)  
 Companion to the workbook 'Barotrauma\_metrics\_reproducibility.xlsx'*
 
@@ -18,13 +18,13 @@ study, how reproducible the live-fish evidence base actually is. We then
 identify the major problems and gaps and propose concrete,
 community-level next steps, including a minimum reporting standard.
 
-Scope. We screened all 228 papers in the passage library for barotrauma
+Scope. We screened all 255 papers in the passage library for barotrauma
 relevance (full-text density of barotrauma / decompression /
 swim-bladder / nadir / pressure-change terms plus title screening) and
-retained 61 barotrauma-relevant papers. Of these, 38 are live-fish
-studies — 31 controlled laboratory (pressure-chamber /
+retained 66 barotrauma-relevant papers. Of these, 39 are live-fish
+studies — 32 controlled laboratory (pressure-chamber /
 simulated-passage) studies and 7 field live-fish passage studies — and
-these 38 form the reproducibility assessment. The remaining 23
+these 39 form the reproducibility assessment. The remaining 27
 (CFD/exposure modeling, reviews, guidelines, and one 1928 swim-bladder
 physiology paper) are catalogued for metric coverage but not scored.
 
@@ -32,7 +32,7 @@ physiology paper) are catalogued for metric coverage but not scored.
 
 | **Role**                                      | **Papers** | **What it provides**                                                  |
 | --------------------------------------------- | ---------- | --------------------------------------------------------------------- |
-| Live-fish LAB (chamber / simulated passage)   | 31         | Controlled dose–response between pressure change and injury/mortality |
+| Live-fish LAB (chamber / simulated passage)   | 32         | Controlled dose–response between pressure change and injury/mortality |
 | Live-fish FIELD (real-structure passage)      | 7          | Injury/mortality of fish passed through turbines/screws/structures    |
 | Modeling / exposure (CFD, Sensor Fish, tools) | 12         | Predicted or measured pressure/nadir exposure (no live fish)          |
 | Reviews / perspectives                        | 8          | Synthesis of mechanisms, metrics and knowledge gaps                   |
@@ -102,7 +102,7 @@ reproducibility rubric accounts for.
 
 # 5\. Reproducibility assessment
 
-Method. Each of the 38 live-fish studies was scored against a 10-element
+Method. Each of the 39 live-fish studies was scored against a 10-element
 reporting checklist (C1–C10; see workbook 'Legend'). The score is
 reported criteria ÷ applicable criteria; tiers are High (≥80%), Medium
 (50–79%), Low (\<50%). For field studies, chamber-acclimation criteria
@@ -117,15 +117,15 @@ reporting rates expose where the gaps are:
 | **Reporting element**                            | **Reported** | **Status**                              |
 | ------------------------------------------------ | ------------ | --------------------------------------- |
 | C8 Holding / recovery & delayed-mortality window | 100%         | Strong                                  |
-| C3 Acclimation pressure / depth (lab)            | 90%          | Strong                                  |
+| C3 Acclimation pressure / depth (lab)            | 91%          | Strong                                  |
 | C1 Species + life stage + body size              | 87%          | Strong                                  |
-| C7 Injury-scoring protocol                       | 84%          | Adequate (but methods not standardized) |
+| C7 Injury-scoring protocol                       | 82%          | Adequate (but methods not standardized) |
 | C5 Exposure pressure / nadir quantified          | 82%          | Adequate                                |
 | C9 Controls (handling / tag / sham)              | 82%          | Adequate                                |
-| C10 Statistical / dose–response model            | 68%          | Gap                                     |
-| C2 Sample size (n) per treatment                 | 63%          | Gap                                     |
-| C6 Pressure-change metric explicitly defined     | 42%          | Major gap                               |
-| C4 Acclimation duration                          | 39%          | Major gap                               |
+| C10 Statistical / dose–response model            | 67%          | Gap                                     |
+| C2 Sample size (n) per treatment                 | 64%          | Gap                                     |
+| C6 Pressure-change metric explicitly defined     | 41%          | Major gap                               |
+| C4 Acclimation duration                          | 41%          | Major gap                               |
 
 The lowest-reported elements — an explicitly defined pressure-change
 metric (42%) and acclimation duration (39%) — are precisely the ones
@@ -223,7 +223,7 @@ following — a checklist journals and funders could require:
   - Resolve the Boyle's-law vs dynamic-decompression question with
     rate-varying experiments.
 
-*Method note: the 61-paper set and per-criterion scores were generated
+*Method note: the 66-paper set and per-criterion scores were generated
 by full-text screening and automated detection of reporting elements,
 then reviewed; 37 quantitative claims are independently verified in the
 companion state-of-the-art report and extraction spreadsheet.

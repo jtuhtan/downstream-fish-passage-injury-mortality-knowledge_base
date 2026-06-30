@@ -3,6 +3,195 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.14.0] - 2026-06-30
+Screened the 13 second-ingest papers into the mechanism deep-dives, so they
+are now treated identically to the rest of the corpus.
+
+### Added / changed
+- **Mechanism registers** now include the 13 new papers where relevant:
+  barotrauma register 61 → **66** (Foye 1965, Davies 1988, Cada 1997, Perry 2001,
+  Koukouvinis 2023); collision register 47 → **53** (Davies, Cada, Bickford 2000,
+  Skalski 2002, Jansen 2007, Koukouvinis); shear register 36 → **39** (Davies, Cada,
+  Koukouvinis).
+- **Reproducibility scorecards** scored the new live-fish studies against the
+  10-criterion checklists: barotrauma 38 → **39** (Foye 1965, lab pressure-survival,
+  70% Medium); collision 24 → **25** (Jansen 2007, field HI-Z passage, 90% High;
+  field split now 9 simulated + **16** field). Shear unchanged (no new live-fish
+  shear study). Per-criterion completeness tables in the three `reviews/*_overview.md`
+  recomputed accordingly.
+- **Three axes** recoded for the 12 newly-screened papers (Koukouvinis was already
+  coded): real `study_environment` / `location_during_passage` / `outcome_timing`
+  replace the placeholder "Not reported" values; gas-supersaturation (Ebel 1969,
+  Bouck 1980) and behavioural (Long 1968, Haro 1998) papers are tagged outside the
+  three mechanism modules with explanatory notes.
+- **Docs synced:** `reviews/cross_mechanism_synthesis.md` mechanism table, the three
+  overviews, `reviews/state_of_the_art.md` study-type table (corrected from the stale
+  229-total to 255: Lab 77 / Field 68 / Numerical 48 / Review 49 / Guidelines 13) and
+  its mechanism-coverage tallies, and the README deep-dive bullets.
+- Regenerated `docs/index.html` and `outputs/`.
+
+### Known issue
+- `data/extraction.csv` contains two rows for `2012_Normandeau` (one Field with a
+  mechanism, one Numerical with a blank mechanism); the second looks like a
+  defective duplicate. Left as-is pending a decision on whether to drop it
+  (would move the analysed count 255 → 254).
+
+## [0.13.0] - 2026-06-30
+Second literature ingest: 13 reviewed PDFs added.
+
+### Added
+- Ingested 13 reviewed PDFs into the collection (downloaded via the
+  `_candidates_to_check` workflow with institutional/OA access): Foye 1965,
+  Long 1968, Ebel 1969, Bouck 1980, Davies 1988, Brookshier 1995, Cada 1997
+  ("Shaken, not stirred" — corrected paper), Haro 1998, Bickford 2000, Perry 2001,
+  Skalski 2002, Jansen 2007, and the Koukouvinis & Anagnostopoulos 2023 review
+  (Energies, 10.3390/en16062661). Filed into study-type folders, added to
+  `corpus.csv` (now **272**) with Mined rows in `extraction.csv` and
+  `axes_exposure_timing.csv` (now **255**). Study-type split: Lab 77 / Field 68 /
+  Numerical 48 / Review 49 / Guidelines 13.
+- Removed the 12 corresponding rows from `data/candidate_additions.csv`
+  (50 → **38**; 8 High remain).
+
+### Notes
+- During folder cleanup, two duplicate downloads (a second Skalski 2002 and a
+  second Haro 1998) were moved to `_candidates_rejected/`; an unidentified scan was
+  resolved to Brookshier 1995. New rows are **Mined** (image-only scans, e.g. Cada
+  and Brookshier, have sparse fields) pending the verification pass.
+- Recovered `candidate_additions.csv` from a OneDrive NUL-corrupted state before
+  editing. Integrity verified: no duplicate keys, no orphan PDFs, all rows resolve.
+- Regenerated `outputs/` and `docs/index.html`.
+
+### Documentation
+- Synced all corpus-level counts to current status across `README.md`, the five
+  `reviews/*.md` (state-of-the-art, barotrauma/collision/shear overviews,
+  cross-mechanism synthesis), `reviews/candidate_additions.md`, and
+  `methodology/07_axes_exposure_and_timing.md`: 255 analysed papers, 272 catalogued,
+  38 candidates (8 High / 8 Medium / 22 Low). Mechanism deep-dive counts
+  (barotrauma 61/38, collision 47/24, shear 36/12) are unchanged — the 13 new
+  papers are not yet screened into the registers/scorecards (pending verification).
+
+## [0.12.5] - 2026-06-30
+Removed 4 invalid candidates flagged in review.
+
+### Removed
+- Deleted 4 candidates from `data/candidate_additions.csv` (54 → 50), logged with
+  reasons in new `data/candidate_removals_log.csv`:
+  - **#52 Associates 2005** — not a real publication; a garbled reference to
+    Deng et al. 2005 (CJFAS 10.1139/F05-091), already in the corpus as `2005_Deng`.
+  - **#62 McEwen 1992**, **#63 Bell 1991**, **#68 Johnson 1972** — reviewer marked
+    "Not valid" (engineering/USACE report fragments; not valid/locatable works).
+
+### Note
+- `docs/index.html` candidate count (and the candidates tab) will refresh to 50 on
+  the next `scripts/build_dashboard.py` run — the rebuild was deferred this pass
+  because the working copy was mid-sync. Data, removal log, and README are current.
+
+## [0.12.4] - 2026-06-30
+Web-searched every remaining candidate for a free PDF.
+
+### Added
+- New `pdf_url` column in `data/candidate_additions.csv`: searched all 54 remaining
+  candidates (regardless of DOI) and recorded the best free/OA or institutional
+  landing link found. **20 of 54** have a usable link (OSTI, USGS, UMass
+  ScholarWorks, UBC cIRcle, SINTEF Brage, MDPI/PMC, J. Exp. Biol. archive, SLU,
+  Oxford); the other **34 have no free source** (offline USACE/NMFS/ETSU/Normandeau
+  reports, theses, books, and non-OA legacy journals) — annotated in `notes`.
+- Staged **Cada 1997 "Shaken, not stirred"** (the correct paper this time, OSTI
+  510550; image-only scan) in `_candidates_to_check/` for review — fixing candidate
+  #3, whose earlier download was the wrong Cada paper.
+
+### Notes
+- Per-item interactive download was not pursued for these (grey-lit yield is low and
+  most are landing pages, not direct PDFs); the recorded links support manual
+  retrieval. Candidate count unchanged at 54 (Cada pending your review/ingest).
+
+## [0.12.3] - 2026-06-30
+Catalogued Montén 1985 (already on disk); concluded the OA download hunt.
+
+### Added
+- **Montén 1985, "Fish and turbines: fish injuries during passage through power
+  station turbines"** — a foundational turbine fish-injury monograph that was
+  already in the library as a chapter-by-chapter zip
+  (`Misc/1985_Monten…zip`). Merged the 18 chapter PDFs (in order) into one file,
+  filed it in `Review/`, and catalogued it: `corpus.csv` (now 260), Mined rows in
+  `extraction.csv` (243) + `axes_exposure_timing.csv` (243). Removed the duplicate
+  candidate rows #37/#66.
+
+### Notes
+- OA download hunt concluded: of the original 72 candidates, 15 are now in the
+  collection and 3 were rejected; **54 remain**, overwhelmingly grey literature
+  (old USACE/NMFS/ETSU reports, theses, conference proceedings) not freely online,
+  plus a few at non-subscribed publishers. Five still carry DOIs (Rummer 2005,
+  Mathur 1996, Cada 1990, Fjeldstad 2018, Bouck 1980) and keep their
+  `candidate_link`/`doi_or_url` for manual retrieval.
+- Regenerated `outputs/` and `docs/index.html`.
+
+## [0.12.2] - 2026-06-30
+Ingested 3 more candidates; fixed a study-type tagging bug.
+
+### Added
+- Ingested 3 reviewed candidates into the collection (all Field, via Oxford
+  institutional access): **Muir 2001** (bypass/turbine/spillway survival, Snake
+  River), **McNabb 2003** (Archimedes lifts & Hidrostal pump, Red Bluff),
+  **Backman 2002** (gas-bubble-trauma incidence, Columbia River). Filed in
+  `Field/`, added to `corpus.csv` (now 259), with Mined rows in `extraction.csv`
+  (now 242) and `axes_exposure_timing.csv`. Removed from the candidate list (now 56).
+
+### Fixed
+- The extraction script tagged `Category` from the (temp) folder name, so the 14
+  candidates ingested in 0.12.0/0.12.2 were mis-tagged ("ingest"/"ing2") and
+  dropped out of the study-type chart. Corrected all 14 `Category` values from the
+  corpus `study_type`; study-type counts are now Lab 75 / Field 63 / Numerical 48 /
+  Review 43 / Guidelines 13 = 242. Noted the post-extraction Category-sync step in
+  `methodology/09_adding_literature.md`.
+
+- Regenerated `outputs/` and `docs/index.html`.
+
+## [0.12.1] - 2026-06-30
+Replaced the erroneous `2008_Deng` record with the Carlson paper.
+
+### Changed
+- `2008_Deng` ("Data overview of sensor data", Misc) was a wrong/mislabelled
+  record; replaced it with **`2008_Carlson`** — "Data overview for Sensor Fish
+  samples acquired at Ice Harbor, John Day, and Bonneville II dams in 2005, 2006,
+  and 2007" (PNNL-17398). Swapped the PDF (the wrong file moved to
+  `_candidates_rejected/`), updated `data/corpus.csv`, and removed Carlson from
+  `data/candidate_additions.csv` (now 59; 9 High). Catalogued total unchanged (256);
+  it remains a `Misc` data-overview (not in the analysed set) pending screening.
+- `.gitignore`: exclude stale working leftovers (`data/*.csv.tmp`,
+  `candidate_additions_enriched.csv`) — locked locally; delete when convenient.
+
+## [0.12.0] - 2026-06-30
+First literature ingest from the candidate list (11 works added).
+
+### Added
+- Ingested **11** reviewed candidate PDFs into the collection: Weitkamp 1980,
+  Coutant 1997, Mathur 2000, Turnpenny 2000 (Risk Assessment report), Killgore
+  2001, Humphries 2002, Larinier 2008, Calles 2010, Baumgartner 2012, Bracken
+  2013, Calles 2013. Each was renamed to the repo convention, filed in its
+  study-type folder, and added to `data/corpus.csv` (now 256) with a `Mined`
+  row in `data/extraction.csv` (now 239) and a `Mined` placeholder in
+  `data/axes_exposure_timing.csv`. PDFs are not committed (copyright).
+- Downloaded via the `_candidates_to_check` → review → `_candidates_accepted`
+  workflow (Chrome + institutional access for Wiley/Springer/Oxford; OA for
+  reports/KMAE/EPA/OSTI). Reviewed with `_candidates_to_check/REVIEW_CHECKLIST.csv`.
+
+### Changed / removed
+- `data/candidate_additions.csv`: removed the 11 ingested rows and 2 out-of-scope
+  rows (Larinier 2002 — upstream passage; Paish 2002 — no downstream-passage
+  content) → 60 candidates remain. Annotated #3 Cada (the OA link resolved to a
+  different, already-held paper = 1999_Cada "Exploring shear stress…"; rejected)
+  and put #1 Carlson **on hold** as a probable duplicate of existing `2008_Deng`
+  "Data overview of sensor data" (pending confirmation).
+- Regenerated `outputs/` and `docs/index.html`.
+
+### Pending (next pass)
+- Mechanism **registers / reproducibility scorecards** were not scored for the 11
+  new papers, and their extraction + axes rows are `Mined` — these are completed
+  via the verification protocol (`tools/verification/verify.py`,
+  `methodology/08`). Resolve the Carlson-vs-Deng duplicate; obtain the true
+  "Shaken, not stirred" (Cada #3).
+
 ## [0.11.0] - 2026-06-30
 Offline verification tool + reset all rows to Mined.
 

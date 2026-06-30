@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stressor-Response Explorer - Downstream Fish Passage</title>
+<style>
+:root{--bg:#fff;--fg:#1b2330;--mut:#5b6675;--line:#e3e8ef;--accent:#2563eb;--chip:#eef2f7}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--fg);background:var(--bg)}
+header{padding:18px 22px;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:19px}
+.sub{color:var(--mut);font-size:12.5px;margin-top:4px}
+.wrap{padding:16px 22px;max-width:1180px;margin:0 auto}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 16px}
+.filters label{display:flex;flex-direction:column;font-size:11px;color:var(--mut);gap:3px}
+select{padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:13px;min-width:150px;background:#fff}
+h2{font-size:15px;margin:22px 0 8px;border-bottom:1px solid var(--line);padding-bottom:5px}
+.note{background:#fff8e6;border:1px solid #f0d98a;border-radius:8px;padding:9px 12px;font-size:12.5px;color:#6b5600;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+th{background:var(--chip);position:sticky;top:0;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px}
+td.small{color:var(--mut);font-size:11.5px}
+.tag{display:inline-block;padding:1px 6px;border-radius:10px;background:var(--chip);font-size:11px}
+.v{font-weight:600}
+.mined{color:#9a6a00}.verified{color:#0a7a2f}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0;font-size:11.5px}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.lane{font-size:11.5px}
+.counts{color:var(--mut);font-size:12px;margin:4px 0 0}
+.eqform{font-family:ui-monospace,Consolas,monospace;background:#f6f8fa;padding:1px 5px;border-radius:5px}
+footer{color:var(--mut);font-size:11.5px;padding:14px 22px;border-top:1px solid var(--line);margin-top:24px}
+</style></head><body>
+<header>
+  <h1>Stressor-Response Explorer &mdash; Downstream Fish Passage Injury &amp; Mortality</h1>
+  <div class="sub" id="sub"></div>
+</header>
+<div class="wrap">
+  <div class="note"><b>Comparability rule:</b> thresholds and points are only comparable <b>within one metric</b>.
+  Each metric (e.g. <code>rpc_AN = P<sub>A</sub>/P<sub>N</sub></code> vs <code>rpc_EA = P<sub>N</sub>/P<sub>A</sub></code>) gets its
+  <b>own lane and axis</b> below &mdash; never read across lanes. Demonstrator data (mostly <span class="mined">Mined</span>); verify against source before use.</div>
+
+  <div class="filters" id="filters"></div>
+
+  <h2>Within-metric comparator (numeric thresholds &amp; points)</h2>
+  <div class="legend" id="legend"></div>
+  <div id="plot"></div>
+  <div class="counts" id="plotcount"></div>
+
+  <h2>Relationships <span class="counts" id="relcount"></span></h2>
+  <div style="max-height:430px;overflow:auto;border:1px solid var(--line);border-radius:8px">
+    <table id="reltable"></table>
+  </div>
+
+  <h2>Equations registry</h2>
+  <div style="max-height:360px;overflow:auto;border:1px solid var(--line);border-radius:8px">
+    <table id="eqtable"></table>
+  </div>
+
+  <h2>Coverage</h2>
+  <div id="coverage" class="counts"></div>
+</div>
+<footer id="foot"></footer>
+
+<script>
+var ROWS = [{"relationship_id": "Brown2009_r01", "citation_key": "Brown2009", "mechanism": "barotrauma", "predictor": "nadir_p", "predictor_value": "", "predictor_range": "8.2-19.2", "predictor_unit": "kPa", "response": "mortality;injury", "response_value": "", "response_unit": "%", "response_uncertainty": "", "relationship_type": "threshold", "effect_direction": "increases", "model_or_value": "barotrauma injury & mortality at turbine nadir 8.2-19.2 kPa", "species": "Chinook salmon (Oncorhynchus tshawytscha)", "life_stage": "juvenile", "fish_size": "", "acclimation": "depth-acclimated (varied)", "structure_type": "Kaplan (simulated)", "structure_detail": "", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "immediate+latent_48h", "source_location": "Methods/Results p.6", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "mortal-injury endpoint per McKinstry metric; 48-h holding"}, {"relationship_id": "Brown2009_r02", "citation_key": "Brown2009", "mechanism": "barotrauma", "predictor": "rpc_AN", "predictor_value": "", "predictor_range": "", "predictor_unit": "ratio_PA/PN", "response": "injury_hemorrhage", "response_value": "88-93", "response_unit": "%", "response_uncertainty": "", "relationship_type": "point", "effect_direction": "increases", "model_or_value": "caudal-vein rupture hemorrhage in 88% yearling / 93% subyearling", "species": "Chinook salmon (Oncorhynchus tshawytscha)", "life_stage": "juvenile", "fish_size": "", "acclimation": "depth-acclimated", "structure_type": "Kaplan (simulated)", "structure_detail": "", "operating_point": "", "geometry": "", "n": "25-41", "exposure_pathway": "lab", "outcome_timing": "immediate", "source_location": "Results p.9", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "histology; RPC = acclimation/nadir convention"}, {"relationship_id": "Brown2012_r01", "citation_key": "Brown2012", "mechanism": "barotrauma", "predictor": "lrp", "predictor_value": "", "predictor_range": "", "predictor_unit": "ln(PA/PN)", "response": "injury_mortal", "response_value": "", "response_unit": "probability", "response_uncertainty": "", "relationship_type": "curve", "effect_direction": "increases", "model_or_value": "probability of mortal injury rises with LRP (logistic) -> EQ Pflugrath/McKinstry", "species": "Chinook salmon (Oncorhynchus tshawytscha)", "life_stage": "juvenile", "fish_size": "95-165 mm", "acclimation": "depth-acclimated", "structure_type": "Kaplan (simulated)", "structure_detail": "MABL chamber", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "immediate+latent", "source_location": "Fig 3 p.7", "extraction_method": "digitized_figure", "digitized_points_file": "", "confidence": "Mined", "notes": "point-level curve pending digitization (figure_digitization.md)"}, {"relationship_id": "Pflugrath2018_r01", "citation_key": "Pflugrath2018", "mechanism": "barotrauma", "predictor": "lrp", "predictor_value": "", "predictor_range": "", "predictor_unit": "ln(PA/PN)", "response": "injury_mortal", "response_value": "", "response_unit": "probability", "response_uncertainty": "", "relationship_type": "curve", "effect_direction": "increases", "model_or_value": "P(mortal injury) increases with ln(RPC); logistic per species -> equations.csv", "species": "Australian bass (Macquaria novemaculeata)", "life_stage": "juvenile", "fish_size": "", "acclimation": "depth-acclimated", "structure_type": "weir/dam (simulated)", "structure_detail": "", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "immediate", "source_location": "Fig 3 p.6", "extraction_method": "digitized_figure", "digitized_points_file": "", "confidence": "Mined", "notes": "recommend keeping RPC below ~3 for Australian bass"}, {"relationship_id": "Pflugrath2018_r02", "citation_key": "Pflugrath2018", "mechanism": "barotrauma", "predictor": "lrp", "predictor_value": "", "predictor_range": "", "predictor_unit": "ln(PA/PN)", "response": "injury", "response_value": "", "response_unit": "probability", "response_uncertainty": "", "relationship_type": "curve", "effect_direction": "increases", "model_or_value": "P(injury) increases with ln(RPC); logistic per species", "species": "carp gudgeon (Hypseleotris spp.);Murray cod (Maccullochella peelii);silver perch (Bidyanus bidyanus)", "life_stage": "juvenile", "fish_size": "", "acclimation": "depth-acclimated", "structure_type": "weir/dam (simulated)", "structure_detail": "", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "immediate", "source_location": "Fig 2 p.5", "extraction_method": "digitized_figure", "digitized_points_file": "", "confidence": "Mined", "notes": "four-species comparison; curves differ by species"}, {"relationship_id": "Pflugrath2018_r03", "citation_key": "Pflugrath2018", "mechanism": "barotrauma", "predictor": "structure_type", "predictor_value": "", "predictor_range": "", "predictor_unit": "categorical", "response": "injury_swimbladder_rupture", "response_value": "", "response_unit": "", "response_uncertainty": "", "relationship_type": "categorical", "effect_direction": "nonmonotonic", "model_or_value": "silver perch has a LOWER swim-bladder-rupture threshold than Murray cod", "species": "silver perch (Bidyanus bidyanus);Murray cod (Maccullochella peelii)", "life_stage": "juvenile", "fish_size": "", "acclimation": "depth-acclimated", "structure_type": "weir/dam (simulated)", "structure_detail": "", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "immediate", "source_location": "Discussion p.? ", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "species susceptibility comparison (physoclists)"}, {"relationship_id": "Pflugrath2018_r04", "citation_key": "Pflugrath2018", "mechanism": "barotrauma", "predictor": "rpc_AN", "predictor_value": "2.0", "predictor_range": "", "predictor_unit": "ratio_PA/PN", "response": "mortality", "response_value": "50", "response_unit": "%", "response_uncertainty": "", "relationship_type": "threshold", "effect_direction": "increases", "model_or_value": "Chinook mortality reported at RPC ~2 (= 50% pressure reduction)", "species": "Chinook salmon (Oncorhynchus tshawytscha)", "life_stage": "juvenile", "fish_size": "", "acclimation": "depth-acclimated", "structure_type": "turbine (simulated)", "structure_detail": "", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "immediate", "source_location": "Intro p.1", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "cites Brown et al.; RPC = acclimation/nadir"}, {"relationship_id": "Boys2016_r01", "citation_key": "Boys2016", "mechanism": "barotrauma", "predictor": "rpc_EA", "predictor_value": "0.4", "predictor_range": "", "predictor_unit": "ratio_PN/PA", "response": "injury_hemorrhage", "response_value": "", "response_unit": "", "response_uncertainty": "", "relationship_type": "threshold", "effect_direction": "increases", "model_or_value": "larval haemorrhage increases significantly once RPC(E/A) falls below ~0.4", "species": "silver perch (Bidyanus bidyanus);golden perch (Macquaria ambigua);Murray cod (Maccullochella peelii)", "life_stage": "larva", "fish_size": "", "acclimation": "acclimated", "structure_type": "weir/dam (simulated)", "structure_detail": "barometric chamber", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "immediate", "source_location": "Results/Fig p.4-5", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "INVERSE RPC definition (exposure/acclimation); = pressure falling below 40% of acclimation"}, {"relationship_id": "Boys2016_r02", "citation_key": "Boys2016", "mechanism": "barotrauma", "predictor": "rpc_EA", "predictor_value": "", "predictor_range": "full range", "predictor_unit": "ratio_PN/PA", "response": "hatching_success", "response_value": "", "response_unit": "", "response_uncertainty": "", "relationship_type": "categorical", "effect_direction": "none", "model_or_value": "egg hatching success UNAFFECTED by RPC (no dose-response)", "species": "silver perch (Bidyanus bidyanus);golden perch (Macquaria ambigua)", "life_stage": "egg", "fish_size": "", "acclimation": "acclimated", "structure_type": "weir/dam (simulated)", "structure_detail": "barometric chamber", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "latent", "source_location": "Results p.2; Fig 1", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "null result: golden perch chi2=0.001 P=0.993; silver perch P=0.41"}, {"relationship_id": "Boys2016_r03", "citation_key": "Boys2016", "mechanism": "barotrauma", "predictor": "rpc_EA", "predictor_value": "", "predictor_range": "", "predictor_unit": "ratio_PN/PA", "response": "mortality_shortterm", "response_value": "", "response_unit": "", "response_uncertainty": "", "relationship_type": "qualitative", "effect_direction": "none", "model_or_value": "little evidence that decompression level increased short-term larval mortality", "species": "silver perch (Bidyanus bidyanus);golden perch (Macquaria ambigua);Murray cod (Maccullochella peelii)", "life_stage": "larva", "fish_size": "", "acclimation": "acclimated", "structure_type": "weir/dam (simulated)", "structure_detail": "", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "latent", "source_location": "Results p.5", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "injury observed but weak link to short-term death"}, {"relationship_id": "Stephenson2010_r01", "citation_key": "Stephenson2010", "mechanism": "barotrauma", "predictor": "nadir_p", "predictor_value": "", "predictor_range": "", "predictor_unit": "kPa", "response": "injury_emboli;injury_swimbladder_rupture;injury_hemorrhage;mortality", "response_value": "", "response_unit": "%", "response_uncertainty": "", "relationship_type": "curve", "effect_direction": "increases", "model_or_value": "% emboli/rupture/hemorrhage/mortality increase as nadir falls; deviance: nadir ~15-23%", "species": "Chinook salmon (Oncorhynchus tshawytscha)", "life_stage": "juvenile", "fish_size": "", "acclimation": "neutral & negative buoyancy", "structure_type": "Kaplan (simulated)", "structure_detail": "MABL chamber", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "immediate", "source_location": "Fig 3; Table 1 p.4-5", "extraction_method": "digitized_figure", "digitized_points_file": "", "confidence": "Mined", "notes": "nadir + buoyancy main effects; buoyancy ~6% deviance"}, {"relationship_id": "Stephenson2010_r02", "citation_key": "Stephenson2010", "mechanism": "barotrauma", "predictor": "swimbladder", "predictor_value": "", "predictor_range": "", "predictor_unit": "categorical", "response": "injury;mortality", "response_value": "", "response_unit": "", "response_uncertainty": "", "relationship_type": "categorical", "effect_direction": "increases", "model_or_value": "negatively buoyant fish injured more than neutrally buoyant at same nadir", "species": "Chinook salmon (Oncorhynchus tshawytscha)", "life_stage": "juvenile", "fish_size": "", "acclimation": "neutral vs negative buoyancy", "structure_type": "Kaplan (simulated)", "structure_detail": "", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "immediate", "source_location": "Table 1 p.5", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "buoyancy state modifies barotrauma susceptibility"}, {"relationship_id": "Pflugrath2012_r01", "citation_key": "Pflugrath2012", "mechanism": "barotrauma", "predictor": "accl_depth", "predictor_value": "", "predictor_range": "", "predictor_unit": "m", "response": "buoyancy_max_neutral_depth", "response_value": "", "response_unit": "m", "response_uncertainty": "", "relationship_type": "threshold", "effect_direction": "nonmonotonic", "model_or_value": "a maximum neutral-buoyancy depth exists; beyond it fish are negatively buoyant", "species": "Chinook salmon (Oncorhynchus tshawytscha)", "life_stage": "juvenile", "fish_size": "", "acclimation": "", "structure_type": "n/a", "structure_detail": "", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "n/a", "source_location": "Results/Methods", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "exact MNBD value to verify from paper; sets the worst-case acclimation for barotrauma"}, {"relationship_id": "Colotelo2012_r01", "citation_key": "Colotelo2012", "mechanism": "barotrauma", "predictor": "accl_p", "predictor_value": "146.2", "predictor_range": "", "predictor_unit": "kPa", "response": "injury;mortality", "response_value": "low", "response_unit": "", "response_uncertainty": "", "relationship_type": "point", "effect_direction": "none", "model_or_value": "physostome lamprey ammocoetes highly tolerant of rapid decompression (minimal barotrauma)", "species": "western brook lamprey (Lampetra richardsoni);Pacific lamprey (Entosphenus tridentatus)", "life_stage": "larva_ammocoete", "fish_size": "80-124 mm", "acclimation": "4.6 m (146.2 kPa)", "structure_type": "turbine (simulated)", "structure_detail": "hyper/hypobaric chamber", "operating_point": "", "geometry": "", "n": "15-20", "exposure_pathway": "lab", "outcome_timing": "immediate", "source_location": "Methods p.? ", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "physostome tolerance contrasts physoclist sensitivity"}, {"relationship_id": "XCUT_r01", "citation_key": "Colotelo2012;Boys2016;Brown2012", "mechanism": "barotrauma", "predictor": "swimbladder", "predictor_value": "", "predictor_range": "", "predictor_unit": "categorical", "response": "injury;mortality", "response_value": "", "response_unit": "", "response_uncertainty": "", "relationship_type": "categorical", "effect_direction": "decreases", "model_or_value": "physostomes (lamprey/eel/some cyprinids) markedly more barotrauma-tolerant than physoclists (salmonids/perch)", "species": "multiple", "life_stage": "mixed", "fish_size": "", "acclimation": "", "structure_type": "", "structure_detail": "", "operating_point": "", "geometry": "", "n": "", "exposure_pathway": "lab", "outcome_timing": "immediate", "source_location": "cross-study", "extraction_method": "reported", "digitized_points_file": "", "confidence": "Mined", "notes": "cross-cutting susceptibility axis; physostome vs physoclist"}];
+var EQS  = [{"equation_id": "Pflugrath2018_eq1", "citation_key": "Pflugrath2018", "origin_citation_key": "Brown2009", "name": "Ratio of pressure change (RPC)", "mechanism": "barotrauma", "predicts": "barotrauma dose", "form": "empirical-fit", "equation": "RPC = PA / PN", "variables": "PA: acclimation pressure [kPa]; PN: nadir (exposure) pressure [kPa]", "parameters": "", "domain_of_validity": ">=1 (1 = no change); depth-acclimated fish", "response_metric": "dimensionless dose", "source_location": "Methods", "validation": "n/a", "confidence": "Verified", "notes": "primary transferable barotrauma dose (acclimation/nadir)"}, {"equation_id": "Boys2016_eq1", "citation_key": "Boys2016", "origin_citation_key": "", "name": "RPC (exposure/acclimation convention)", "mechanism": "barotrauma", "predicts": "barotrauma dose", "form": "empirical-fit", "equation": "RPC(E/A) = PN / PA", "variables": "PN: exposure/nadir pressure [kPa]; PA: acclimation pressure [kPa]", "parameters": "", "domain_of_validity": "0-1 (1 = no change; lower = more decompression)", "response_metric": "dimensionless dose", "source_location": "Methods; Table 2", "validation": "n/a", "confidence": "Verified", "notes": "INVERSE of Pflugrath/Brown RPC; never pool across the two conventions"}, {"equation_id": "Brown2012_eq1", "citation_key": "Brown2012", "origin_citation_key": "Boyle 1662", "name": "Boyle's-law barotrauma (volume change)", "mechanism": "barotrauma", "predicts": "swim-bladder gas-volume change", "form": "mechanistic", "equation": "PA*VA = PN*VN", "variables": "PA: acclimation pressure [kPa]; VA: gas volume at acclimation; PN: nadir pressure [kPa]; VN: gas volume at nadir", "parameters": "isothermal", "domain_of_validity": "rapid decompression; physoclist & physostome swim bladder", "response_metric": "relative gas-volume expansion", "source_location": "Eq p.5", "validation": "partial (static; ignores dynamic exsolution)", "confidence": "Mined", "notes": "Brown 2012 contrasts Boyle's vs Henry's-law/dynamic effects"}, {"equation_id": "Brown2012_eq2", "citation_key": "Brown2012", "origin_citation_key": "McKinstry2007", "name": "Log ratio of pressure (LRP)", "mechanism": "barotrauma", "predicts": "barotrauma dose", "form": "empirical-fit", "equation": "LRP = ln(PA / PN)", "variables": "PA: acclimation pressure [kPa]; PN: nadir pressure [kPa]", "parameters": "", "domain_of_validity": "depth-acclimated fish", "response_metric": "dimensionless dose", "source_location": "Eq p.5", "validation": "n/a", "confidence": "Mined", "notes": "linearises the dose for logistic injury models"}, {"equation_id": "Pflugrath2018_eq2", "citation_key": "Pflugrath2018", "origin_citation_key": "", "name": "Logistic (mortal) injury vs ln(RPC)", "mechanism": "barotrauma", "predicts": "probability of (mortal) injury", "form": "statistical(logistic GLM)", "equation": "logit(p) = b0 + b1*ln(RPC)", "variables": "p: probability of injury/mortal injury; RPC: PA/PN", "parameters": "b0, b1 per species (see source Fig 2-3 / Table)", "domain_of_validity": "tested ln(RPC) range; bass, carp gudgeon, Murray cod, silver perch", "response_metric": "probability of injury / mortal injury", "source_location": "Fig 2-3 p.5-6", "validation": "fit to trial data with 95% CI", "confidence": "Mined", "notes": "per-species coefficients to be extracted/verified"}, {"equation_id": "McKinstry2007_eq1", "citation_key": "McKinstry2007", "origin_citation_key": "", "name": "Mortal-injury metric (AIC-selected)", "mechanism": "barotrauma", "predicts": "mortal-injury classification", "form": "statistical(logistic+AIC)", "equation": "fish = mortally injured if any of 8 injury types present; model selected by AIC = 2k - 2 ln(L)", "variables": "k: number of parameters; L: likelihood; 8 binary injury indicators", "parameters": "AIC selects the predictive injury set", "domain_of_validity": "depth-acclimated physostomous juvenile Chinook", "response_metric": "binary mortal-injury endpoint", "source_location": "Eq (1) p.12", "validation": "AIC over candidate models", "confidence": "Mined", "notes": "defines the response variable reused across the PNNL/WA barotrauma studies"}];
+var META = {"built": "2026-06-30 13:22 UTC", "n_rel": 15, "n_eq": 6, "n_num": 3, "issues": 0};
+var PALETTE = ["#2563eb","#dc2626","#059669","#d97706","#7c3aed","#0891b2","#be185d","#65a30d","#475569","#ea580c"];
+
+function tokens(s){ return (s||"").split(";").map(function(x){return x.trim();}).filter(Boolean); }
+function uniqSorted(arr){ var s={}; arr.forEach(function(x){ if(x) s[x]=1; }); return Object.keys(s).sort(); }
+function speciesList(){ var a=[]; ROWS.forEach(function(r){ a=a.concat(tokens(r.species)); }); return uniqSorted(a); }
+function colorFor(sp){ var l=speciesList(); var i=l.indexOf(sp); return PALETTE[(i<0?0:i)%PALETTE.length]; }
+
+var FILT={mechanism:"",predictor:"",response:"",species:"",confidence:""};
+
+function buildFilters(){
+  var defs=[
+    ["mechanism","Mechanism",uniqSorted(ROWS.map(function(r){return r.mechanism;}))],
+    ["predictor","Predictor (metric)",uniqSorted(ROWS.map(function(r){return r.predictor;}))],
+    ["response","Response",uniqSorted([].concat.apply([],ROWS.map(function(r){return tokens(r.response);})))],
+    ["species","Species",speciesList()],
+    ["confidence","Confidence",uniqSorted(ROWS.map(function(r){return r.confidence;}))]
+  ];
+  var html="";
+  defs.forEach(function(d){
+    html+='<label>'+d[1]+'<select data-k="'+d[0]+'"><option value="">all</option>';
+    d[2].forEach(function(o){ html+='<option>'+o+'</option>'; });
+    html+='</select></label>';
+  });
+  var f=document.getElementById("filters"); f.innerHTML=html;
+  f.querySelectorAll("select").forEach(function(sel){
+    sel.addEventListener("change",function(){ FILT[sel.getAttribute("data-k")]=sel.value; render(); });
+  });
+}
+
+function match(r){
+  if(FILT.mechanism && r.mechanism!==FILT.mechanism) return false;
+  if(FILT.predictor && r.predictor!==FILT.predictor) return false;
+  if(FILT.confidence && r.confidence!==FILT.confidence) return false;
+  if(FILT.response && tokens(r.response).indexOf(FILT.response)<0) return false;
+  if(FILT.species && tokens(r.species).indexOf(FILT.species)<0) return false;
+  return true;
+}
+
+function esc(s){ return (s==null?"":String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function renderPlot(rows){
+  var pts=rows.filter(function(r){ return r.predictor_value!=="" && !isNaN(parseFloat(r.predictor_value)); });
+  var lanesMap={};
+  pts.forEach(function(r){ var k=r.predictor+"  ["+(r.predictor_unit||"?")+"]"; (lanesMap[k]=lanesMap[k]||[]).push(r); });
+  var lanes=Object.keys(lanesMap).sort();
+  var W=1080, padL=210, padR=70, laneH=46, top=10;
+  var H=top+lanes.length*laneH+20;
+  var svg='<svg width="100%" viewBox="0 0 '+W+' '+H+'" font-size="11" font-family="inherit">';
+  lanes.forEach(function(lk,li){
+    var arr=lanesMap[lk];
+    var vals=arr.map(function(r){return parseFloat(r.predictor_value);});
+    var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals);
+    if(mn===mx){ mn=mn-1; mx=mx+1; }
+    var y=top+li*laneH+laneH/2;
+    var x0=padL, x1=W-padR;
+    svg+='<text x="6" y="'+(y+3)+'" fill="#5b6675">'+esc(lk)+'</text>';
+    svg+='<line x1="'+x0+'" y1="'+y+'" x2="'+x1+'" y2="'+y+'" stroke="#cdd5e0"/>';
+    svg+='<text x="'+x0+'" y="'+(y+16)+'" fill="#9aa4b2">'+mn+'</text>';
+    svg+='<text x="'+x1+'" y="'+(y+16)+'" text-anchor="end" fill="#9aa4b2">'+mx+'</text>';
+    arr.forEach(function(r){
+      var v=parseFloat(r.predictor_value);
+      var x=x0+(x1-x0)*((v-mn)/(mx-mn));
+      var sp=tokens(r.species)[0]||"multiple";
+      var t=r.relationship_id+"  |  "+r.predictor+"="+r.predictor_value+" "+(r.predictor_unit||"")
+            +"  ->  "+r.response+(r.response_value?(" = "+r.response_value+(r.response_unit||"")):"")
+            +"  |  "+sp+"  |  "+r.citation_key+" ("+r.source_location+")";
+      svg+='<circle cx="'+x.toFixed(1)+'" cy="'+y+'" r="6" fill="'+colorFor(sp)+'" fill-opacity="0.82" stroke="#fff"><title>'+esc(t)+'</title></circle>';
+    });
+  });
+  svg+='</svg>';
+  if(!lanes.length) svg='<div class="counts">No numeric predictor points in the current filter (many rows are curves/categorical &mdash; see table).</div>';
+  document.getElementById("plot").innerHTML=svg;
+  document.getElementById("plotcount").textContent=pts.length+" numeric point(s) across "+lanes.length+" metric lane(s). Hover a dot for details.";
+  var sps=uniqSorted([].concat.apply([],pts.map(function(r){return tokens(r.species);})));
+  document.getElementById("legend").innerHTML=sps.map(function(s){
+    return '<span><i class="dot" style="background:'+colorFor(s)+'"></i>'+esc(s)+'</span>';
+  }).join("");
+}
+
+function renderTable(rows){
+  var cols=[["citation_key","Study"],["predictor","Predictor"],["pv","Value"],["response","Response"],
+            ["relationship_type","Type"],["effect_direction","Effect"],["species","Species"],
+            ["structure_type","Structure"],["confidence","Conf."],["source_location","Source"],["notes","Notes"]];
+  var h="<tr>"+cols.map(function(c){return "<th>"+c[1]+"</th>";}).join("")+"</tr>";
+  rows.forEach(function(r){
+    var pv=(r.predictor_value||r.predictor_range||"")+" "+(r.predictor_unit||"");
+    var resp=r.response+(r.response_value?(" = "+r.response_value+(r.response_unit||"")):"");
+    var cc=r.confidence==="Verified"?"verified":"mined";
+    h+="<tr>"
+      +"<td>"+esc(r.citation_key)+"</td>"
+      +"<td>"+esc(r.predictor)+"</td>"
+      +"<td class='v'>"+esc(pv.trim())+"</td>"
+      +"<td>"+esc(resp)+"</td>"
+      +"<td><span class='tag'>"+esc(r.relationship_type)+"</span></td>"
+      +"<td>"+esc(r.effect_direction)+"</td>"
+      +"<td class='small'>"+esc(r.species)+"</td>"
+      +"<td class='small'>"+esc(r.structure_type)+"</td>"
+      +"<td class='"+cc+"'>"+esc(r.confidence)+"</td>"
+      +"<td class='small'>"+esc(r.source_location)+"</td>"
+      +"<td class='small'>"+esc(r.notes)+"</td></tr>";
+  });
+  document.getElementById("reltable").innerHTML=h;
+  document.getElementById("relcount").textContent=rows.length+" shown / "+ROWS.length+" total";
+}
+
+function renderEqs(){
+  var cols=[["name","Model"],["predicts","Predicts"],["form","Form"],["equation","Equation"],
+            ["domain_of_validity","Domain of validity"],["citation_key","Source"],["confidence","Conf."],["notes","Notes"]];
+  var h="<tr>"+cols.map(function(c){return "<th>"+c[1]+"</th>";}).join("")+"</tr>";
+  EQS.forEach(function(e){
+    var cc=e.confidence==="Verified"?"verified":"mined";
+    h+="<tr><td class='v'>"+esc(e.name)+"</td><td class='small'>"+esc(e.predicts)+"</td>"
+      +"<td class='small'>"+esc(e.form)+"</td><td><span class='eqform'>"+esc(e.equation)+"</span></td>"
+      +"<td class='small'>"+esc(e.domain_of_validity)+"</td><td class='small'>"+esc(e.citation_key)+(e.origin_citation_key?(" &larr; "+esc(e.origin_citation_key)):"")+"</td>"
+      +"<td class='"+cc+"'>"+esc(e.confidence)+"</td><td class='small'>"+esc(e.notes)+"</td></tr>";
+  });
+  document.getElementById("eqtable").innerHTML=h;
+}
+
+function renderCoverage(rows){
+  function tally(keyfn){ var m={}; rows.forEach(function(r){ keyfn(r).forEach(function(k){ if(k) m[k]=(m[k]||0)+1; }); });
+    return Object.keys(m).sort(function(a,b){return m[b]-m[a];}).map(function(k){return k+" ("+m[k]+")";}).join(" &middot; "); }
+  document.getElementById("coverage").innerHTML=
+    "<b>By predictor:</b> "+tally(function(r){return [r.predictor];})+"<br>"
+    +"<b>By response:</b> "+tally(function(r){return tokens(r.response);})+"<br>"
+    +"<b>By species:</b> "+tally(function(r){return tokens(r.species);});
+}
+
+function render(){
+  var rows=ROWS.filter(match);
+  renderPlot(rows); renderTable(rows); renderCoverage(rows);
+}
+
+document.getElementById("sub").innerHTML=META.n_rel+" relationships &middot; "+META.n_eq+" equations &middot; "
+  +META.n_num+" numeric points &middot; built "+META.built+(META.issues?(" &middot; "+META.issues+" QA issue(s)"):" &middot; QA clean");
+document.getElementById("foot").innerHTML="Generated by scripts/build_stressor_response.py from data/stressor_response.csv + data/equations.csv. "
+  +"No PDFs; metadata only. Demonstrator dataset &mdash; verify before citing.";
+buildFilters(); renderEqs(); render();
+</script>
+</body></html>

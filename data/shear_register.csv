@@ -35,3 +35,6 @@ citation_key,year,first_author,title,role,metric,reproducibility_pct,reproducibi
 2024_Canada,2024,Canada,Risk to fish from very low head turbine installations,Guideline,shear stress (Pa); CFD shear field; Sensor Fish exposure; velocity gradient,,
 2024_Kaminski,2024,Kaminski,Computational fluid dynamics simulation of passive downstream fish passage over a weir with OpenFOAM,Modeling (CFD),strain rate (s-1); shear stress (Pa); CFD shear field; Sensor Fish exposure; velocity gradient,,
 2025_Kan,2025,Kan,Fish-friendly optimization of low-head axial-flow turbines,Modeling (CFD),strain rate (s-1); shear stress (Pa); CFD shear field,,
+1988_Davies,1988,Davies,A review of information relating to fish passage through turbines: Implications to tidal power schemes. Journa,review,turbine-passage injury mechanisms (incl. shear),,
+1997_Cada,1997,Cada,"Shaken, not stirred: the recipe for a fish-friendly turbine",review,biological design criteria (shear),,
+2023_Koukouvinis,2023,Koukouvinis,State of the Art in Designing Fish-Friendly Turbines - Concepts and Performance Indicators,review,fish-friendly turbine design / CFD (shear),,

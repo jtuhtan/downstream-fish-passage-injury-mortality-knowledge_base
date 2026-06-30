@@ -24,3 +24,7 @@ venv/
 
 # Verification tool: local machine config (PDF path + verifier initials)
 tools/verification/config.json
+
+# Stale working leftovers (do not commit)
+data/*.csv.tmp
+data/candidate_additions_enriched.csv

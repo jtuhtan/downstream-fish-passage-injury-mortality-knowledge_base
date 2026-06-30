@@ -23,3 +23,4 @@ citation_key,year,first_author,title,type,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,reprodu
 2022_Doyle,2022,Doyle,Survival estimates across five life stages of redfin (Perca fluviatilis) exposed to simulated pumped-storage hydropower,simulated,1,1,1,1,1,1,0,1,1,1,90,High,strike probability; blade/leading-edge geometry (L/t); mutilation/injury rate
 2022_Meng,2022,Meng,Turbine blade strike tests for evaluation,simulated,1,1,1,1,1,0,1,1,1,0,80,High,blade/leading-edge geometry (L/t); modeled collision probability
 2011_Amaralb,2011,Amaral,Designing leading edges of turbine blades to increase fish survival from blade strike,simulated,1,0,1,1,1,1,0,0,0,0,50,Medium,strike probability; strike velocity; blade/leading-edge geometry (L/t)
+2007_Jansen,2007,Jansen,Survival and movement of fish experimentally passed through a re-runnered turbine at the Kelsey Generating Station,field,1,1,1,1,1,0,1,1,1,1,90,High,survival probability (HI-Z paired release-recapture); injury/condition

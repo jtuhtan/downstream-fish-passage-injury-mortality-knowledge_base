@@ -18,9 +18,9 @@ It has two jobs:
 2. **Document a rigorous, repeatable methodology** for how the base is built,
    maintained and updated, so anyone can reproduce or extend it.
 
-> **Status:** v0.11.0. Three mechanism modules (barotrauma, collision, shear)
+> **Status:** v0.14.0. Three mechanism modules (barotrauma, collision, shear)
 > with reproducibility scorecards; a three-axis framework (mechanism × exposure
-> pathway × outcome timing) coded and **fully verified across all 228 analysed
+> pathway × outcome timing) coded across all **255 analysed
 > papers**; a cross-mechanism synthesis and gap matrix; and a literature-discovery
 > skill with a ranked candidate-additions list. See [CHANGELOG.md](CHANGELOG.md).
 ## Visual overview
@@ -45,11 +45,11 @@ flowchart LR
 
 ```mermaid
 pie showData
-  title Analysed papers by study type (n=228)
-  "Lab" : 74
-  "Field" : 55
+  title Analysed papers by study type (n=255)
+  "Lab" : 77
+  "Field" : 68
   "Numerical" : 48
-  "Review" : 38
+  "Review" : 49
   "Guidelines" : 13
 ```
 
@@ -103,35 +103,35 @@ structures. Injury mechanisms follow the controlled vocabulary in
 barotrauma, shear, cavitation, turbulence, grinding/abrasion, gas
 supersaturation, and entrainment/impingement.
 
-## Coverage at a glance (v0.11.0)
+## Coverage at a glance (v0.14.0)
 
-- 245 catalogued publications (1928–2026); 228 analysed across Review / Lab /
-  Field / Numerical / Guidelines.
-- Barotrauma deep-dive: 61 barotrauma papers; 38 live-fish studies scored for
+- 272 catalogued publications (1928–2026); 255 analysed across Review / Lab /
+  Field / Numerical / Guidelines (27 added from the candidate list).
+- Barotrauma deep-dive: 66 barotrauma papers; 39 live-fish studies scored for
   reproducibility of reporting.
-- Collision (blade strike & impact) deep-dive: 47 collision papers; 24 live-fish
-  studies (9 simulated-strike + 15 field-observed) scored.
-- Shear (fluid shear / strain rate) deep-dive: 36 shear papers; 12 live-fish
+- Collision (blade strike & impact) deep-dive: 53 collision papers; 25 live-fish
+  studies (9 simulated-strike + 16 field-observed) scored.
+- Shear (fluid shear / strain rate) deep-dive: 39 shear papers; 12 live-fish
   studies (lab jet/flume) scored. Field live-fish shear evidence is effectively
   absent (shear is studied almost entirely in the laboratory).
 - Three-axis framework: every study is described by **mechanism** x **exposure
   pathway** (study environment + location during passage) x **outcome timing**.
   The two cross-cutting axes are coded once per study in
-  `data/axes_exposure_timing.csv` (all 228 papers; see
+  `data/axes_exposure_timing.csv` (all 255 papers; see
   `methodology/07_axes_exposure_and_timing.md`).
 - Cross-mechanism synthesis & gap matrix: `reviews/cross_mechanism_synthesis.md`
   and `outputs/Cross_mechanism_gap_matrix.xlsx` (coverage by mechanism x family
   group x environment x outcome timing, with explicit data gaps).
-- Literature discovery: 72 candidate works cited by the collection but missing
-  from it, ranked and theme-tagged in `data/candidate_additions.csv` (11 High
-  priority), with **ISO 4 / LTWA** short titles, via the
-  `passage-literature-discovery` skill. The 26 High + Medium candidates are
-  resolved to canonical titles + ISO-4 short titles (17 with verified DOIs); the
-  46 Low-priority await resolution.
+- Literature discovery: 38 candidate works still cited by the collection but
+  missing from it, ranked and theme-tagged in `data/candidate_additions.csv` (8
+  High priority), with **ISO 4 / LTWA** short titles and a `candidate_link` +
+  `pdf_url` per row (open-access/landing link where one exists), via the
+  `passage-literature-discovery` skill. Invalid/duplicate candidates are logged in
+  `data/candidate_removals_log.csv`.
 - Verification: a documented, offline, PDF-in-hand protocol confirms each row
   against its source (`methodology/08_verification_protocol.md` +
   `tools/verification/verify.py`, which logs provenance to
-  `data/verification_log.csv`). **All 228 extraction rows are currently `Mined`**
+  `data/verification_log.csv`). **All 255 extraction rows are currently `Mined`**
   pending that pass.
 
 ## Publishing the dashboard (GitHub Pages)

@@ -83,7 +83,7 @@ new mechanism module is added, its register's `citation_key`s are folded in so
 every study carries all three axes.
 
 ## Verification rule (added v0.5.0)
-The axes are now coded corpus-wide (all 229 analysed papers, not just the
+The axes are now coded corpus-wide (all 255 analysed papers, not just the
 3-mechanism union). Each row carries `confidence`:
 - **Verified** - rows whose `study_environment` is rule-deterministic and whose
   `location_during_passage` follows directly from it: all Lab apparatus,
@@ -99,7 +99,7 @@ bounds. This rule is intentionally conservative so "Verified" never overstates.
 ## Verification pass outcome (v0.5.1)
 The 97 Field and Numerical/CFD rows (previously `Mined`) were reviewed
 per-paper against abstracts and methods. 66 were corrected and all 97 flipped to
-`Verified`; the axes table is now fully Verified (229/229). Typical corrections:
+`Verified`; the axes table now has 255 rows; the earlier Verified flags were reset to Mined in v0.11.0 pending formal PDF-in-hand verification. Typical corrections:
 mis-tagged structures (e.g. a spillbay study coded as whole-route -> Spillway; a
 waterfall study -> Plunge pool; Archimedean-screw and pump studies re-homed to
 the right environment/location); spurious `Indirect`/`Latent` timing tags removed

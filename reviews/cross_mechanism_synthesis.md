@@ -2,16 +2,16 @@
 
 A first synthesis across the three mechanism modules and the three-axis framework
 (mechanism x exposure pathway x outcome timing), covering the 120-study union
-within a 228-paper corpus now coded on all three axes. Companion file:
+within a 255-paper corpus now coded on all three axes. Companion file:
 `outputs/Cross_mechanism_gap_matrix.xlsx`.
 
 ## 1. Reproducibility vs. scope - an inverse relationship
 
 | Mechanism | Papers | Live-fish studies scored | Mean reporting completeness |
 |---|---|---|---|
-| Barotrauma | 61 | 38 (31 lab + 7 field) | 74% |
-| Collision (blade strike & impact) | 47 | 24 (9 simulated + 15 field) | 81% |
-| Shear (fluid shear / strain rate) | 36 | 12 (lab only) | 94% |
+| Barotrauma | 66 | 39 (32 lab + 7 field) | 74% |
+| Collision (blade strike & impact) | 53 | 25 (9 simulated + 16 field) | 83% |
+| Shear (fluid shear / strain rate) | 39 | 12 (lab only) | 94% |
 
 The headline pattern: **the better-reported a mechanism is, the narrower its
 evidence base.** Shear has near-complete reporting but rests on ~12 lab studies
@@ -99,7 +99,7 @@ least-quantified part of the whole field.
 ## Provenance & caveats
 Mechanism membership and metrics come from the per-mechanism registers; family
 groups are mapped from `data/vocab/species.csv`; exposure/timing from
-`data/axes_exposure_timing.csv` (all 228 rows Verified; the 97 field/numerical
+`data/axes_exposure_timing.csv` (all 255 rows (currently Mined, pending verification); the 97 field/numerical
 rows were reviewed per-paper, 66 corrected - see `methodology/07`). Indirect-timing counts are upper bounds
 (coverage, not quantification). Counts exceed unique-paper totals because studies
 span several taxa, environments and timing classes.

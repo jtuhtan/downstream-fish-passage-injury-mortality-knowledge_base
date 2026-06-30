@@ -1,7 +1,7 @@
 **Fluid Shear & Strain-Rate Injury in Downstream Fish Passage  
 Metrics, Protocols & the Reproducibility of Live-Fish Studies**
 
-*A state-of-the-art assessment of 36 shear papers (12 live-fish studies
+*A state-of-the-art assessment of 39 shear papers (12 live-fish studies
 scored)  
 Companion to the workbook 'Shear\_metrics\_reproducibility.xlsx'*
 
@@ -24,12 +24,12 @@ exposure and is included where studies link it to injury or behaviour.
 Shear is distinct from blade-strike collision and from pressure-change
 barotrauma.
 
-Scope. All 228 analysed papers were screened for shear relevance
+Scope. All 255 analysed papers were screened for shear relevance
 (full-text density of shear / strain-rate / turbulence / jet /
-shear-stress terms plus title screening); 36 shear-relevant papers were
+shear-stress terms plus title screening); 39 shear-relevant papers were
 retained. Of these, 12 are live-fish studies, all controlled laboratory
 jet/flume experiments, and these form the reproducibility assessment.
-The remaining 24 (CFD shear-field models, Sensor-Fish field exposure,
+The remaining 27 (CFD shear-field models, Sensor-Fish field exposure,
 reviews and guidelines) are catalogued for metric coverage but not
 scored.
 
@@ -215,7 +215,7 @@ and inbred.
   - Digitise/OCR foundational scanned reports (e.g. Neitzel 2004) so the
     historical dose-response data can be re-analysed.
 
-*Method note: the 36-paper shear set and per-criterion scores were
+*Method note: the 39-paper shear set and per-criterion scores were
 produced by full-text screening and automated detection of reporting
 elements, then reviewed. Quantitative landmarks attributed to a named
 study were read from that source. Reproducibility tiers index reporting

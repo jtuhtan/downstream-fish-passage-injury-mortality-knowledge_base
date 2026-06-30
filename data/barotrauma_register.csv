@@ -60,3 +60,8 @@ citation_key,Year,First author,Title,Source folder,Role,Metric(s) used,Reproduci
 2025_Schneider,2025,Schneider,A barotrauma chamber for the systematic assessment of barotrauma-related injuries in potamodromous European fish,Lab,Live-fish LAB,nadir pressure,70,Medium
 2025_Zitek,2025,Zitek,Untersuchung von druckänderungsbedingten,Lab,Live-fish LAB,nadir pressure; mortal-injury index,70,Medium
 2026_Zitek,2026,Zitek,Sensitivity of larval and juvenile fish with different swim bladder morphology to barotrauma with a special focus on,Lab,Live-fish LAB,RPC; LRP; nadir pressure; mortal-injury index,100,High
+1965_Foye,1965,Foye,Effectsof pressure on survivalofsix species offish,Lab,Live-fish LAB,survival vs applied pressure (psi),70,Medium
+1988_Davies,1988,Davies,A review of information relating to fish passage through turbines: Implications to tidal power schemes. Journa,Review,Review,turbine-passage injury mechanisms (incl. pressure),,
+1997_Cada,1997,Cada,"Shaken, not stirred: the recipe for a fish-friendly turbine",Review,Review/criteria,biological design criteria (pressure),,
+2001_Perry,2001,Perry,Buoyancy compensation of juvenile Chinook salmon implanted with two different size dummy transmitters. Transac,Lab,Lab (buoyancy/physiology),depth/buoyancy compensation,,
+2023_Koukouvinis,2023,Koukouvinis,State of the Art in Designing Fish-Friendly Turbines - Concepts and Performance Indicators,Review,Review,fish-friendly turbine design (pressure),,

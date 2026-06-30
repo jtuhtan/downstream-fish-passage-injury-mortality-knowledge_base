@@ -6,7 +6,7 @@ ranked by how many collection papers cite each (an in-corpus proxy for importanc
 and tagged with the themes of the citing papers. Full list:
 [`data/candidate_additions.csv`](../data/candidate_additions.csv).
 
-**72 candidates** (cited by >=5 collection papers): 11 High, 15 Medium, 46 Low priority.
+**38 candidates remaining** (8 High, 8 Medium, 22 Low priority). Of the original 72, many have since been added to the collection or removed as invalid — see `data/candidate_additions.csv` and `data/candidate_removals_log.csv`.
 
 ## Top priority (High: cited by >=10 collection papers)
 

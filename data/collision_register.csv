@@ -46,3 +46,9 @@ citation_key,year,first_author,title,role,metric,reproducibility_pct,reproducibi
 2025_Huang,2025,Huang,Velocity- and pressure-based metrics for estimating strike injuries during fish passage through hydro turbines,Modeling (strike metrics),blade-strike model,,
 2025_Zillig,2025,Zillig,Comparison of juvenile white sturgeon blade strike survival through a conventional and a novel hydropower turbine,live-fish field,strike probability; blade/leading-edge geometry (L/t),90,High
 2026_Pan,2026,Pan,A novel fish-friendly-twisted blade towards low-head pumped hydro storage assessment of flow distortion-induced,Modeling (CFD design),strike probability; particle/DEM collision model; strike velocity; leading-edge geometry; blade-strike model; mutilation rate,,
+1988_Davies,1988,Davies,A review of information relating to fish passage through turbines: Implications to tidal power schemes. Journa,review,turbine-passage injury mechanisms (incl. blade strike),,
+1997_Cada,1997,Cada,"Shaken, not stirred: the recipe for a fish-friendly turbine",review,biological design criteria (blade strike),,
+2000_Bickford,2000,Bickford,Reanalysis and Interpretation of 25 years of Snake-Columbia River Juvenile Salmon Survival Studies. North Amer,review,turbine-passage survival reanalysis,,
+2002_Skalski,2002,Skalski,Effects of turbine operating efficiency on smolt passage survival,review,turbine-efficiency vs survival reanalysis,,
+2007_Jansen,2007,Jansen,Survival and movement of fish experimentally passed through a re-runnered turbine at the Kelsey Generating Station,live-fish field,survival; injury/condition (HI-Z balloon-tag),90,High
+2023_Koukouvinis,2023,Koukouvinis,State of the Art in Designing Fish-Friendly Turbines - Concepts and Performance Indicators,review,fish-friendly turbine design / CFD (blade strike),,

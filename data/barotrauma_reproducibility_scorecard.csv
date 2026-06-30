@@ -37,3 +37,4 @@ citation_key,Year,First author,Title,Type,C1 Species+stage+size,C2 Sample size (
 2007_McKinstry,2007,McKinstry,Derivation of a Mortal Injury Metric for Studies of Rapid Decompression of Depth-Acclimated Physostomous Fish,LAB,—,—,Y,—,Y,—,Y,Y,—,Y,50,Medium,nadir pressure; mortal-injury index,
 2019_Meng,2019,Meng,Experimental evaluation of the effect of decompression on crucian carps injury during turbine passage,LAB,—,—,—,—,Y,—,—,Y,Y,—,30,Low,nadir pressure,
 1983_Feathers,1983,Feathers,Effects of Depressurization Upon Largemouth Bass,LAB,Y,—,Y,—,—,—,—,Y,—,—,30,Low,,
+1965_Foye,1965,Foye,Effectsof pressure on survivalofsix species offish,LAB,Y,Y,Y,Y,Y,—,—,Y,Y,—,70,Medium,survival vs applied pressure,101–2068 (atm to 300 psi)
