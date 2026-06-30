@@ -46,3 +46,37 @@ be named in the row.
   calibration (often a missed log axis) is wrong.
 - **No figure images are committed** — only the extracted numeric points (consistent
   with the repo's no-PDF / metadata-only policy). The figure stays in the source PDF.
+
+## Copyright & digitization (legal basis)
+
+Digitization here extracts **numeric data points (facts)** from a figure — it does **not** copy
+the figure. Copyright protects the figure as *expression* (the rendered image), not the underlying
+measurements, which are facts and not copyrightable (US: *Feist*; EU: idea/expression dichotomy).
+Extracting and recording those values for analysis is standard meta-analysis practice and is
+consistent with the repo's no-PDF / metadata-only policy. Rules that keep it clean:
+
+1. **Never store or commit the figure image** (no scans/screenshots) — only the extracted numeric
+   points. The figure stays in the source PDF; any render made for digitization is a throw-away
+   working file, never committed.
+2. **Attribute** every digitized dataset to its source (`citation_key` + figure number) and record
+   provenance (`extraction_method = digitized_figure`, plus tool / operator / date).
+3. **Legal basis:** as a research organisation we rely on the **EU DSM Directive (2019/790)
+   Art. 3 text-and-data-mining exception** — which **cannot be overridden by publisher terms** for
+   research — together with the facts-not-copyrightable principle. Keep extractions
+   **proportionate** (the points needed for analysis) so the EU *sui generis* database right is not
+   engaged on a substantial part.
+4. **Prefer the primary data** when it exists — author-provided underlying data, supplementary
+   files, or data-repository deposits (often CC-licensed / public-domain) — and cite that instead
+   of digitizing. Ask the authors when in doubt.
+
+This is general US/EU reasoning, **not legal advice**; jurisdictions and individual agreements vary.
+
+## Provisional visual extraction (interim tier)
+
+Tool-calibrated digitization (WebPlotDigitizer) is the standard. When a quick interim read is needed
+to seed the pipeline, a **provisional visual extraction** may be recorded **only if clearly flagged**:
+`extraction_method = digitized_figure`, `confidence = Mined`, and a note
+`provisional visual read — verify with WebPlotDigitizer`. Provisional points must be replaced by a
+calibrated extraction before any quantitative claim relies on them, and never carry
+`confidence = Verified`. Prefer **table-extracted** values and **published model coefficients** over
+visual reads wherever they exist — they are exact and need no digitization.

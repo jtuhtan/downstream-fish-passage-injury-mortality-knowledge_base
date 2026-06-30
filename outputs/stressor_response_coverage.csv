@@ -19,6 +19,7 @@ barotrauma,pct_bep,nadir_pressure,2,2,1,quantitative,Martinez2019; Martinez2025
 barotrauma,rpc_AN,injury,4,4,4,quantitative,Beirao2018; Kerr2023; Pauwels2020; Pflugrath2020
 barotrauma,rpc_AN,injury_hemorrhage,1,1,1,quantitative,Brown2009
 barotrauma,rpc_AN,mortality,4,4,4,quantitative,Kerr2023; Pauwels2020; Pflugrath2018; Pflugrath2020
+barotrauma,rpc_AN,mortality_mortal_injury,2,1,4,quantitative,Zitek2026
 barotrauma,rpc_EA,hatching_success,1,1,2,qualitative,Boys2016
 barotrauma,rpc_EA,injury,1,1,3,quantitative,Boys2014
 barotrauma,rpc_EA,injury_hemorrhage,1,1,3,quantitative,Boys2016
@@ -27,7 +28,7 @@ barotrauma,rpc_EA,mortality_shortterm,1,1,3,qualitative,Boys2016
 barotrauma,structure_type,injury_swimbladder_rupture,1,1,2,qualitative,Pflugrath2018
 barotrauma,swimbladder,injury,3,3,3,qualitative,Colotelo2012;Boys2016;Brown2012; Pflugrath2019; Stephenson2010
 barotrauma,swimbladder,mortality,3,3,3,qualitative,Colotelo2012;Boys2016;Brown2012; Pflugrath2019; Stephenson2010
-barotrauma,swimbladder,mortality_mortal_injury,1,1,1,qualitative,Zitek2026
+barotrauma,swimbladder,mortality_mortal_injury,2,1,2,qualitative,Zitek2026
 barotrauma,tdg,injury,1,1,2,qualitative,Abernethy2002
 barotrauma,tdg,mortality,1,1,2,qualitative,Abernethy2002
 shear,strain_rate,injury,1,1,1,quantitative,Pflugrath2020

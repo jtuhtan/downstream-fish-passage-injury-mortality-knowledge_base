@@ -3,6 +3,29 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.18.0] - 2026-06-30
+Dose–response curve overlay from published coefficients, plus a codified copyright-&-digitization policy.
+
+### Added
+- `data/dose_response_models.csv` — runnable per-species logistic models with **exact published
+  coefficients**: Pflugrath 2018 Table 4 (injury & mortal injury × {Australian bass, carp gudgeon,
+  Murray cod, silver perch}) and Carlson 2012 (Chinook). x = ln(RPC) = LRP, so all curves share one axis.
+- **Dose–response curve overlay** in the explorer: the models plotted as overlaid logistic curves
+  (solid = mortal injury, dashed = injury), computed **analytically from the coefficients — not digitized**.
+- Zitek 2026 RPC-at-50%-mortal-injury thresholds (nase/roach ≈ 2.7; grayling/perch ≈ 10–12), capturing
+  that two-chambered **Cypriniformes are highly susceptible** (swim-bladder morphology, not just
+  physostome/physoclist). Relationships: 41 → 44.
+
+### Added — policy
+- **Copyright & digitization** statement in `skills/passage-stressor-response/references/figure_digitization.md`:
+  data (facts) vs image (expression); the **EU DSM Art. 3 TDM research exception**; proportionality;
+  attribution; prefer-primary-data; and a clearly-flagged "provisional visual extraction" interim tier.
+
+### Notes
+- Model coefficients were taken from published tables/equations (exact) — the preferred, copyright-clean
+  route over tracing figures. Figure-point digitization remains the next step for figure-only data
+  (e.g. Stephenson Fig 3).
+
 ## [0.17.0] - 2026-06-30
 Stressor–response assessment & gap-analysis layer: derived coverage/threshold tables and an interactive coverage-gap matrix.
 

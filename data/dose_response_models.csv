@@ -1,0 +1,10 @@
+model_id,citation_key,mechanism,species,response,x_metric,x_min,x_max,form,b0,b1,source_location,confidence,notes
+DRM_Pf18_inj_bass,Pflugrath2018,barotrauma,Australian bass,injury,ln(RPC),0,2.7,logistic,-3.71,3.52,Table 4,Mined,P=1/(1+exp(-(b0+b1*x))); x=ln(RPC)=LRP
+DRM_Pf18_inj_gudgeon,Pflugrath2018,barotrauma,carp gudgeon,injury,ln(RPC),0,2.7,logistic,-3.94,3.22,Table 4,Mined,P=1/(1+exp(-(b0+b1*x)))
+DRM_Pf18_inj_cod,Pflugrath2018,barotrauma,Murray cod,injury,ln(RPC),0,2.7,logistic,-4.25,3.23,Table 4,Mined,P=1/(1+exp(-(b0+b1*x)))
+DRM_Pf18_inj_perch,Pflugrath2018,barotrauma,silver perch,injury,ln(RPC),0,2.7,logistic,-3.70,4.11,Table 4,Mined,steepest injury curve (silver perch most sensitive)
+DRM_Pf18_mi_bass,Pflugrath2018,barotrauma,Australian bass,mortal injury,ln(RPC),0,2.7,logistic,-5.72,2.68,Table 4,Mined,mortal-injury curve
+DRM_Pf18_mi_gudgeon,Pflugrath2018,barotrauma,carp gudgeon,mortal injury,ln(RPC),0,2.7,logistic,-5.70,1.99,Table 4,Mined,mortal-injury curve
+DRM_Pf18_mi_cod,Pflugrath2018,barotrauma,Murray cod,mortal injury,ln(RPC),0,2.7,logistic,-7.33,2.79,Table 4,Mined,most tolerant (curve shifted right)
+DRM_Pf18_mi_perch,Pflugrath2018,barotrauma,silver perch,mortal injury,ln(RPC),0,2.7,logistic,-3.91,1.39,Table 4,Mined,mortal-injury curve
+DRM_Ca12_mi_chinook,Carlson2012,barotrauma,Chinook salmon,mortal injury,ln(RPC),0,2.0,logistic,-5.997,4.201,Eqn 1,Mined,TB=0 baseline; full model adds +0.603*tag_burden_%

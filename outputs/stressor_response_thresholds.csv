@@ -4,6 +4,10 @@ barotrauma,accl_p,kPa,injury,western brook lamprey (Lampetra richardsoni),1,146.
 barotrauma,accl_p,kPa,mortality,Pacific lamprey (Entosphenus tridentatus),1,146.2,146.2,146.2,Colotelo2012
 barotrauma,accl_p,kPa,mortality,western brook lamprey (Lampetra richardsoni),1,146.2,146.2,146.2,Colotelo2012
 barotrauma,rpc_AN,ratio_PA/PN,mortality,Chinook salmon (Oncorhynchus tshawytscha),1,2,2,2,Pflugrath2018
+barotrauma,rpc_AN,ratio_PA/PN,mortality_mortal_injury,Common nase (Chondrostoma nasus),1,2.7,2.7,2.7,Zitek2026
+barotrauma,rpc_AN,ratio_PA/PN,mortality_mortal_injury,European grayling (Thymallus thymallus),1,11,11,11,Zitek2026
+barotrauma,rpc_AN,ratio_PA/PN,mortality_mortal_injury,European perch (Perca fluviatilis),1,11,11,11,Zitek2026
+barotrauma,rpc_AN,ratio_PA/PN,mortality_mortal_injury,Roach (Rutilus rutilus),1,2.7,2.7,2.7,Zitek2026
 barotrauma,rpc_EA,ratio_PN/PA,injury_hemorrhage,Murray cod (Maccullochella peelii),1,0.4,0.4,0.4,Boys2016
 barotrauma,rpc_EA,ratio_PN/PA,injury_hemorrhage,golden perch (Macquaria ambigua),1,0.4,0.4,0.4,Boys2016
 barotrauma,rpc_EA,ratio_PN/PA,injury_hemorrhage,silver perch (Bidyanus bidyanus),1,0.4,0.4,0.4,Boys2016

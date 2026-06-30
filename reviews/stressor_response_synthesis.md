@@ -62,13 +62,18 @@ salmonid model onto an eel. New since the 8-paper demo: **tag burden, operating 
 runner geometry (CFD), and many more species** (American shad, American eel, gambusia,
 redfin, crucian carp, pictus catfish, Neotropical and European potamodromous fishes).
 
-## 5. Biggest gap (what to do next)
+## 5. Dose–response curves — overlaid from published coefficients
 
-The **dose–response curves themselves are in figures** (Brown Fig 3 mortal-injury vs LRP;
-Pflugrath Figs 2–3 injury vs ln(RPC); Stephenson Fig 3 vs nadir). Until they are
-**digitized** (`references/figure_digitization.md`) the explorer plots only the scalar
-thresholds. Digitizing those four figures + extracting the per-species logistic
-coefficients would turn this into a real, overlay-able barotrauma dose–response dataset.
+The per-species logistic **coefficients** are extracted *exactly* from the source tables/equations
+into [`../data/dose_response_models.csv`](../data/dose_response_models.csv) — Pflugrath 2018 Table 4
+(injury & mortal injury × Australian bass, carp gudgeon, Murray cod, silver perch) and Carlson 2012
+(Chinook). Because `LRP = ln(RPC)`, all nine models share one x-axis, so the explorer **overlays the
+curves analytically** (solid = mortal injury, dashed = injury) — the preferred route over tracing
+figures (and copyright-clean: published coefficients, no image). This is where you read off, e.g.,
+that silver perch's injury curve is the steepest and Murray cod's mortal-injury curve is shifted
+rightmost (most tolerant). Remaining **figure-point digitization** (e.g. Stephenson Fig 3, % vs
+nadir, which exists only as a figure) follows the protocol and the **copyright & digitization
+policy** in `skills/passage-stressor-response/references/figure_digitization.md`.
 
 ## 6. Coverage & gaps — the assessment framework
 

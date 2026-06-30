@@ -203,6 +203,8 @@ def main() -> int:
     rows = read_csv(SR)
     eqs = read_csv(EQ) if EQ.exists() else []
     variables = read_csv(VARS) if VARS.exists() else []
+    DRMP = REPO / "data" / "dose_response_models.csv"
+    drm = read_csv(DRMP) if DRMP.exists() else []
 
     issues = validate(rows)
     conv_log, n_pressure = standardize_pressures(rows)
@@ -245,6 +247,7 @@ def main() -> int:
             .replace("__SR_DATA__", json.dumps(rows, ensure_ascii=False))
             .replace("__EQ_DATA__", json.dumps(eqs, ensure_ascii=False))
             .replace("__VARS_DATA__", json.dumps(variables, ensure_ascii=False))
+            .replace("__DRM_DATA__", json.dumps(drm, ensure_ascii=False))
             .replace("__META__", json.dumps(meta, ensure_ascii=False)))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(html, encoding="utf-8")
@@ -311,6 +314,13 @@ footer{color:var(--mut);font-size:11.5px;padding:14px 22px;border-top:1px solid 
   <div id="plot"></div>
   <div class="counts" id="plotcount"></div>
 
+  <h2>Dose&ndash;response curves (modelled)</h2>
+  <div class="filters" style="margin:0 0 6px"><label>Response<select id="drresp">
+    <option value="all">all</option><option value="injury">injury</option><option value="mortal injury">mortal injury</option></select></label></div>
+  <div id="drplot"></div>
+  <div class="legend" id="drlegend"></div>
+  <div class="counts" id="drnote"></div>
+
   <h2>Relationships <span class="counts" id="relcount"></span></h2>
   <div style="max-height:430px;overflow:auto;border:1px solid var(--line);border-radius:8px">
     <table id="reltable"></table>
@@ -343,6 +353,7 @@ footer{color:var(--mut);font-size:11.5px;padding:14px 22px;border-top:1px solid 
 var ROWS = __SR_DATA__;
 var EQS  = __EQ_DATA__;
 var VARS = __VARS_DATA__;
+var DRM  = __DRM_DATA__;
 var META = __META__;
 var PALETTE = ["#2563eb","#dc2626","#059669","#d97706","#7c3aed","#0891b2","#be185d","#65a30d","#475569","#ea580c"];
 
@@ -523,6 +534,35 @@ function renderCoverage(rows){
   document.getElementById("coverage").innerHTML="<b>By study:</b> "+tally(function(r){return [r.citation_key];});
 }
 
+function logistic(b0,b1,x){ return 1/(1+Math.exp(-(b0+b1*x))); }
+function renderDoseResponse(){
+  if(!DRM||!DRM.length){ document.getElementById("drplot").innerHTML='<div class="counts">No dose-response models.</div>'; return; }
+  var sel=document.getElementById("drresp").value;
+  var models=DRM.filter(function(m){ return sel==="all"||m.response===sel; });
+  var W=1080,H=300,padL=56,padR=16,padT=14,padB=40;
+  var xmin=Math.min.apply(null,models.map(function(m){return parseFloat(m.x_min);}));
+  var xmax=Math.max.apply(null,models.map(function(m){return parseFloat(m.x_max);}));
+  if(!isFinite(xmin)){xmin=0;} if(!isFinite(xmax)){xmax=2.7;}
+  function X(x){ return padL+(W-padL-padR)*((x-xmin)/((xmax-xmin)||1)); }
+  function Y(p){ return padT+(H-padT-padB)*(1-p); }
+  var svg='<svg width="100%" viewBox="0 0 '+W+' '+H+'" font-size="11" font-family="inherit">';
+  [0,0.25,0.5,0.75,1].forEach(function(p){ svg+='<line x1="'+padL+'" y1="'+Y(p)+'" x2="'+(W-padR)+'" y2="'+Y(p)+'" stroke="#eef2f7"/><text x="'+(padL-6)+'" y="'+(Y(p)+3)+'" text-anchor="end" fill="#9aa4b2">'+p+'</text>'; });
+  svg+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+Y(0)+'" stroke="#cdd5e0"/>';
+  var xt=xmin; while(xt<=xmax+0.001){ svg+='<text x="'+X(xt)+'" y="'+(Y(0)+16)+'" text-anchor="middle" fill="#9aa4b2">'+xt.toFixed(1)+'</text>'; xt+=0.5; }
+  svg+='<text x="'+((padL+W-padR)/2)+'" y="'+(H-6)+'" text-anchor="middle" fill="#5b6675">ln(RPC) = LRP</text>';
+  svg+='<text transform="translate(14,'+((padT+Y(0))/2)+') rotate(-90)" text-anchor="middle" fill="#5b6675">probability</text>';
+  models.forEach(function(m){
+    var b0=parseFloat(m.b0),b1=parseFloat(m.b1),x0=parseFloat(m.x_min),x1=parseFloat(m.x_max),pts=[];
+    for(var i=0;i<=40;i++){ var x=x0+(x1-x0)*i/40; pts.push(X(x).toFixed(1)+","+Y(logistic(b0,b1,x)).toFixed(1)); }
+    var dash=m.response==="injury"?' stroke-dasharray="4 3"':'';
+    svg+='<polyline points="'+pts.join(" ")+'" fill="none" stroke="'+colorFor(m.species)+'" stroke-width="2"'+dash+'><title>'+esc(m.species+" - "+m.response+" ["+m.citation_key+"]  logit(p)="+m.b0+"+"+m.b1+"*ln(RPC)")+'</title></polyline>';
+  });
+  svg+='</svg>';
+  document.getElementById("drplot").innerHTML=svg;
+  var sps=uniqSorted(models.map(function(m){return m.species;}));
+  document.getElementById("drlegend").innerHTML=sps.map(function(s){ return '<span><i class="dot" style="background:'+colorFor(s)+'"></i>'+esc(s)+'</span>'; }).join("");
+  document.getElementById("drnote").innerHTML=models.length+" published logistic models on a shared x-axis (solid = mortal injury, dashed = injury), computed from <b>exact coefficients</b> (Pflugrath 2018 Table 4; Carlson 2012) &mdash; not digitized. x = ln(RPC) = LRP, so the curves are directly comparable.";
+}
 function render(){
   var rows=ROWS.filter(match);
   renderPlot(rows); renderTable(rows); renderCoverage(rows);
@@ -535,7 +575,8 @@ document.getElementById("foot").innerHTML="Generated by scripts/build_stressor_r
   +"No PDFs; metadata only. Demonstrator dataset &mdash; verify before citing.";
 buildFilters(); renderEqs(); renderVars();
 document.getElementById("covdim").addEventListener("change",function(){ COVDIM=this.value; render(); });
-render();
+document.getElementById("drresp").addEventListener("change",renderDoseResponse);
+render(); renderDoseResponse();
 </script>
 </body></html>"""
 
