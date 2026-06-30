@@ -398,7 +398,7 @@ footer{color:var(--mut);font-size:11.5px;padding:14px 22px;border-top:1px solid 
 
   <h2>Dose&ndash;response curves (modelled)</h2>
   <div class="filters" style="margin:0 0 6px"><label>Response<select id="drresp">
-    <option value="all">all</option><option value="injury">injury</option><option value="mortal injury">mortal injury</option></select></label></div>
+    <option value="all">all</option><option value="injury">injury</option><option value="mortal injury">mortal injury</option><option value="immediate mortality">immediate mortality</option></select></label></div>
   <div id="drplot"></div>
   <div class="legend" id="drlegend"></div>
   <div class="counts" id="drnote"></div>
@@ -678,7 +678,7 @@ function renderDoseResponse(){
   document.getElementById("drplot").innerHTML=svg;
   var sps=uniqSorted(models.map(function(m){return m.species;}));
   document.getElementById("drlegend").innerHTML=sps.map(function(s){ return '<span><i class="dot" style="background:'+colorFor(s)+'"></i>'+esc(s)+'</span>'; }).join("");
-  document.getElementById("drnote").innerHTML=models.length+" published logistic models on a shared x-axis (solid = mortal injury, dashed = injury), computed from <b>exact coefficients</b> (Pflugrath 2018 Table 4; Zitek 2026 Table 3; Carlson 2012) &mdash; not digitized. x = ln(RPC) = LRP, so the curves are directly comparable.";
+  document.getElementById("drnote").innerHTML=models.length+" published logistic models on a shared x-axis (solid = mortal injury, dashed = injury), computed from <b>exact published coefficients</b> (PNNL Biological Response Models 2020, Tables 11&ndash;13; Zitek 2026 Table 3; Carlson 2012) &mdash; not digitized. x = ln(RPC) = LRP, so the curves are directly comparable. Use the Response selector and the Species/Family filters to focus.";
 }
 function render(){
   var rows=ROWS.filter(match);

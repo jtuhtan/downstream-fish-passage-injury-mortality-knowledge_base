@@ -3,6 +3,27 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.21.0] - 2026-06-30
+Ingested the PNNL "Biological Response Models" report — dose–response curves now span ~15 species.
+
+### Added
+- Located and ingested the **PNNL Biological Response Models report** (Pflugrath et al., Nov 2020;
+  `2020_Pflugrath_Numerical_Biol_Response_Models.pdf`, register `2020_Pflugrathc`) — a synthesis of
+  dose–response models across barotrauma, blade strike and fluid shear.
+- Extracted its **barotrauma logistic coefficients** (Tables 11–13, Equation 12) into
+  `data/dose_response_models.csv`: ~15 species × **injury / mortal injury / immediate mortality**
+  (American shad, bluegill, Chinook, kokanee, largemouth bass, Macquarie perch, Murray cod, rainbow
+  trout, silver perch, tiger muskie, walleye, white sturgeon, golden gray mullet, Australian species).
+  The dose–response overlay now shows **46 models** (was 17), with a new **immediate mortality** response option.
+- New species added to the family vocabulary (bluegill, largemouth bass, kokanee, Macquarie perch,
+  tiger muskie, walleye, golden gray mullet).
+
+### Notes
+- Coefficients are from the report's published tables (exact); the scientific-name column was
+  realigned where the PDF text-extraction shifted it. All models share the ln(RPC) = LRP axis.
+- Still to ingest from the same report: the **blade-strike** (vs strike velocity & L/t ratio) and
+  **fluid-shear** (vs strain rate) model families — these need a multi-x-axis overlay.
+
 ## [0.20.0] - 2026-06-30
 Added the Zitek 2026 dose–response curves (per-species/stage logistic models).
 
