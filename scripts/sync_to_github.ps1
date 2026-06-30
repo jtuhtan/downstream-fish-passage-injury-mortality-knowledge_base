@@ -100,37 +100,60 @@ $ver = $null
 foreach ($l in (Get-Content -Encoding UTF8 (Join-Path $RepoPath 'CHANGELOG.md'))) {
   if ($l -match '^\#\#\s*\[(\d+\.\d+\.\d+)\]') { $ver = $matches[1]; break }
 }
-$newTag = $false; $tag = $null
+$tag = $null
 if ($ver) {
   $tag = "v$ver"
   if (-not (git -C $RepoPath tag --list $tag)) {
     git -C $RepoPath tag -a $tag -m $tag
-    $newTag = $true
     Log ("TAG: {0}" -f $tag)
   }
 }
 
-# 5. PUSH -------------------------------------------------------------------
-git -C $RepoPath push -q
-if ($newTag) { git -C $RepoPath push -q origin $tag }
-Log ("PUSH: main{0}" -f $(if ($newTag) { " + $tag" } else { "" }))
-
-# 6. RELEASE ----------------------------------------------------------------
-if ($newTag -and -not $NoRelease -and $gh) {
-  $notes = New-Object System.Collections.Generic.List[string]
-  $inSec = $false
-  foreach ($l in (Get-Content -Encoding UTF8 (Join-Path $RepoPath 'CHANGELOG.md'))) {
-    if ($l -match '^\#\#\s*\[') {
-      if ($inSec) { break }
-      if ($l -match ("\[{0}\]" -f [regex]::Escape($ver))) { $inSec = $true; continue }
-    }
-    if ($inSec) { $notes.Add($l) }
+# 5. PUSH (retry transient failures; abort LOUDLY on real failure) ----------
+function Push-WithRetry([string[]]$pushArgs, [string]$what) {
+  for ($i = 1; $i -le 3; $i++) {
+    git -C $RepoPath @pushArgs
+    if ($LASTEXITCODE -eq 0) { return $true }
+    Log ("WARN: push of {0} failed (exit {1}); attempt {2}/3" -f $what, $LASTEXITCODE, $i)
+    Start-Sleep 6
   }
-  $nf = Join-Path $env:TEMP ("relnotes_{0}.md" -f $ver)
-  [System.IO.File]::WriteAllText($nf, ($notes -join "`n").Trim(), $Utf8NoBom)
-  & $gh release create $tag --repo $RepoSlug --title $tag --notes-file $nf --verify-tag
-  Remove-Item $nf -ErrorAction SilentlyContinue
-  Log ("RELEASE: {0}" -f $tag)
+  return $false
+}
+if (-not (Push-WithRetry @('push', 'origin', 'HEAD') 'main')) {
+  Log "ERROR: could not push main. Commit + tag are saved LOCALLY; fix connectivity and re-run (this script is idempotent)."
+  throw "git push (main) failed"
+}
+if ($tag) {
+  # pushing an already-present tag is a harmless no-op, so this is safe on re-run
+  if (-not (Push-WithRetry @('push', 'origin', $tag) $tag)) {
+    Log ("ERROR: main pushed but tag {0} did not; re-run to finish tag + release." -f $tag)
+    throw "git push (tag) failed"
+  }
+}
+Log ("PUSH: main{0}" -f $(if ($tag) { " + $tag" } else { "" }))
+
+# 6. RELEASE (idempotent: only create if it does not already exist) ----------
+if ($tag -and -not $NoRelease -and $gh) {
+  & $gh release view $tag --repo $RepoSlug --json tagName *> $null
+  if ($LASTEXITCODE -ne 0) {
+    $notes = New-Object System.Collections.Generic.List[string]
+    $inSec = $false
+    foreach ($l in (Get-Content -Encoding UTF8 (Join-Path $RepoPath 'CHANGELOG.md'))) {
+      if ($l -match '^\#\#\s*\[') {
+        if ($inSec) { break }
+        if ($l -match ("\[{0}\]" -f [regex]::Escape($ver))) { $inSec = $true; continue }
+      }
+      if ($inSec) { $notes.Add($l) }
+    }
+    $nf = Join-Path $env:TEMP ("relnotes_{0}.md" -f $ver)
+    [System.IO.File]::WriteAllText($nf, ($notes -join "`n").Trim(), $Utf8NoBom)
+    & $gh release create $tag --repo $RepoSlug --title $tag --notes-file $nf --verify-tag
+    if ($LASTEXITCODE -eq 0) { Log ("RELEASE: {0}" -f $tag) }
+    else { Log ("ERROR: release create for {0} failed (exit {1})" -f $tag, $LASTEXITCODE) }
+    Remove-Item $nf -ErrorAction SilentlyContinue
+  } else {
+    Log ("RELEASE: {0} already exists, skipping" -f $tag)
+  }
 }
 
 Log "done"
