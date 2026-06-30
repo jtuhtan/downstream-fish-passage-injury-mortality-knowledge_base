@@ -134,8 +134,14 @@ Log ("PUSH: main{0}" -f $(if ($tag) { " + $tag" } else { "" }))
 
 # 6. RELEASE (idempotent: only create if it does not already exist) ----------
 if ($tag -and -not $NoRelease -and $gh) {
-  & $gh release view $tag --repo $RepoSlug --json tagName *> $null
-  if ($LASTEXITCODE -ne 0) {
+  # Does the release already exist? Toggle ErrorActionPreference so the native
+  # stderr from `gh release view` on a not-found release isn't wrapped into a
+  # terminating error (PS 5.1 trap) — we only want its exit code.
+  $eapSaved = $ErrorActionPreference; $ErrorActionPreference = 'SilentlyContinue'
+  & $gh release view $tag --repo $RepoSlug --json tagName 1>$null 2>$null
+  $relMissing = ($LASTEXITCODE -ne 0)
+  $ErrorActionPreference = $eapSaved
+  if ($relMissing) {
     $notes = New-Object System.Collections.Generic.List[string]
     $inSec = $false
     foreach ($l in (Get-Content -Encoding UTF8 (Join-Path $RepoPath 'CHANGELOG.md'))) {
