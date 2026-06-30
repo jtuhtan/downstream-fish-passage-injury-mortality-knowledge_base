@@ -121,6 +121,81 @@ def standardize_pressures(rows: list[dict]) -> tuple[list[str], int]:
     return log, n_pressure
 
 
+# --- derived analysis tables (the assessment / evaluation layer) ------------
+COV_COLS = ["mechanism", "predictor", "response", "n_relationships", "n_studies",
+            "n_species", "coverage_level", "studies"]
+THR_COLS = ["mechanism", "predictor", "unit", "response", "species", "n",
+            "min", "median", "max", "studies"]
+
+
+def _toks(s):
+    return [x.strip() for x in (s or "").split(";") if x.strip()]
+
+
+def _num(x):
+    try:
+        return float(str(x).strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def coverage_table(rows: list[dict]) -> list[dict]:
+    """One row per populated (mechanism, predictor, response) cell + coverage level."""
+    cells: dict = {}
+    for r in rows:
+        mech, pred = r.get("mechanism", ""), r.get("predictor", "")
+        for resp in _toks(r.get("response", "")):
+            c = cells.setdefault((mech, pred, resp),
+                                 {"n": 0, "st": set(), "sp": set(), "num": 0, "eq": 0})
+            c["n"] += 1
+            if r.get("citation_key"):
+                c["st"].add(r["citation_key"])
+            for sp in _toks(r.get("species", "")):
+                c["sp"].add(sp)
+            if (_num(r.get("predictor_value")) is not None or _num(r.get("response_value")) is not None
+                    or r.get("relationship_type") in ("threshold", "point", "curve")):
+                c["num"] += 1
+            if r.get("relationship_type") == "equation" or "equations.csv" in r.get("model_or_value", ""):
+                c["eq"] += 1
+    out = []
+    for (mech, pred, resp), c in sorted(cells.items()):
+        lvl = "modelled" if c["eq"] else ("quantitative" if c["num"] else "qualitative")
+        out.append({"mechanism": mech, "predictor": pred, "response": resp,
+                    "n_relationships": c["n"], "n_studies": len(c["st"]),
+                    "n_species": len(c["sp"]), "coverage_level": lvl,
+                    "studies": "; ".join(sorted(c["st"]))})
+    return out
+
+
+def thresholds_table(rows: list[dict]) -> list[dict]:
+    """Per (mechanism, predictor, unit, response, species): n + min/median/max of values."""
+    g: dict = {}
+    for r in rows:
+        v = _num(r.get("predictor_value"))
+        if v is None:
+            continue
+        for resp in _toks(r.get("response", "")):
+            for sp in (_toks(r.get("species", "")) or ["(unspecified)"]):
+                key = (r.get("mechanism", ""), r.get("predictor", ""),
+                       r.get("predictor_unit", ""), resp, sp)
+                g.setdefault(key, []).append((v, r.get("citation_key", "")))
+    out = []
+    for (mech, pred, unit, resp, sp), vals in sorted(g.items()):
+        nums = sorted(v for v, _ in vals)
+        out.append({"mechanism": mech, "predictor": pred, "unit": unit, "response": resp,
+                    "species": sp, "n": len(nums), "min": f"{nums[0]:g}",
+                    "median": f"{nums[len(nums)//2]:g}", "max": f"{nums[-1]:g}",
+                    "studies": "; ".join(sorted(set(c for _, c in vals)))})
+    return out
+
+
+def write_csv(path: Path, cols: list[str], rows: list[dict]) -> None:
+    with open(path, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=cols, extrasaction="ignore")
+        w.writeheader()
+        w.writerows(rows)
+
+
 def main() -> int:
     if not SR.exists():
         print(f"ERROR: {SR} not found", file=sys.stderr)
@@ -145,6 +220,18 @@ def main() -> int:
             print("  -", s)
     else:
         print("\nQA: all rows pass required-field / unit / confidence checks.")
+
+    # derived analysis tables -> outputs/ (machine-readable assessment layer)
+    cov = coverage_table(rows)
+    thr = thresholds_table(rows)
+    outdir = REPO / "outputs"
+    outdir.mkdir(exist_ok=True)
+    write_csv(outdir / "stressor_response_coverage.csv", COV_COLS, cov)
+    write_csv(outdir / "stressor_response_thresholds.csv", THR_COLS, thr)
+    n_quant = sum(1 for c in cov if c["coverage_level"] in ("quantitative", "modelled"))
+    print(f"\ncoverage: {len(cov)} populated cells ({n_quant} quantified/modelled) | "
+          f"thresholds: {len(thr)} groups")
+    print("  -> outputs/stressor_response_coverage.csv, outputs/stressor_response_thresholds.csv")
 
     n_num = sum(1 for r in rows if _is_num(r.get("predictor_value")))
     meta = {
@@ -203,6 +290,9 @@ td.small{color:var(--mut);font-size:11.5px}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 .counts{color:var(--mut);font-size:12px;margin:4px 0 0}
 .eqform{font-family:ui-monospace,Consolas,monospace;background:#f6f8fa;padding:1px 5px;border-radius:5px}
+.cov td,.cov th{text-align:center;min-width:34px;font-size:11.5px}
+.cov td:first-child,.cov th:first-child{text-align:left;white-space:nowrap}
+.chip{padding:1px 6px;border-radius:4px;white-space:nowrap}
 footer{color:var(--mut);font-size:11.5px;padding:14px 22px;border-top:1px solid var(--line);margin-top:24px}
 </style></head><body>
 <header>
@@ -237,8 +327,15 @@ footer{color:var(--mut);font-size:11.5px;padding:14px 22px;border-top:1px solid 
     <table id="vartable"></table>
   </div>
 
-  <h2>Coverage</h2>
-  <div id="coverage" class="counts"></div>
+  <h2>Coverage &amp; gaps (assessment matrix)</h2>
+  <div class="filters" style="margin:0 0 6px"><label>Matrix columns<select id="covdim">
+    <option value="response">Response</option><option value="species">Species</option>
+    <option value="structure_type">Structure</option><option value="mechanism">Mechanism</option></select></label></div>
+  <div id="covsummary" class="counts" style="margin-bottom:8px"></div>
+  <div style="max-height:430px;overflow:auto;border:1px solid var(--line);border-radius:8px">
+    <table id="covmatrix" class="cov"></table>
+  </div>
+  <div id="coverage" class="counts" style="margin-top:8px"></div>
 </div>
 <footer id="foot"></footer>
 
@@ -256,6 +353,7 @@ function colorFor(sp){ var l=speciesList(); var i=l.indexOf(sp); return PALETTE[
 function esc(s){ return (s==null?"":String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
 var FILT={mechanism:"",predictor:"",response:"",species:"",citation_key:"",confidence:""};
+var COVDIM="response";
 
 function buildFilters(){
   var defs=[
@@ -381,13 +479,48 @@ function renderVars(){
     +". Depth (m) -> absolute kPa = 101.325 + 9.80665 &times; depth (freshwater).<br>"+conv;
 }
 
+var COVCOLORS={modelled:"#34d399",quantitative:"#bbf7d0",qualitative:"#fde68a",none:"#f1f5f9"};
+function colTokens(r,dim){ return (dim==="response"||dim==="species") ? tokens(r[dim]) : [r[dim]||"(none)"]; }
+function covCell(rows,p,cv,dim){
+  var rs=rows.filter(function(r){ return r.predictor===p && colTokens(r,dim).indexOf(cv)>=0; });
+  if(!rs.length) return null;
+  var num=rs.some(function(r){ return !isNaN(parseFloat(r.predictor_value))||!isNaN(parseFloat(r.response_value))||["threshold","point","curve"].indexOf(r.relationship_type)>=0; });
+  var eq=rs.some(function(r){ return r.relationship_type==="equation"||(r.model_or_value||"").indexOf("equations.csv")>=0; });
+  return {n:rs.length, lvl: eq?"modelled":(num?"quantitative":"qualitative"), studies:uniqSorted(rs.map(function(r){return r.citation_key;}))};
+}
 function renderCoverage(rows){
+  var dim=COVDIM;
+  var preds=uniqSorted(rows.map(function(r){return r.predictor;}));
+  var cols=uniqSorted([].concat.apply([],rows.map(function(r){return colTokens(r,dim);})));
+  var nModel=0,nQuant=0,nQual=0,nGap=0;
+  var h='<tr><th>predictor \\ '+esc(dim)+'</th>';
+  cols.forEach(function(cv){ h+='<th>'+esc(cv)+'</th>'; });
+  h+='</tr>';
+  preds.forEach(function(p){
+    h+='<tr><td class="v">'+esc(p)+'</td>';
+    cols.forEach(function(cv){
+      var c=covCell(rows,p,cv,dim);
+      if(!c){ nGap++; h+='<td style="background:'+COVCOLORS.none+'"></td>'; }
+      else{
+        if(c.lvl==="modelled")nModel++; else if(c.lvl==="quantitative")nQuant++; else nQual++;
+        var t=p+" -> "+cv+": "+c.n+" rel ("+c.lvl+") | "+c.studies.join(", ");
+        h+='<td style="background:'+COVCOLORS[c.lvl]+'" title="'+esc(t)+'">'+c.n+'</td>';
+      }
+    });
+    h+='</tr>';
+  });
+  document.getElementById("covmatrix").innerHTML=h;
+  var tot=preds.length*cols.length;
+  function chip(col,txt){ return '<span class="chip" style="background:'+col+'">'+txt+'</span>'; }
+  document.getElementById("covsummary").innerHTML=
+    "<b>"+preds.length+" predictors &times; "+cols.length+" "+esc(dim)+" = "+tot+" cells.</b>&nbsp; "
+    +chip(COVCOLORS.modelled,"modelled "+nModel)+" "+chip(COVCOLORS.quantitative,"quantitative "+nQuant)+" "
+    +chip(COVCOLORS.qualitative,"qualitative-only "+nQual)+" "+chip(COVCOLORS.none,"gap "+nGap)
+    +"&nbsp; &mdash; quantified "+(nModel+nQuant)+"/"+tot+" ("+Math.round(100*(nModel+nQuant)/Math.max(tot,1))+"%). "
+    +"Blank = unstudied combination (gap); amber = exists but not yet numeric (extract / digitize).";
   function tally(keyfn){ var m={}; rows.forEach(function(r){ keyfn(r).forEach(function(k){ if(k) m[k]=(m[k]||0)+1; }); });
     return Object.keys(m).sort(function(a,b){return m[b]-m[a];}).map(function(k){return k+" ("+m[k]+")";}).join(" &middot; "); }
-  document.getElementById("coverage").innerHTML=
-    "<b>By predictor:</b> "+tally(function(r){return [r.predictor];})+"<br>"
-    +"<b>By response:</b> "+tally(function(r){return tokens(r.response);})+"<br>"
-    +"<b>By study:</b> "+tally(function(r){return [r.citation_key];});
+  document.getElementById("coverage").innerHTML="<b>By study:</b> "+tally(function(r){return [r.citation_key];});
 }
 
 function render(){
@@ -400,7 +533,9 @@ document.getElementById("sub").innerHTML=META.n_rel+" relationships &middot; "+M
   +(META.issues?(" &middot; "+META.issues+" QA issue(s)"):" &middot; QA clean");
 document.getElementById("foot").innerHTML="Generated by scripts/build_stressor_response.py from data/stressor_response.csv + data/equations.csv + data/variables_units.csv. "
   +"No PDFs; metadata only. Demonstrator dataset &mdash; verify before citing.";
-buildFilters(); renderEqs(); renderVars(); render();
+buildFilters(); renderEqs(); renderVars();
+document.getElementById("covdim").addEventListener("change",function(){ COVDIM=this.value; render(); });
+render();
 </script>
 </body></html>"""
 

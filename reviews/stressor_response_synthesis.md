@@ -69,3 +69,35 @@ Pflugrath Figs 2–3 injury vs ln(RPC); Stephenson Fig 3 vs nadir). Until they a
 **digitized** (`references/figure_digitization.md`) the explorer plots only the scalar
 thresholds. Digitizing those four figures + extracting the per-species logistic
 coefficients would turn this into a real, overlay-able barotrauma dose–response dataset.
+
+## 6. Coverage & gaps — the assessment framework
+
+`build_stressor_response.py` emits two machine-readable tables that operationalise the base for
+assessment and gap analysis, and the explorer renders them as an interactive **coverage & gaps
+matrix** (predictor × {response | species | structure | mechanism}, colour-coded so quantified,
+qualitative-only, and blank/unstudied cells are obvious):
+
+- `outputs/stressor_response_coverage.csv` — one row per (mechanism × predictor × response) cell
+  with a **coverage level** (modelled / quantitative / qualitative) and the contributing studies.
+- `outputs/stressor_response_thresholds.csv` — per (mechanism × predictor × unit × response ×
+  species): **n** and **min/median/max** of the numeric values.
+
+**Current barotrauma coverage (41 relationships → 34 populated cells):** **2 modelled, 21
+quantitative, 11 qualitative-only**; **9 numeric threshold groups**.
+
+- **Best quantified / modelled:** pressure-ratio dose (**LRP / RPC**) → (mortal) injury, with
+  logistic models [Pflugrath2018, Carlson2012, Zitek2026] — the densest, most model-ready cell.
+- **Qualitative-only cells (the curation gaps — exist but not yet numeric):** buoyancy / swim-bladder
+  state → injury/mortality (3 studies, categorical), **TDG** → injury/mortality, turbine/pump
+  **structure_type** comparisons, runner **geometry** → nadir. Their numbers live in figures/tables
+  not yet digitized.
+- **Sparse thresholds:** only 9 numeric groups (e.g. RPC_AN ≈ 2 → 50 % mortality, Chinook;
+  RPC_EA ≈ 0.4 injury onset, Australian larvae; strain rate 1000 s⁻¹ → −16 % survival, gambusia).
+
+**Major gaps (blank / thin cells):** non-salmonid species (eel, shad, lamprey, cyprinids,
+Neotropical/European) mostly have single qualitative cells; **pump / screw / VLH** structure types
+are barely represented vs Kaplan; **shear** is almost absent from the barotrauma corpus; and the
+operating-point/geometry → outcome link is qualitative (CFD nadir distributions exist, but the
+nadir → survival step is not yet numeric here). The highest-value action to convert qualitative
+cells to quantitative remains **digitizing the dose–response figures** and extracting the
+per-species logistic coefficients.

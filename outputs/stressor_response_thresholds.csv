@@ -1,0 +1,10 @@
+mechanism,predictor,unit,response,species,n,min,median,max,studies
+barotrauma,accl_p,kPa,injury,Pacific lamprey (Entosphenus tridentatus),1,146.2,146.2,146.2,Colotelo2012
+barotrauma,accl_p,kPa,injury,western brook lamprey (Lampetra richardsoni),1,146.2,146.2,146.2,Colotelo2012
+barotrauma,accl_p,kPa,mortality,Pacific lamprey (Entosphenus tridentatus),1,146.2,146.2,146.2,Colotelo2012
+barotrauma,accl_p,kPa,mortality,western brook lamprey (Lampetra richardsoni),1,146.2,146.2,146.2,Colotelo2012
+barotrauma,rpc_AN,ratio_PA/PN,mortality,Chinook salmon (Oncorhynchus tshawytscha),1,2,2,2,Pflugrath2018
+barotrauma,rpc_EA,ratio_PN/PA,injury_hemorrhage,Murray cod (Maccullochella peelii),1,0.4,0.4,0.4,Boys2016
+barotrauma,rpc_EA,ratio_PN/PA,injury_hemorrhage,golden perch (Macquaria ambigua),1,0.4,0.4,0.4,Boys2016
+barotrauma,rpc_EA,ratio_PN/PA,injury_hemorrhage,silver perch (Bidyanus bidyanus),1,0.4,0.4,0.4,Boys2016
+shear,strain_rate,s-1,survival,Gambusia holbrooki,1,1000,1000,1000,Doyle2020
