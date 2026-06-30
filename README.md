@@ -1,9 +1,11 @@
 # Downstream Fish Passage Injury and Mortality Knowledge Base
 
 [![Live interactive dashboard](https://img.shields.io/badge/Live_interactive_dashboard-Open_in_browser-2ea44f?style=for-the-badge)](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/)
+[![Stressor-response explorer](https://img.shields.io/badge/Stressor--response_explorer-Open_in_browser-2563eb?style=for-the-badge)](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/stressor_response.html)
 
-> 📊 **[Open the interactive dashboard →](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/)** — browse the evidence, charts and reproducibility tiers in your browser. No download or GitHub account needed.
-> *(Clicking `docs/index.html` inside the repo only shows its source code — use this link to actually run it.)*
+> 📊 **[Open the interactive dashboard →](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/)** — browse the evidence, charts and reproducibility tiers in your browser.
+> 🔬 **[Open the stressor–response explorer →](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/stressor_response.html)** — thresholds, dose–response and equations linking physical stressors (pressure, shear, blade strike…) to injury and mortality (barotrauma demonstrator).
+> *(Clicking a `docs/*.html` file inside the repo only shows its source code — use these links to actually run them. No download or GitHub account needed.)*
 
 A community knowledge base on **how fish are injured and killed during downstream
 passage** through hydropower turbines, pumps, Archimedean screws, weirs,
