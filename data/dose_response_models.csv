@@ -8,3 +8,11 @@ DRM_Pf18_mi_gudgeon,Pflugrath2018,barotrauma,carp gudgeon,mortal injury,ln(RPC),
 DRM_Pf18_mi_cod,Pflugrath2018,barotrauma,Murray cod,mortal injury,ln(RPC),0,2.7,logistic,-7.33,2.79,Table 4,Mined,most tolerant (curve shifted right)
 DRM_Pf18_mi_perch,Pflugrath2018,barotrauma,silver perch,mortal injury,ln(RPC),0,2.7,logistic,-3.91,1.39,Table 4,Mined,mortal-injury curve
 DRM_Ca12_mi_chinook,Carlson2012,barotrauma,Chinook salmon,mortal injury,ln(RPC),0,2.0,logistic,-5.997,4.201,Eqn 1,Mined,TB=0 baseline; full model adds +0.603*tag_burden_%
+DRM_Zi26_mi_nase_L1,Zitek2026,barotrauma,Common nase (L1),mortal injury,ln(RPC),0,2.7,logistic,-3.319,3.194,Table 3,Mined,larval physostome cyprinid (two-chambered swim bladder; highly susceptible)
+DRM_Zi26_mi_nase_0,Zitek2026,barotrauma,Common nase (0+),mortal injury,ln(RPC),0,2.7,logistic,-7.257,7.377,Table 3,Mined,b1 decimal inferred (7.377); RPC50~2.7 matches text
+DRM_Zi26_mi_roach_L6,Zitek2026,barotrauma,Roach (L6/J1),mortal injury,ln(RPC),0,2.7,logistic,-3.003,2.737,Table 3,Mined,physostome cyprinid (susceptible)
+DRM_Zi26_mi_roach_0,Zitek2026,barotrauma,Roach (0+),mortal injury,ln(RPC),0,2.7,logistic,-6.492,4.017,Table 3,Mined,
+DRM_Zi26_mi_perch_L1,Zitek2026,barotrauma,European perch (L1/L2),mortal injury,ln(RPC),0,2.7,logistic,-4.848,1.974,Table 3,Mined,early larvae - swim bladder not developed (most tolerant)
+DRM_Zi26_mi_perch_L6,Zitek2026,barotrauma,European perch (L6/J1),mortal injury,ln(RPC),0,2.7,logistic,-10.909,6.998,Table 3,Mined,steep curve
+DRM_Zi26_mi_perch_0,Zitek2026,barotrauma,European perch (0+),mortal injury,ln(RPC),0,2.7,logistic,-5.720,4.806,Table 3,Mined,
+DRM_Zi26_mi_grayling_0,Zitek2026,barotrauma,European grayling (0+),mortal injury,ln(RPC),0,2.7,logistic,-5.182,2.222,Table 3,Mined,most tolerant (RPC50~10)

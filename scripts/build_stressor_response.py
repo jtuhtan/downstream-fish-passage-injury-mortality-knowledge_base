@@ -678,7 +678,7 @@ function renderDoseResponse(){
   document.getElementById("drplot").innerHTML=svg;
   var sps=uniqSorted(models.map(function(m){return m.species;}));
   document.getElementById("drlegend").innerHTML=sps.map(function(s){ return '<span><i class="dot" style="background:'+colorFor(s)+'"></i>'+esc(s)+'</span>'; }).join("");
-  document.getElementById("drnote").innerHTML=models.length+" published logistic models on a shared x-axis (solid = mortal injury, dashed = injury), computed from <b>exact coefficients</b> (Pflugrath 2018 Table 4; Carlson 2012) &mdash; not digitized. x = ln(RPC) = LRP, so the curves are directly comparable.";
+  document.getElementById("drnote").innerHTML=models.length+" published logistic models on a shared x-axis (solid = mortal injury, dashed = injury), computed from <b>exact coefficients</b> (Pflugrath 2018 Table 4; Zitek 2026 Table 3; Carlson 2012) &mdash; not digitized. x = ln(RPC) = LRP, so the curves are directly comparable.";
 }
 function render(){
   var rows=ROWS.filter(match);

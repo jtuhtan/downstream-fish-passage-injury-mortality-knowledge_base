@@ -3,6 +3,22 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.20.0] - 2026-06-30
+Added the Zitek 2026 dose–response curves (per-species/stage logistic models).
+
+### Added
+- 8 **Zitek 2026** logistic models in `data/dose_response_models.csv` (b0/b1 from the paper's
+  Table 3, for nase, roach, European perch and European grayling × life stage), so their curves now
+  appear in the dose–response overlay. Previously only Zitek's RPC-at-50% thresholds were captured
+  (points, not curves). Coefficients were cross-checked against the paper's stated RPC-50 values
+  (e.g. grayling b0=−5.182, b1=2.222 → RPC50 ≈ 10, matching the reported 10–12).
+- The dose–response panel now overlays 17 models on the shared ln(RPC) = LRP axis.
+
+### Notes
+- The curves confirm Zitek's finding: physostomous Cypriniformes (nase, roach) and developed-
+  swim-bladder stages are the most susceptible, while early larvae without a developed swim bladder
+  (perch/grayling L1/L2) are the most tolerant.
+
 ## [0.19.0] - 2026-06-30
 Explorer: family / life-stage / length / mass filters, a data-completeness indicator, and a dose–response legend fix.
 
