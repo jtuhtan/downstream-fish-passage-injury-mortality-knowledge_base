@@ -114,3 +114,50 @@ traceability of *where and when* a conversion happens:
 
 Note: **shear stress (Pa)** is a distinct quantity and is *not* folded into the pressure
 standard; strain rate (s⁻¹) ≠ shear stress (Pa) ≠ pressure (kPa).
+
+**Length & mass are standardized too:** length → **mm**, mass → **g** (parsed from the free-text
+`fish_size` field by the build; `cm ×10`, `m ×1000`, `kg ×1000`, `mg ×0.001`). The build adds derived
+`length_mm` / `mass_g` (used by the explorer's body-length / body-mass filters and the
+data-completeness indicator). A field that is absent stays blank and shows as *(not provided)* — never
+imputed.
+
+---
+
+## D. `data/dose_response_models.csv` — one row per runnable fitted model
+
+Holds the **fitted coefficients** so a dose–response curve can be **computed** (and overlaid on a
+shared axis) without digitizing points. This is where published model tables land (e.g. PNNL
+Biological Response Models Tables 11–13; Pflugrath 2018 Table 4; Zitek 2026 Table 3).
+
+| Column | Content | Convention |
+|---|---|---|
+| `model_id` | Stable id | `DRM_<src>_<resp>_<species>` |
+| `citation_key` | Source | → `data/corpus.csv` (e.g. `Pflugrath2020c` = the PNNL report) |
+| `mechanism` | Mechanism | `barotrauma` / `strike` / `shear` |
+| `species` | Taxon (+ stage if needed) | `Common name (Scientific name)`; matches relationship rows for shared colour/filter |
+| `response` | What the curve predicts | `injury` / `mortal injury` / `immediate mortality` / `survival` |
+| `x_metric` | **The x-axis** | `ln(RPC)` (=LRP, barotrauma) / `strike velocity` / `strain rate` — models compare only within one x_metric |
+| `x_min`, `x_max` | Domain to draw over | numeric, in x_metric units |
+| `form` | Functional form | `logistic` (`P = 1/(1+exp(-(b0+b1·x)))`), `curvilinear`, … |
+| `b0`, `b1` | Coefficients | as published |
+| `source_location` | **REQUIRED** | `Table 12`, `Eqn 12`, `p. …` |
+| `confidence` | `Mined` / `Verified` | |
+| `notes` | Original study, caveats, inferred values | |
+
+**Rules**
+- **`x_metric` is mandatory and segregates the plot** — barotrauma (LRP), blade strike (velocity),
+  and shear (strain rate) each get their own axis; never overlay across metrics.
+- Verify each model against a stated landmark (e.g. `RPC50 = exp(−b0/b1)`) before use.
+- A model taken from a synthesis report cites the report in `citation_key`, with the original study in `notes`.
+
+---
+
+## E. Derived (generated) tables — the assessment layer
+
+`scripts/build_stressor_response.py` regenerates these into `outputs/` on every build; they are the
+machine-readable assessment / gap-analysis layer (do **not** hand-edit):
+
+- `outputs/stressor_response_coverage.csv` — one row per (mechanism × predictor × response) cell with a
+  **coverage level** (`modelled` / `quantitative` / `qualitative`) + the contributing studies.
+- `outputs/stressor_response_thresholds.csv` — per (mechanism × predictor × unit × response × species):
+  `n` and `min/median/max` of the numeric values.
