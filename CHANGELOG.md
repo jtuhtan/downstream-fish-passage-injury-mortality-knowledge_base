@@ -3,6 +3,27 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.22.0] - 2026-06-30
+Updated the stressor–response skill to current state and re-ran the barotrauma analysis under it.
+
+### Changed
+- **Updated the `passage-stressor-response` skill** (SKILL.md + schema.md): three output tables incl.
+  `dose_response_models.csv`; a synthesis-report-first, coefficients-over-figure-digitization workflow;
+  unit standardization (kPa/mm/g); the coverage/assessment layer; and documented PDF table-extraction
+  gotchas (species-column shift, dropped decimals, RPC50 cross-check).
+- **Re-ran the full barotrauma analysis under the updated skill:**
+  - **Coefficient cross-check** (`RPC50 = exp(−b0/b1)`) on all 46 dose–response models — all pass and
+    validate the extractions (grayling RPC50 10.3 ≈ stated 10–12; nase 2.67 ≈ 2.7).
+  - **Reconciled 3 relationship rows** (Brown 2012; Pflugrath 2018 ×2) from `digitized_figure /
+    pending digitization` → `reported` — curves are now held as exact coefficients.
+  - Re-ran the assessment: coverage 35 cells (24 quantified/modelled), 13 threshold groups.
+- Added **`reviews/stressor_response_skill_update.md`** documenting the old-vs-updated-skill changes.
+
+### Notes
+- Two immediate-mortality models (Murray cod, silver perch) have RPC50 beyond the realistic range —
+  consistent with low immediate mortality, not extraction errors.
+- Figure-only datasets still pending digitization: Stephenson Fig 3, Boys piecewise, Doyle life-stage.
+
 ## [0.21.0] - 2026-06-30
 Ingested the PNNL "Biological Response Models" report — dose–response curves now span ~15 species.
 
