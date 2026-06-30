@@ -3,6 +3,31 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.15.0] - 2026-06-30
+Added the stressor–response module: quantitative relationships (thresholds, dose–response, equations) linking physical stressors and system characteristics to injury and mortality.
+
+### Added
+- **Skill** `skills/passage-stressor-response/` — extracts one row per quantitative
+  relationship (thresholds with conditions, dose–response points, equations, digitized
+  figures), with a controlled predictor vocabulary, schema, extraction playbook,
+  figure-digitization protocol, and a dependency-free first-pass finder
+  (`scripts/extract_relationships.py`).
+- **Data** `data/stressor_response.csv` (41 relationships) and `data/equations.csv`
+  (11 models) — barotrauma demonstrator curated from a finder run over all 72 available
+  barotrauma PDFs (2,385 candidates). Predictors include RPC (both conventions), LRP,
+  nadir pressure, strain rate, acclimation depth, buoyancy state, tag burden, operating
+  point and runner geometry; species span salmonids, eel, lamprey, shad, perch, gambusia,
+  catfish, Cypriniformes and Neotropical/European fishes. All rows `Mined` (source-located).
+- **Build/explorer** `scripts/build_stressor_response.py` → self-contained
+  `docs/stressor_response.html` (within-metric comparator, relationships table, equations
+  registry, coverage), published via GitHub Pages and linked from the README.
+- **Synthesis** `reviews/stressor_response_synthesis.md`.
+
+### Notes
+- Captures the metric-comparability trap explicitly: RPC = PA/PN (Brown/Pflugrath) vs
+  RPC = PN/PA (Boys) are inverse conventions and are never pooled.
+- Curation of the remaining candidates and figure digitization are ongoing.
+
 ## [0.14.0] - 2026-06-30
 Screened the 13 second-ingest papers into the mechanism deep-dives, so they
 are now treated identically to the rest of the corpus.

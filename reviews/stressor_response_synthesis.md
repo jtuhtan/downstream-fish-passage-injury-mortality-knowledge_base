@@ -1,10 +1,12 @@
 # Stressor–response synthesis — barotrauma (demonstrator)
 
-> **Scope & status.** A demonstrator built from the `passage-stressor-response` skill
-> on **8 barotrauma lab papers**. All rows are `confidence = Mined` (extracted, not yet
-> PDF-verified via `tools/verification/`). It exists to show the value chain
-> *curated relationships → analysis/comparison/exploration/reporting*; it is **not** a
-> complete barotrauma synthesis. Sources: [`data/stressor_response.csv`](../data/stressor_response.csv),
+> **Scope & status.** Built with the `passage-stressor-response` skill across the
+> **full barotrauma corpus** — the finder ran over all **72 available barotrauma PDFs**
+> (2,385 candidate findings), from which **41 relationships + 11 equations** are curated
+> so far across ~25 papers. All rows are `confidence = Mined` (extracted, not yet
+> PDF-verified via `tools/verification/`). It shows the value chain
+> *curated relationships → analysis/comparison/exploration/reporting*; curation of the
+> remaining candidates and figure digitization are ongoing. Sources: [`data/stressor_response.csv`](../data/stressor_response.csv),
 > [`data/equations.csv`](../data/equations.csv); explore interactively at
 > [`docs/stressor_response.html`](../docs/stressor_response.html); regenerate with
 > `python scripts/build_stressor_response.py`.
@@ -47,11 +49,18 @@ keeps each metric in its own lane (see the explorer) precisely so a "RPC of 0.4"
 
 ## 4. Models available to predict outcomes
 
-`equations.csv` registers 6: Boyle's-law volume change (static) and its dynamic critique
+`equations.csv` registers 11: Boyle's-law volume change (static) and its dynamic critique
 [Brown2012]; the two RPC definitions and LRP; the **per-species logistic** `logit(p) = b0 +
-b1·ln(RPC)` [Pflugrath2018]; and McKinstry's **AIC-selected mortal-injury metric** (the
-8-injury endpoint reused across the PNNL/WA studies) [McKinstry2007]. Each carries its
-**domain of validity** — the guard against extrapolating a salmonid model onto an eel.
+b1·ln(RPC)` [Pflugrath2018, Zitek2026]; McKinstry's **AIC-selected mortal-injury metric**
+(the 8-injury endpoint reused across the PNNL/WA studies) [McKinstry2007]; **Carlson's
+fitted model** `logit(p) = −5.997 + 4.201·LRP + 0.603·TB` adding **tag burden** as a
+predictor (so e.g. RPC = 2.18 → ~14–24 % mortal injury depending on tag load) [Carlson2012];
+the BioPA-style **CFD-coupled** model that integrates a dose–response over a modelled
+nadir-pressure distribution [Martinez2025, Hou2018]; and a **shear** threshold (LS10)
+[Boys2014]. Each carries its **domain of validity** — the guard against extrapolating a
+salmonid model onto an eel. New since the 8-paper demo: **tag burden, operating point /
+runner geometry (CFD), and many more species** (American shad, American eel, gambusia,
+redfin, crucian carp, pictus catfish, Neotropical and European potamodromous fishes).
 
 ## 5. Biggest gap (what to do next)
 
