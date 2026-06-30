@@ -1,0 +1,22 @@
+symbol,quantity,unit,definition,notes
+PA,Acclimation (onset) pressure,kPa,Absolute pressure the fish equilibrated to before passage,Canonical pressure unit is kPa
+PN,Nadir (exposure) pressure,kPa,Lowest absolute pressure experienced during passage,
+VA,Gas volume at acclimation,relative,Swim-bladder / free-gas volume at PA,Pairs with VN in Boyle's law
+VN,Gas volume at nadir,relative,Free-gas volume at PN,
+RPC_AN,Ratio of pressure change (acclimation/nadir),dimensionless,PA / PN (>= 1; higher = more severe),Brown / Pflugrath convention
+RPC_EA,Ratio of pressure change (exposure/acclimation),dimensionless,PN / PA (0-1; lower = more severe),Boys convention; INVERSE of RPC_AN - never pool
+LRP,Log ratio of pressure,dimensionless,ln(PA / PN),Linearises the dose for logistic injury models
+dPdt,Rate of pressure change,kPa/s,Speed of decompression at the runner,
+nadir_p,Nadir pressure,kPa,See PN,Pressure -> standardized to kPa
+accl_p,Acclimation pressure,kPa,See PA,Pressure -> standardized to kPa
+accl_depth,Acclimation / neutral-buoyancy depth,m,Depth the fish equilibrated to,"Absolute pressure (kPa) = 101.325 + 9.80665 x depth_m (freshwater); depth kept in m, pressure equivalent noted"
+TB,Tag burden,%,Tag mass as a percentage of fish body mass,
+strain_rate,Fluid strain rate,s^-1,Primary fluid-shear exposure metric (jet/flume),Distinct from shear stress
+shear_stress,Shear stress,Pa,Fluid stress; NOT interchangeable with strain rate,Kept in Pa (a stress metric, not a barotrauma pressure)
+tdg,Total dissolved gas,% saturation,Gas-supersaturation metric,
+strike_v,Blade strike velocity,m/s,Impact speed at runner contact,
+length,Fish total / fork length,mm,,
+mass,Body mass,g,,
+pct_bep,Operating point,% of best efficiency,Turbine operating mode,
+head,Hydraulic head,m,,
+discharge,Flow rate (Q),m^3/s,,

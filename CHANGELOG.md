@@ -3,6 +3,25 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.16.0] - 2026-06-30
+Stressor–response explorer: rename, Study filter, a variables/units table, and a documented kPa pressure standard.
+
+### Added
+- `data/variables_units.csv` — canonical variables and their physical units, rendered in the
+  explorer under *Variables & physical units*.
+- **kPa pressure standard**, enforced and logged at build time
+  (`scripts/build_stressor_response.py` → `standardize_pressures()`): any non-kPa pressure is
+  converted (factors: psi ×6.894757, bar ×100, atm ×101.325, mmHg ×0.1333224, Pa ×0.001;
+  depth→kPa = 101.325 + 9.80665×m), the original is preserved in the row's `notes`, and each
+  conversion is logged in the build output and the explorer for traceability. Documented in
+  `skills/passage-stressor-response/references/schema.md` §C. (Current data: 9 pressures, all
+  already kPa → 0 conversions.)
+
+### Changed
+- Renamed the tool to **"Stress-Response Explorer for Downstream Fish Passage — Injury and Mortality"**.
+- Added a **Study** filter (by `citation_key`) to the explorer; coverage also tallies by study.
+- Added a **Variables & physical units** table below the equations registry.
+
 ## [0.15.0] - 2026-06-30
 Added the stressor–response module: quantitative relationships (thresholds, dose–response, equations) linking physical stressors and system characteristics to injury and mortality.
 

@@ -87,3 +87,30 @@ the fit in `model_or_value`) — do both when the paper gives points *and* a fit
   from running a model outside the range/species/turbine it was fit for.
 - If a relationship row in table A *is* this equation, set its `model_or_value` to
   `EQ → equations.csv:<equation_id>`.
+
+---
+
+## C. Units & pressure standardization
+
+The canonical variables and their physical units are listed in
+[`../../../data/variables_units.csv`](../../../data/variables_units.csv) (rendered in the
+explorer under *Variables & physical units*).
+
+**Pressure is standardized to kPa.** Two complementary places enforce this, for full
+traceability of *where and when* a conversion happens:
+
+1. **At curation (source CSV).** Enter pressures in **kPa**. When a source reports another
+   unit, convert it and record the original in `notes`, e.g. `acclimation 4.6 m (146.2 kPa)`.
+2. **At build time (enforced + logged).** `scripts/build_stressor_response.py`
+   (`standardize_pressures()`) converts any pressure field whose unit is not kPa, using the
+   factors below, **appends the original value to that row's `notes`** as
+   `[conv: <value> <unit> ×<factor> -> kPa]`, and writes a conversion entry to the build log
+   and the explorer's *Variables & units* panel. If everything is already kPa it reports
+   `0 conversions` (the current state of the dataset).
+
+**Conversion factors (× value → kPa):** `Pa ×0.001`, `hPa ×0.1`, `kPa ×1`, `MPa ×1000`,
+`psi ×6.894757`, `bar ×100`, `atm ×101.325`, `mmHg ×0.1333224`.
+**Depth → pressure (freshwater):** absolute kPa = `101.325 + 9.80665 × depth_m`.
+
+Note: **shear stress (Pa)** is a distinct quantity and is *not* folded into the pressure
+standard; strain rate (s⁻¹) ≠ shear stress (Pa) ≠ pressure (kPa).
