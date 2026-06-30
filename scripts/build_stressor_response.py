@@ -326,15 +326,16 @@ function renderPlot(rows){
 }
 
 function renderTable(rows){
-  var cols=[["citation_key","Study"],["predictor","Predictor"],["pv","Value"],["response","Response"],
+  var cols=[["citation_key","Study"],["predictor","Predictor"],["val","Value"],["unit","Unit"],["response","Response"],
             ["relationship_type","Type"],["effect_direction","Effect"],["species","Species"],
             ["structure_type","Structure"],["confidence","Conf."],["source_location","Source"],["notes","Notes"]];
   var h="<tr>"+cols.map(function(c){return "<th>"+c[1]+"</th>";}).join("")+"</tr>";
   rows.forEach(function(r){
-    var pv=(r.predictor_value||r.predictor_range||"")+" "+(r.predictor_unit||"");
+    var val=(r.predictor_value||r.predictor_range||"");
     var resp=r.response+(r.response_value?(" = "+r.response_value+(r.response_unit||"")):"");
     var cc=r.confidence==="Verified"?"verified":"mined";
-    h+="<tr><td>"+esc(r.citation_key)+"</td><td>"+esc(r.predictor)+"</td><td class='v'>"+esc(pv.trim())+"</td>"
+    h+="<tr><td>"+esc(r.citation_key)+"</td><td>"+esc(r.predictor)+"</td>"
+      +"<td class='v'>"+esc(val)+"</td><td class='small'>"+esc(r.predictor_unit||"")+"</td>"
       +"<td>"+esc(resp)+"</td><td><span class='tag'>"+esc(r.relationship_type)+"</span></td>"
       +"<td>"+esc(r.effect_direction)+"</td><td class='small'>"+esc(r.species)+"</td>"
       +"<td class='small'>"+esc(r.structure_type)+"</td><td class='"+cc+"'>"+esc(r.confidence)+"</td>"
