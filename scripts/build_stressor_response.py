@@ -404,7 +404,7 @@ footer{color:var(--mut);font-size:11.5px;padding:14px 22px;border-top:1px solid 
   <div class="counts" id="drnote"></div>
 
   <h2>Relationships <span class="counts" id="relcount"></span></h2>
-  <div style="overflow-x:auto;border:1px solid var(--line);border-radius:8px">
+  <div style="max-height:430px;overflow:auto;border:1px solid var(--line);border-radius:8px">
     <table id="reltable"></table>
   </div>
 
@@ -550,7 +550,7 @@ function renderTable(rows){
       +"<td class='small'>"+esc(r.source_location)+"</td><td class='small'>"+esc(r.notes)+"</td></tr>";
   });
   document.getElementById("reltable").innerHTML=h;
-  document.getElementById("relcount").textContent=rows.length+" shown / "+ROWS.length+" total";
+  document.getElementById("relcount").textContent=(rows.length===ROWS.length?ROWS.length+" total":rows.length+" of "+ROWS.length);
 }
 
 function renderEqs(){
