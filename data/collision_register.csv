@@ -6,7 +6,6 @@ citation_key,year,first_author,title,role,metric,reproducibility_pct,reproducibi
 2007_Dengb,2007,Deng,Evaluation of blade-strike models for estimating the biological performance of Kaplan turbines,Modeling (blade-strike model),strike probability; particle/DEM collision model; leading-edge geometry; blade-strike model; mutilation rate,,
 2008_Ferguson,2008,Ferguson,Combining turbine blade-strike and life cycle models to assess mitigation strategies for fish passing dams,Modeling (blade-strike + life cycle),strike probability; leading-edge geometry; blade-strike model,,
 2009_Normandeau,2009,Normandeau,Shad movement and mortality,live-fish field,blade/leading-edge geometry (L/t),80,High
-200x_Dixon,200x,Dixon,EPRI-Designing-leading-edges-of-turbine-blades-to-increase-fish-survival-from-blade-strike,live-fish simulated,strike probability; strike velocity; blade/leading-edge geometry (L/t),50,Medium
 2011_Amaralb,2011,Amaral,Designing leading edges of turbine blades to increase fish survival from blade strike,live-fish simulated,strike probability; strike velocity; blade/leading-edge geometry (L/t),50,Medium
 2011_Amaral,2011,Amaral,Estimating total passage survival for fish migrating downstream at hydropower projects-amaral,Review (passage-survival estimation),strike probability; strike velocity; leading-edge geometry; blade-strike model,,
 2011_EPRI,2011,EPRI,Evaluation of Fish Injury and Mortality Associated with Hydrokinetic Turbines,Review (hydrokinetic injury),strike probability; strike velocity; leading-edge geometry; blade-strike model,,

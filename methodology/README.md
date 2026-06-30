@@ -28,7 +28,10 @@ PDFs or extend it with new papers.
  6. Build artefacts & update         06_update_protocol.md
    +  Cross-cutting axes (exposure pathway, outcome timing)
                                        07_axes_exposure_and_timing.md
-            reviews/, outputs/, releases
+        │   reviews/, outputs/, releases
+        ▼
+ 8. Verification against PDFs         08_verification_protocol.md
+            Mined -> Verified, PDF-in-hand   (tools/verification/verify.py)
 ```
 
 ## Principles
@@ -36,7 +39,9 @@ PDFs or extend it with new papers.
 - **Source of truth is text (CSV).** Binary artefacts (xlsx/docx) are generated,
   never hand-edited.
 - **Two-tier confidence.** Every extracted row is `Mined` (automated first pass)
-  or `Verified` (read and checked against the source).
+  or `Verified` (confirmed against the source PDF via the formal protocol in
+  `08_verification_protocol.md`, using `tools/verification/verify.py`). All rows
+  are currently `Mined` pending that PDF-in-hand verification.
 - **No PDFs in the repo.** Only metadata, derived data and original summaries.
 - **Tooling is reproducible.** The extraction and discovery logic lives in
   `scripts/` and in the `skills/` bundles, not only in prose.

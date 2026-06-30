@@ -6,6 +6,18 @@
 - For every paper, record a DOI where available; `scripts/extract_passage_data.py`
   and the corpus builder mine DOIs from the first pages as a fallback.
 
+## Authoritative titles (read from the PDFs)
+Titles are read from the PDF itself, not inferred from filenames or reference
+parses: the embedded `pdfinfo` **Title** metadata when it is a sane title, else a
+**largest-font, top-of-page-1 heuristic** (via `pdftohtml -xml`), with journal
+mastheads stripped, all-caps normalised, and noisy tails (e.g. "Abstract",
+author/affiliation lines) trimmed. Each candidate is flagged by confidence
+(`same` / `improved` = superset of the prior title / `likely` / `review` /
+`keep-current`) and **reviewed against a manifest before being applied** to
+`corpus.csv`. The audit trail lives alongside the PDFs as
+`title_scan_manifest.csv`. Titles flagged `review` are low-confidence and may
+contain extraction errors — fix them in the manifest and re-apply.
+
 ## File-naming convention
 Local PDFs use a sortable, parseable convention:
 

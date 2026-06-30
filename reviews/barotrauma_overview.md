@@ -18,7 +18,7 @@ study, how reproducible the live-fish evidence base actually is. We then
 identify the major problems and gaps and propose concrete,
 community-level next steps, including a minimum reporting standard.
 
-Scope. We screened all 229 papers in the passage library for barotrauma
+Scope. We screened all 228 papers in the passage library for barotrauma
 relevance (full-text density of barotrauma / decompression /
 swim-bladder / nadir / pressure-change terms plus title screening) and
 retained 61 barotrauma-relevant papers. Of these, 38 are live-fish

@@ -24,7 +24,7 @@ exposure and is included where studies link it to injury or behaviour.
 Shear is distinct from blade-strike collision and from pressure-change
 barotrauma.
 
-Scope. All 229 analysed papers were screened for shear relevance
+Scope. All 228 analysed papers were screened for shear relevance
 (full-text density of shear / strain-rate / turbulence / jet /
 shear-stress terms plus title screening); 36 shear-relevant papers were
 retained. Of these, 12 are live-fish studies, all controlled laboratory

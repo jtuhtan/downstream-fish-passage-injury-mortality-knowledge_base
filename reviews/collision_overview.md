@@ -1,7 +1,7 @@
 **Collision (Blade Strike & Impact) in Downstream Fish Passage  
 Metrics, Protocols & the Reproducibility of Live-Fish Studies**
 
-*A state-of-the-art assessment of 48 collision papers (25 live-fish
+*A state-of-the-art assessment of 47 collision papers (24 live-fish
 studies scored)  
 Companion to the workbook 'Collision\_metrics\_reproducibility.xlsx'*
 
@@ -24,9 +24,9 @@ pinch/grinding contact. We cover both SIMULATED collisions (controlled
 strike rigs) and FIELD-OBSERVED collisions (injuries on fish passed
 through real structures).
 
-Scope. All 229 analysed papers were screened for collision relevance
+Scope. All 228 analysed papers were screened for collision relevance
 (full-text density of blade-strike / strike / collision / impact /
-leading-edge terms plus title screening); 48 collision-relevant papers
+leading-edge terms plus title screening); 47 collision-relevant papers
 were retained. Of these, 25 are live-fish studies — 10 controlled
 simulated-strike experiments and 15 field-observed passage studies — and
 these form the reproducibility assessment. The remaining 23
@@ -106,7 +106,7 @@ screws (Brackley; Pauwels), compact and novel fish-friendly turbines
 
 # 5\. Reproducibility assessment
 
-Method. Each of the 25 live-fish studies was scored against a 10-element
+Method. Each of the 24 live-fish studies was scored against a 10-element
 collision reporting checklist (C1-C10; see workbook 'Legend'). Score =
 reported / 10; tiers High (\>=80%), Medium (50-79%), Low (\<50%). All
 ten criteria apply to both simulated and field studies (field studies

@@ -60,7 +60,9 @@ def build_data():
         z = sorted(counter.items(), key=lambda x: -x[1])
         return {"labels": [a for a, _ in z], "data": [b for _, b in z]}
 
+    doi = {r["citation_key"]: r["doi"] for r in corp}
     table = [{"key": r["citation_key"], "year": r["Year"], "author": r["First author"],
+              "doi": doi.get(r["citation_key"], ""),
               "cat": r["Category"], "title": r["Title"], "mech": r["Mechanism(s)"],
               "species": r.get("Species", ""), "outcome": r.get("Mortality/survival", ""),
               "conf": r["Confidence"]} for r in ex]

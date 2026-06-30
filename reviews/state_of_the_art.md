@@ -1,14 +1,14 @@
 **Fish Passage Injury & Mortality  
 State of the Art**
 
-*A mechanism-based synthesis of a 229-paper downstream-passage library
+*A mechanism-based synthesis of a 228-paper downstream-passage library
 (1928–2026)  
 Quantitative claims verified against 37 key papers; see the extraction
 spreadsheet ('Confidence' column)*
 
 # 1\. Scope & corpus
 
-This synthesis covers 229 publications on downstream fish passage and
+This synthesis covers 228 publications on downstream fish passage and
 the injury and mortality it causes — passage through hydropower
 turbines, pumps, Archimedean screws, weirs, spillways, and
 bypass/fish-friendly structures (1928–2026). Headline quantitative
@@ -25,7 +25,7 @@ values remain text-mined first-pass estimates.
 | Guidelines     | 13         | Standards & criteria (NEN 8775, German/Austrian/Dutch/Canadian guidance)     |
 
 Mechanism coverage is dominated by barotrauma and shear, with blade
-strike close behind (counts exceed 229 because most studies address
+strike close behind (counts exceed 228 because most studies address
 several mechanisms): barotrauma/pressure 84; shear 70; blade strike 53;
 turbulence 42; entrainment/impingement 26; cavitation 26; gas
 supersaturation 11; grinding 11.
@@ -229,7 +229,7 @@ exposure live fish experience.
 
 *Provenance: figures attributed to a named study above were read from
 that paper and are marked 'Verified' in the extraction spreadsheet (37
-studies). Corpus-level counts come from automated text mining of all 229
+studies). Corpus-level counts come from automated text mining of all 228
 PDFs and should be treated as close estimates. Remaining unverified
 cells in the spreadsheet (Confidence = 'Mined') should be checked before
 citation.*

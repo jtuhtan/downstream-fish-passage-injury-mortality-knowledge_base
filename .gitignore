@@ -21,3 +21,6 @@ venv/
 # Build scratch
 /tmp/
 *.log
+
+# Verification tool: local machine config (PDF path + verifier initials)
+tools/verification/config.json

@@ -3,6 +3,122 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.11.0] - 2026-06-30
+Offline verification tool + reset all rows to Mined.
+
+### Added
+- `tools/verification/verify.py` — an **offline, dependency-free** (Python stdlib)
+  local web app for confirming the source-of-truth data against the original PDFs.
+  Shows each PDF beside an editable form of every field; writes confirmed data back
+  to `data/extraction.csv` (sets `Confidence = Verified`) and appends provenance
+  (`verifier, date, fields_changed`) to `data/verification_log.csv`. Runs locally
+  because it needs the (uncommitted) PDF library. Includes `README.md` and
+  `config.example.json`; `config.json` is git-ignored.
+- `methodology/08_verification_protocol.md` — the protocol and per-field rules for
+  what counts as "Verified"; added stage 8 to the methodology pipeline.
+
+### Changed
+- **Reset all `extraction.csv` rows to `Mined`** (37 were Verified). Earlier ad-hoc
+  verification predates this formal PDF-in-hand process, so the slate is cleared;
+  rows become Verified only via `verify.py`. Dashboard "Verified" KPI now 0.
+
+### Rationale
+- Makes verification a documented, repeatable, auditable process others can run and
+  extend — not a one-off. Provenance is recorded per row.
+
+## [0.10.0] - 2026-06-30
+Regenerated outputs; DOI column and full titles in the dashboard.
+
+### Added
+- `scripts/build_outputs.py` — reproducibly regenerates everything in `outputs/`
+  from the source data + reviews (Word reports via pandoc; workbooks via openpyxl;
+  recomputed cross-mechanism gap matrix). Replaces hand-built artefacts.
+
+### Changed
+- Regenerated all 10 `outputs/` artefacts so they reflect the current corpus
+  (post-dedup, corrected titles).
+- Synced `extraction.csv` titles to the authoritative `corpus.csv` titles (101
+  rows) so the dashboard and extraction workbook show full, corrected titles.
+- Dashboard (`docs/index.html`): added a **DOI column** after Author (linked to
+  doi.org; 140/228 rows have a DOI), the evidence table now shows the **full
+  title**, and search covers DOI. Removed hard-coded counts from the template.
+
+## [0.9.2] - 2026-06-29
+Duplicate consolidation and a full title QA pass.
+
+### Removed
+- Confirmed `200x_Dixon` and `2011_Amaralb` are the **same** document (identical
+  author, creation timestamp, page count; first-3-page text overlap = 1.00 — both
+  the Amaral & Hecker 2011 conference presentation). Removed the `200x_Dixon`
+  rows from `corpus.csv`, `extraction.csv`, `collision_register.csv`,
+  `collision_reproducibility_scorecard.csv` and `axes_exposure_timing.csv`, and
+  moved its PDF to `_Duplicates_review/`. New counts: **245** catalogued, **228**
+  analysed; collision 47 papers / 24 live-fish (9 simulated-strike + 15 field).
+
+### Changed
+- Full QA re-scan of all remaining titles (`Barotrauma/title_qa.csv`). 219 were
+  correct; 25 "fuller" flags were journal-name prefixes (current titles already
+  correct); **2 genuinely truncated titles fixed** (Schneider 2025, Zillig 2025)
+  and those 2 PDFs re-renamed. One supplementary-material file (Zítek 2026) left
+  as "Supplementary".
+- Updated counts in `README.md` (status, coverage, study-type pie) and rebuilt
+  `docs/index.html`.
+
+## [0.9.1] - 2026-06-29
+Manual review of the low-confidence (`review`-tier) titles.
+
+### Changed
+- Corrected 6 titles after a manual walk-through: Linnansaari 2015
+  ("Fish passage in large rivers: a literature review"), Dixon 200x
+  ("Designing leading edges of turbine blades to increase fish survival from
+  blade strike"), Sættem 1990 ("Skadefrekvens hos laksefisk etter nedvandring i
+  foss"), STOWA 2012 ("Gemalen of vermalen worden?"), Benigni 2020 ("Downstream
+  fish migration in a Kaplan turbine – Part 2: …"), MacMillan 2016 ("Evaluation
+  of the response of American eels to rapid decompression"). 3 PDFs re-renamed;
+  the other 3 already had an equivalent ISO-4 stem. The remaining 10 `review`
+  rows were confirmed correct as-is.
+- Flagged **Dixon 200x** and **Amaral 2011b** as likely duplicates (same title)
+  in `title_scan_manifest.csv` for verification against the PDFs.
+
+## [0.9.0] - 2026-06-29
+Re-read titles from the PDFs and corrected the corpus.
+
+### Changed
+- Scanned all 246 PDFs and extracted authoritative titles from embedded `pdfinfo`
+  metadata + a largest-font first-page heuristic (`pdftohtml -xml`), with masthead
+  stripping, all-caps normalisation and noisy-tail trimming. Each was confidence-
+  flagged and reviewed via `Barotrauma/title_scan_manifest.csv`.
+- Applied **112** corrected titles to `data/corpus.csv` (tiers improved + likely +
+  review): fuller titles with recovered subtitles, typo fixes (e.g. "hydraulc" →
+  "Hydraulic"), de-cruft (e.g. "…-amaral"), and several non-English originals.
+  103 already matched; 31 had no clean extraction and were kept.
+- Re-derived ISO-4 filenames from the corrected titles and **renamed 110 PDFs in
+  place** (two-phase rename; `local_filename` re-synced; reorganization manifest
+  refreshed). Rebuilt `docs/index.html`.
+- Documented the title source in `methodology/01_corpus_acquisition_and_naming.md`.
+
+### Notes
+- The `review`-tier titles (16) are low-confidence; a few are known to be wrong
+  (e.g. Linnansaari 2015 picked up an affiliation, "MAES Canadian Rivers
+  Institute"). The manifest is the audit trail for correcting them.
+
+## [0.8.1] - 2026-06-29
+Resolved the Medium-priority candidates' ISO-4 short titles.
+
+### Changed
+- `data/candidate_additions.csv`: the 15 **Medium**-priority candidates resolved to
+  canonical titles; `short_title_iso4` recomputed via `iso4_abbreviate.py` (no
+  longer "(pending canonical resolution)"). DOIs verified for 8 (Muir 2001, Mathur
+  2000, Paish 2002, Bracken 2013, McNabb 2003, Larinier 2002, Cada 1990, Weitkamp
+  1980); Ferguson 2006 title verified, DOI unconfirmed; the rest are conference/
+  trade/report/grey literature without DOIs. Two data-quality flags recorded in
+  `notes`: Bracken 2013 is about **lampreys** (not "fish" as loosely parsed), and
+  the Mathur 2000 reference parse was garbled/merged with a Normandeau report —
+  the key→work mapping should be confirmed. All High + Medium (26 of 72) now have
+  ISO-4 short titles; the 46 Low-priority remain pending.
+- Rebuilt `docs/index.html` so the dashboard's candidate table shows the resolved
+  short titles.
+
 ## [0.8.0] - 2026-06-29
 Added an interactive dashboard (GitHub Pages) and native README diagrams.
 
