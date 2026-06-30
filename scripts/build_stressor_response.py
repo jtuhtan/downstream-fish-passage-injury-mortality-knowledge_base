@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -196,6 +197,65 @@ def write_csv(path: Path, cols: list[str], rows: list[dict]) -> None:
         w.writerows(rows)
 
 
+# --- family lookup + size standardization ----------------------------------
+SIZE_TO_MM = {"mm": 1.0, "cm": 10.0, "m": 1000.0}   # length -> mm (canonical)
+MASS_TO_G = {"mg": 0.001, "g": 1.0, "kg": 1000.0}   # mass   -> g  (canonical)
+_PAREN = re.compile(r"\(([^)]*)\)")
+
+
+def load_family_map() -> dict:
+    """common/scientific name (and genus) -> family_group, from data/vocab/species.csv."""
+    sp = REPO / "data" / "vocab" / "species.csv"
+    m: dict = {}
+    if sp.exists():
+        for v in read_csv(sp):
+            fam = v.get("family_group", "").strip() or v.get("family", "").strip()
+            for key in (v.get("scientific_name", ""), v.get("common_name", "")):
+                key = key.strip().lower()
+                if key:
+                    m.setdefault(key, fam)
+                    g = key.split()[0] if key.split() else ""
+                    if g:
+                        m.setdefault(g, fam)
+    return m
+
+
+def family_of(species_field: str, fammap: dict) -> str:
+    out = []
+    for sp in _toks(species_field):
+        sci = _PAREN.search(sp)
+        cands = []
+        if sci:
+            s = sci.group(1).strip().lower()
+            cands += [s] + ([s.split()[0]] if s.split() else [])
+        cands.append(_PAREN.sub("", sp).strip().lower())
+        fam = next((fammap[c] for c in cands if c and c in fammap), "") or "(family not recorded)"
+        if fam not in out:
+            out.append(fam)
+    return "; ".join(out)
+
+
+def parse_size(fish_size: str):
+    """Parse a free-text size field -> (length_mm, mass_g) standardized strings."""
+    length_mm = mass_g = ""
+    s = (fish_size or "").strip()
+    if not s:
+        return length_mm, mass_g
+    ml = re.search(r"([\d.]+)\s*(?:[-–]\s*([\d.]+))?\s*(mm|cm|m)\b", s)
+    if ml:
+        f = SIZE_TO_MM.get(ml.group(3), 1.0)
+        lo = float(ml.group(1)) * f
+        hi = float(ml.group(2)) * f if ml.group(2) else lo
+        length_mm = f"{lo:g}" if lo == hi else f"{lo:g}-{hi:g}"
+    mm = re.search(r"([\d.]+)\s*(?:[-–]\s*([\d.]+))?\s*(mg|kg|g)\b", s)
+    if mm:
+        f = MASS_TO_G.get(mm.group(3), 1.0)
+        lo = float(mm.group(1)) * f
+        hi = float(mm.group(2)) * f if mm.group(2) else lo
+        mass_g = f"{lo:g}" if lo == hi else f"{lo:g}-{hi:g}"
+    return length_mm, mass_g
+
+
 def main() -> int:
     if not SR.exists():
         print(f"ERROR: {SR} not found", file=sys.stderr)
@@ -209,8 +269,28 @@ def main() -> int:
     issues = validate(rows)
     conv_log, n_pressure = standardize_pressures(rows)
 
+    # derive family (vocab) + standardized length_mm / mass_g for each row & model
+    fammap = load_family_map()
+    n_size = 0
+    for r in rows:
+        r["family"] = family_of(r.get("species", ""), fammap)
+        r["length_mm"], r["mass_g"] = parse_size(r.get("fish_size", ""))
+        if r["length_mm"] or r["mass_g"]:
+            n_size += 1
+    for m in drm:
+        m["family"] = family_of(m.get("species", ""), fammap)
+    n_fam = sum(1 for r in rows if "not recorded" not in r.get("family", "x"))
+    sp_family = {}
+    for r in rows:
+        for sp in _toks(r.get("species", "")):
+            k = _PAREN.sub("", sp).strip().lower()
+            if k and k not in sp_family:
+                sp_family[k] = family_of(sp, fammap)
+
     print(f"stressor_response.csv: {len(rows)} relationships | equations.csv: {len(eqs)} | "
           f"variables_units.csv: {len(variables)}")
+    print(f"derived: family resolved for {n_fam}/{len(rows)} rows; size standardized "
+          f"(length->mm, mass->g) for {n_size} rows")
     print(f"pressure values (kPa-standardized): {n_pressure} | conversions applied: {len(conv_log)}")
     for c in conv_log:
         print("  conv:", c)
@@ -242,6 +322,7 @@ def main() -> int:
         "issues": len(issues), "n_pressure": n_pressure,
         "conversions": conv_log,
         "pressure_factors": {k: v for k, v in PRESSURE_TO_KPA.items() if k != "kpa"},
+        "sp_family": sp_family,
     }
     html = (TEMPLATE
             .replace("__SR_DATA__", json.dumps(rows, ensure_ascii=False))
@@ -308,6 +389,7 @@ footer{color:var(--mut);font-size:11.5px;padding:14px 22px;border-top:1px solid 
   <b>own lane and axis</b> below &mdash; never read across lanes. Demonstrator data (mostly <span class="mined">Mined</span>); verify against source before use.</div>
 
   <div class="filters" id="filters"></div>
+  <div id="missnote" class="std" style="margin:-2px 0 12px"></div>
 
   <h2>Within-metric comparator (numeric thresholds &amp; points)</h2>
   <div class="legend" id="legend"></div>
@@ -360,19 +442,32 @@ var PALETTE = ["#2563eb","#dc2626","#059669","#d97706","#7c3aed","#0891b2","#be1
 function tokens(s){ return (s||"").split(";").map(function(x){return x.trim();}).filter(Boolean); }
 function uniqSorted(arr){ var s={}; arr.forEach(function(x){ if(x) s[x]=1; }); return Object.keys(s).sort(); }
 function speciesList(){ var a=[]; ROWS.forEach(function(r){ a=a.concat(tokens(r.species)); }); return uniqSorted(a); }
-function colorFor(sp){ var l=speciesList(); var i=l.indexOf(sp); return PALETTE[(i<0?0:i)%PALETTE.length]; }
+function spKey(s){ return (s||"").replace(/\([^)]*\)/g,"").trim().toLowerCase(); }
+var SPKEYS=(function(){ var a=[]; ROWS.forEach(function(r){ tokens(r.species).forEach(function(s){ a.push(spKey(s)); }); }); (DRM||[]).forEach(function(m){ a.push(spKey(m.species)); }); return uniqSorted(a); })();
+function colorFor(sp){ var i=SPKEYS.indexOf(spKey(sp)); return PALETTE[(i<0?0:i)%PALETTE.length]; }
+function midnum(s){ if(s==null||s==="") return null; var p=String(s).split("-"); var a=parseFloat(p[0]); var b=(p[1]!==undefined?parseFloat(p[1]):a); return isNaN(a)?null:(a+b)/2; }
+function lengthBin(r){ var v=midnum(r.length_mm); if(v==null) return "(not provided)"; var cm=v/10; if(cm<5)return "<5 cm"; if(cm<10)return "5-10 cm"; if(cm<20)return "10-20 cm"; if(cm<50)return "20-50 cm"; return ">=50 cm"; }
+function massBin(r){ var v=midnum(r.mass_g); if(v==null) return "(not provided)"; if(v<10)return "<10 g"; if(v<100)return "10-100 g"; if(v<500)return "100-500 g"; return ">=500 g"; }
+function lsTokens(r){ return tokens(r.life_stage); }
 function esc(s){ return (s==null?"":String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
-var FILT={mechanism:"",predictor:"",response:"",species:"",citation_key:"",confidence:""};
+var FILT={mechanism:"",predictor:"",response:"",species:"",family:"",life_stage:"",length_bin:"",mass_bin:"",citation_key:"",confidence:""};
 var COVDIM="response";
 
 function buildFilters(){
+  var SF=(META.sp_family||{});
+  var spSorted=speciesList().slice().sort(function(a,b){ var fa=(SF[spKey(a)]||"~~"), fb=(SF[spKey(b)]||"~~"); return (fa+"|"+a).localeCompare(fb+"|"+b); });
+  function lsOpts(){ var a=[],blank=false; ROWS.forEach(function(r){ var t=lsTokens(r); if(!t.length)blank=true; a=a.concat(t); }); a=uniqSorted(a); if(blank)a.push("(not provided)"); return a; }
   var defs=[
     ["mechanism","Mechanism",uniqSorted(ROWS.map(function(r){return r.mechanism;}))],
     ["citation_key","Study",uniqSorted(ROWS.map(function(r){return r.citation_key;}))],
     ["predictor","Predictor (metric)",uniqSorted(ROWS.map(function(r){return r.predictor;}))],
     ["response","Response",uniqSorted([].concat.apply([],ROWS.map(function(r){return tokens(r.response);})))],
-    ["species","Species",speciesList()],
+    ["family","Family",uniqSorted([].concat.apply([],ROWS.map(function(r){return tokens(r.family);})))],
+    ["species","Species (by family)",spSorted],
+    ["life_stage","Life stage",lsOpts()],
+    ["length_bin","Body length",uniqSorted(ROWS.map(lengthBin))],
+    ["mass_bin","Body mass",uniqSorted(ROWS.map(massBin))],
     ["confidence","Confidence",uniqSorted(ROWS.map(function(r){return r.confidence;}))]
   ];
   var html="";
@@ -394,6 +489,10 @@ function match(r){
   if(FILT.confidence && r.confidence!==FILT.confidence) return false;
   if(FILT.response && tokens(r.response).indexOf(FILT.response)<0) return false;
   if(FILT.species && tokens(r.species).indexOf(FILT.species)<0) return false;
+  if(FILT.family && tokens(r.family).indexOf(FILT.family)<0) return false;
+  if(FILT.life_stage){ var ls=lsTokens(r); if(FILT.life_stage==="(not provided)"){ if(ls.length) return false; } else if(ls.indexOf(FILT.life_stage)<0) return false; }
+  if(FILT.length_bin && lengthBin(r)!==FILT.length_bin) return false;
+  if(FILT.mass_bin && massBin(r)!==FILT.mass_bin) return false;
   return true;
 }
 
@@ -535,10 +634,28 @@ function renderCoverage(rows){
 }
 
 function logistic(b0,b1,x){ return 1/(1+Math.exp(-(b0+b1*x))); }
+function renderMiss(rows){
+  var t=rows.length; var el=document.getElementById("missnote"); if(!t){ el.innerHTML=""; return; }
+  function p(n){ return n+" ("+Math.round(100*n/t)+"%)"; }
+  var noLS=rows.filter(function(r){return !lsTokens(r).length;}).length;
+  var noLen=rows.filter(function(r){return midnum(r.length_mm)==null;}).length;
+  var noMass=rows.filter(function(r){return midnum(r.mass_g)==null;}).length;
+  var noFam=rows.filter(function(r){return !r.family||r.family.indexOf("not recorded")>=0;}).length;
+  el.innerHTML="<b>Data completeness ("+t+" shown):</b> life stage missing "+p(noLS)+" &middot; length missing "+p(noLen)+" &middot; mass missing "+p(noMass)+" &middot; family unresolved "+noFam+". A row may name the species yet omit stage / length / mass &mdash; those show as <i>(not provided)</i> in the filters.";
+}
 function renderDoseResponse(){
   if(!DRM||!DRM.length){ document.getElementById("drplot").innerHTML='<div class="counts">No dose-response models.</div>'; return; }
   var sel=document.getElementById("drresp").value;
   var models=DRM.filter(function(m){ return sel==="all"||m.response===sel; });
+  if(FILT.species){ var k=spKey(FILT.species); models=models.filter(function(m){ return spKey(m.species)===k; }); }
+  if(FILT.family){ models=models.filter(function(m){ return tokens(m.family).indexOf(FILT.family)>=0; }); }
+  if(!models.length){
+    var msg="No fitted dose&ndash;response model for the current selection";
+    if(FILT.species) msg+=" &mdash; <b>"+esc(FILT.species)+"</b> has only threshold / categorical data here (see the comparator &amp; table)";
+    else if(FILT.family) msg+=" &mdash; no modelled species in <b>"+esc(FILT.family)+"</b>";
+    document.getElementById("drplot").innerHTML='<div class="counts">'+msg+'.</div>';
+    document.getElementById("drlegend").innerHTML=""; document.getElementById("drnote").innerHTML=""; return;
+  }
   var W=1080,H=300,padL=56,padR=16,padT=14,padB=40;
   var xmin=Math.min.apply(null,models.map(function(m){return parseFloat(m.x_min);}));
   var xmax=Math.max.apply(null,models.map(function(m){return parseFloat(m.x_max);}));
@@ -565,7 +682,7 @@ function renderDoseResponse(){
 }
 function render(){
   var rows=ROWS.filter(match);
-  renderPlot(rows); renderTable(rows); renderCoverage(rows);
+  renderPlot(rows); renderTable(rows); renderCoverage(rows); renderMiss(rows); renderDoseResponse();
 }
 
 document.getElementById("sub").innerHTML=META.n_rel+" relationships &middot; "+META.n_eq+" equations &middot; "
@@ -575,8 +692,8 @@ document.getElementById("foot").innerHTML="Generated by scripts/build_stressor_r
   +"No PDFs; metadata only. Demonstrator dataset &mdash; verify before citing.";
 buildFilters(); renderEqs(); renderVars();
 document.getElementById("covdim").addEventListener("change",function(){ COVDIM=this.value; render(); });
-document.getElementById("drresp").addEventListener("change",renderDoseResponse);
-render(); renderDoseResponse();
+document.getElementById("drresp").addEventListener("change",render);
+render();
 </script>
 </body></html>"""
 

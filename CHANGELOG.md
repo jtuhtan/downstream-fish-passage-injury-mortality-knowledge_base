@@ -3,6 +3,23 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.19.0] - 2026-06-30
+Explorer: family / life-stage / length / mass filters, a data-completeness indicator, and a dose–response legend fix.
+
+### Added
+- **Family** filter (species → family_group via `data/vocab/species.csv`); the Species dropdown is now
+  sorted by family. Added Australian bass, carp gudgeon, European grayling and European perch to the vocab.
+- **Life stage**, **Body length** and **Body mass** filters, with **standard conversions**
+  (length → mm, mass → g; cm ×10, kg ×1000) and a "(not provided)" option.
+- **Data-completeness indicator** under the filters: how many shown rows are missing life stage / length /
+  mass / family — so it is clear when a row names the species but omits the more specific data.
+
+### Fixed
+- Dose–response legend coloured every curve the same and ignored the Species filter. Colours now key off a
+  normalised species name (curves and the comparator share one palette), and the panel respects the
+  Species/Family filter — selecting a species with no fitted model (e.g. European grayling) now says so
+  explicitly instead of showing the other species.
+
 ## [0.18.0] - 2026-06-30
 Dose–response curve overlay from published coefficients, plus a codified copyright-&-digitization policy.
 
