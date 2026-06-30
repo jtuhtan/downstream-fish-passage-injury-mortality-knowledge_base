@@ -404,7 +404,7 @@ footer{color:var(--mut);font-size:11.5px;padding:14px 22px;border-top:1px solid 
   <div class="counts" id="drnote"></div>
 
   <h2>Relationships <span class="counts" id="relcount"></span></h2>
-  <div style="max-height:430px;overflow:auto;border:1px solid var(--line);border-radius:8px">
+  <div style="overflow-x:auto;border:1px solid var(--line);border-radius:8px">
     <table id="reltable"></table>
   </div>
 
