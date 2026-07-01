@@ -11,29 +11,29 @@ barotrauma,rpc_AN,ratio_PA/PN,mortality_mortal_injury,Roach (Rutilus rutilus),1,
 barotrauma,rpc_EA,ratio_PN/PA,injury_hemorrhage,Murray cod (Maccullochella peelii),1,0.4,0.4,0.4,Boys2016
 barotrauma,rpc_EA,ratio_PN/PA,injury_hemorrhage,golden perch (Macquaria ambigua),1,0.4,0.4,0.4,Boys2016
 barotrauma,rpc_EA,ratio_PN/PA,injury_hemorrhage,silver perch (Bidyanus bidyanus),1,0.4,0.4,0.4,Boys2016
-blade strike,mutilation ratio (constant),dimensionless,injury,Atlantic salmon (Salmo salar),1,0.43,0.43,0.43,Turnpenny2000
-blade strike,strike velocity,m/s,mortality,American eel (Anguilla rostrata),1,14.2,14.2,14.2,Pflugrath2020c
-blade strike,strike velocity,m/s,mortality,American shad and blueback herring (Alosa spp.),2,7.87,8.5,8.5,Pflugrath2020c; Saylor2020
-blade strike,strike velocity,m/s,mortality,Bluegill sunfish (Lepomis macrochirus),3,5.68,6.43,7.5,Pflugrath2020c; Saylor2019
-blade strike,strike velocity,m/s,mortality,Brook trout (Salvelinus fontinalis),2,5.99,6.56,6.56,Pflugrath2020c; Saylor2020
-blade strike,strike velocity,m/s,mortality,Gizzard shad (Dorosoma cepedianum),2,5.66,7.7,7.7,Pflugrath2020c; Saylor2020
-blade strike,strike velocity,m/s,mortality,Hybrid striped bass (Morone saxatilis x M. chrysops),1,8.6,8.6,8.6,Pflugrath2020c
-blade strike,strike velocity,m/s,mortality,Rainbow trout (Oncorhynchus mykiss),3,6.59,7.06,7.08,Pflugrath2020c; Saylor2020
-blade strike,strike velocity,m/s,survival,Rainbow trout (Oncorhynchus mykiss),4,10,10,10,Amaral2020
-shear,acceleration,m/s2,mortality,American shad (Alosa sapidissima),1,682,682,682,Pflugrath2020b
-shear,strain rate,s-1,injury,Blue gourami (Trichopodus trichopterus),1,1185,1185,1185,Colotelo2018
-shear,strain rate,s-1,mortality,American shad (Alosa sapidissima),1,688,688,688,Pflugrath2020b
-shear,strain rate,s-1,mortality,Atlantic herring (Clupea harengus),1,151,151,151,Pflugrath2020c
-shear,strain rate,s-1,mortality,Atlantic salmon (Salmo salar),1,1511,1511,1511,Pflugrath2020c
-shear,strain rate,s-1,mortality,Bala shark (Balantiocheilos melanopterus),1,1299,1299,1299,Pflugrath2020c
-shear,strain rate,s-1,mortality,Blue gourami (Trichopodus trichopterus),2,1185,1946,1946,Colotelo2018
-shear,strain rate,s-1,mortality,Bluegill and pumpkinseed (Lepomis macrochirus and L. gibbosus),1,1001,1001,1001,Pflugrath2020c
-shear,strain rate,s-1,mortality,Brown trout (Salmo trutta),1,1696,1696,1696,Pflugrath2020c
-shear,strain rate,s-1,mortality,"Chinook salmon, fall subyearling (Oncorhynchus tshawytscha)",1,1051,1051,1051,Pflugrath2020c
-shear,strain rate,s-1,mortality,"Chinook salmon, fall yearling (Oncorhynchus tshawytscha)",1,1139,1139,1139,Pflugrath2020c
-shear,strain rate,s-1,mortality,"Chinook salmon, spring (Oncorhynchus tshawytscha)",1,1166,1166,1166,Pflugrath2020c
-shear,strain rate,s-1,mortality,Coho salmon (Oncorhynchus kisutch),1,1573,1573,1573,Pflugrath2020c
-shear,strain rate,s-1,mortality,Common sole (Solea solea),1,951,951,951,Pflugrath2020c
-shear,strain rate,s-1,mortality,Iridescent shark (Pangasianodon hypophthalmus),2,1185,1270,1270,Colotelo2018
-shear,strain rate,s-1,mortality,Largemouth bass (Micropterus salmoides),1,976,976,976,Pflugrath2020c
+blade strike,mutil_ratio,dimensionless,injury,Atlantic salmon (Salmo salar),1,0.43,0.43,0.43,Turnpenny2000
+blade strike,strike_v,m/s,mortality,American eel (Anguilla rostrata),1,14.2,14.2,14.2,Pflugrath2020c
+blade strike,strike_v,m/s,mortality,American shad and blueback herring (Alosa spp.),2,7.87,8.5,8.5,Pflugrath2020c; Saylor2020
+blade strike,strike_v,m/s,mortality,Bluegill sunfish (Lepomis macrochirus),3,5.68,6.43,7.5,Pflugrath2020c; Saylor2019
+blade strike,strike_v,m/s,mortality,Brook trout (Salvelinus fontinalis),2,5.99,6.56,6.56,Pflugrath2020c; Saylor2020
+blade strike,strike_v,m/s,mortality,Gizzard shad (Dorosoma cepedianum),2,5.66,7.7,7.7,Pflugrath2020c; Saylor2020
+blade strike,strike_v,m/s,mortality,Hybrid striped bass (Morone saxatilis x M. chrysops),1,8.6,8.6,8.6,Pflugrath2020c
+blade strike,strike_v,m/s,mortality,Rainbow trout (Oncorhynchus mykiss),3,6.59,7.06,7.08,Pflugrath2020c; Saylor2020
+blade strike,strike_v,m/s,survival,Rainbow trout (Oncorhynchus mykiss),4,10,10,10,Amaral2020
+shear,accel,m/s2,mortality,American shad (Alosa sapidissima),1,682,682,682,Pflugrath2020b
+shear,strain_rate,s-1,injury,Blue gourami (Trichopodus trichopterus),1,1185,1185,1185,Colotelo2018
+shear,strain_rate,s-1,mortality,American shad (Alosa sapidissima),1,688,688,688,Pflugrath2020b
+shear,strain_rate,s-1,mortality,Atlantic herring (Clupea harengus),1,151,151,151,Pflugrath2020c
+shear,strain_rate,s-1,mortality,Atlantic salmon (Salmo salar),1,1511,1511,1511,Pflugrath2020c
+shear,strain_rate,s-1,mortality,Bala shark (Balantiocheilos melanopterus),1,1299,1299,1299,Pflugrath2020c
+shear,strain_rate,s-1,mortality,Blue gourami (Trichopodus trichopterus),2,1185,1946,1946,Colotelo2018
+shear,strain_rate,s-1,mortality,Bluegill and pumpkinseed (Lepomis macrochirus and L. gibbosus),1,1001,1001,1001,Pflugrath2020c
+shear,strain_rate,s-1,mortality,Brown trout (Salmo trutta),1,1696,1696,1696,Pflugrath2020c
+shear,strain_rate,s-1,mortality,"Chinook salmon, fall subyearling (Oncorhynchus tshawytscha)",1,1051,1051,1051,Pflugrath2020c
+shear,strain_rate,s-1,mortality,"Chinook salmon, fall yearling (Oncorhynchus tshawytscha)",1,1139,1139,1139,Pflugrath2020c
+shear,strain_rate,s-1,mortality,"Chinook salmon, spring (Oncorhynchus tshawytscha)",1,1166,1166,1166,Pflugrath2020c
+shear,strain_rate,s-1,mortality,Coho salmon (Oncorhynchus kisutch),1,1573,1573,1573,Pflugrath2020c
+shear,strain_rate,s-1,mortality,Common sole (Solea solea),1,951,951,951,Pflugrath2020c
+shear,strain_rate,s-1,mortality,Iridescent shark (Pangasianodon hypophthalmus),2,1185,1270,1270,Colotelo2018
+shear,strain_rate,s-1,mortality,Largemouth bass (Micropterus salmoides),1,976,976,976,Pflugrath2020c
 shear,strain_rate,s-1,survival,Gambusia holbrooki,1,1000,1000,1000,Doyle2020

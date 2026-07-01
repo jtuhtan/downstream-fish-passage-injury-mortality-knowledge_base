@@ -3,6 +3,20 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.25.1] - 2026-07-01
+### Fixed
+- **Coverage & gaps table listed `strain rate` and `strain_rate` as two separate rows** for the same
+  quantity (they didn't merge because recent blade/shear passes wrote free-text predictor labels
+  instead of the controlled-vocabulary codes). Normalized all such labels in
+  `data/stressor_response.csv` to the vocab: `strain rate`→`strain_rate` (17 rows),
+  `strike velocity`→`strike_v` (19), `strike rate (predicted vs observed)`→`strike_p`,
+  `acceleration`→`accel`, `L/t ratio`→`lt_ratio`, `blade leading-edge thickness`→`le_thick`,
+  `mutilation ratio (constant)`→`mutil_ratio`. Coverage cells now merge correctly (shear `strain_rate`:
+  injury 3 / mortality 17 / survival 1); no space/underscore twins remain. Coverage 43 cells
+  (30 quantified/modelled).
+- Added the four new codes (`accel`, `lt_ratio`, `le_thick`, `mutil_ratio`) to the controlled predictor
+  vocabulary (`skills/passage-stressor-response/references/stressors_and_predictors.md`).
+
 ## [0.25.0] - 2026-07-01
 Fluid-shear **primary-source pass** + **Turnpenny (Von Raben) strike model as a new class**.
 

@@ -21,9 +21,12 @@ duplicate them here.
 | `accl_p` | Acclimation pressure | kPa | barotrauma | Or as depth (`accl_depth`, m) |
 | `dpdt` | Rate of pressure change | kPa·s⁻¹ | barotrauma | Dynamic-model predictor |
 | `strain_rate` | Fluid strain rate | s⁻¹ | shear | Primary jet/flume exposure metric |
+| `accel` | Shear acceleration | m·s⁻² | shear | Sensor-Fish metric; twin of strain rate — never conflate |
 | `shear_stress` | Shear stress | Pa | shear | **Distinct** from strain rate — never conflate |
 | `strike_v` | Blade strike velocity | m·s⁻¹ | strike | Impact speed at contact |
-| `strike_p` | Strike probability | — (0–1) | strike | Modeled likelihood of contact |
+| `strike_p` | Strike probability | — (0–1) | strike | Modeled likelihood of contact (Von Raben geometry) |
+| `mutil_ratio` | Mutilation ratio (damage given a strike) | — (0–1) | strike | Von Raben/STRIKER; fraction of struck fish damaged |
+| `lt_ratio` | Fish length ÷ blade leading-edge thickness (L/t) | — (dimensionless) | strike | Key design ratio; L/t ≤ 1 → high injury |
 | `turb_tke` | Turbulent kinetic energy | m²·s⁻² | turbulence | |
 | `turb_intensity` | Turbulence intensity | % | turbulence | |
 | `cav_sigma` | Cavitation index σ | — | cavitation | |
@@ -48,6 +51,7 @@ internal-helical (screw) pump · MHK/tidal rotor.
 | `tip_speed` | Blade tip speed | m·s⁻¹ |
 | `gap_clear` | Runner–hub / blade–shroud gap clearance | mm |
 | `le_form` | Leading-edge form | blunt / slanted / sharp (categorical) |
+| `le_thick` | Blade leading-edge thickness | mm |
 | `runner_angle` | Blade/runner angle | ° |
 | `n_stages` | Pump stages | count |
 
