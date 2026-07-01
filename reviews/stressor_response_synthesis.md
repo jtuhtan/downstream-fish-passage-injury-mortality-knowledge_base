@@ -75,6 +75,12 @@ rightmost (most tolerant). Remaining **figure-point digitization** (e.g. Stephen
 nadir, which exists only as a figure) follows the protocol and the **copyright & digitization
 policy** in `skills/passage-stressor-response/references/figure_digitization.md`.
 
+> **Now multi-mechanism.** The overlay is no longer barotrauma-only: the explorer renders **one panel
+> per mechanism on its own dose axis** — barotrauma (`ln(RPC)`), **blade strike** (strike velocity,
+> m s⁻¹) and **fluid shear** (strain rate, s⁻¹) — **91 runnable models** in total. See the companion
+> [blade-strike & fluid-shear review](stressor_response_blade_shear.md) for the model forms
+> (curvilinear Eq 10, logistic Eq 9/14, MLR Eq 8), the coefficient cross-check, and caveats.
+
 ## 6. Coverage & gaps — the assessment framework
 
 `build_stressor_response.py` emits two machine-readable tables that operationalise the base for

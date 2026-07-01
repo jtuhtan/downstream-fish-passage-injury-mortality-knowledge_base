@@ -396,9 +396,9 @@ footer{color:var(--mut);font-size:11.5px;padding:14px 22px;border-top:1px solid 
   <div id="plot"></div>
   <div class="counts" id="plotcount"></div>
 
-  <h2>Dose&ndash;response curves (modelled)</h2>
+  <h2>Dose&ndash;response curves (modelled) &mdash; barotrauma &middot; blade strike &middot; fluid shear</h2>
   <div class="filters" style="margin:0 0 6px"><label>Response<select id="drresp">
-    <option value="all">all</option><option value="injury">injury</option><option value="mortal injury">mortal injury</option><option value="immediate mortality">immediate mortality</option></select></label></div>
+    <option value="all">all responses</option></select></label></div>
   <div id="drplot"></div>
   <div class="legend" id="drlegend"></div>
   <div class="counts" id="drnote"></div>
@@ -634,6 +634,43 @@ function renderCoverage(rows){
 }
 
 function logistic(b0,b1,x){ return 1/(1+Math.exp(-(b0+b1*x))); }
+// dispatch on model form -> probability at dose x
+function probAt(m,x){
+  var b0=parseFloat(m.b0),b1=parseFloat(m.b1);
+  if(m.form==="loglogistic"){ var e=parseFloat(m.b1),f=parseFloat(m.b2),b=parseFloat(m.b0); if(x<=0)return 0; return f/(1+Math.pow(x/e,b)); }
+  if(m.form==="linear_survival"){ var ps=1+b1*(x-b0); if(ps>1)ps=1; if(ps<0)ps=0; return 1-ps; }
+  return logistic(b0,b1,x);
+}
+function drDash(resp){ return (/injur/i.test(resp)&&!/mortal/i.test(resp))?' stroke-dasharray="4 3"':''; }
+function niceStep(range){ var raw=(range||1)/8, p=Math.pow(10,Math.floor(Math.log(raw)/Math.LN10)), n=raw/p; return (n<1.5?1:n<3?2:n<7?5:10)*p; }
+// one panel per dose axis (x_metric), in this order
+var DR_METRICS=[
+  {key:"ln(RPC)", mech:"Barotrauma", axis:"barotrauma dose  ln(RPC) = LRP", fmt:function(v){return v.toFixed(1);}},
+  {key:"strike velocity (m/s)", mech:"Blade strike", axis:"strike velocity (m s⁻¹)", fmt:function(v){return v.toFixed(0);}},
+  {key:"strain rate (1/s)", mech:"Fluid shear", axis:"strain rate (s⁻¹)", fmt:function(v){return v.toFixed(0);}}
+];
+function drPanel(meta,models){
+  var W=1080,H=250,padL=56,padR=16,padT=22,padB=42;
+  var xmin=Math.min.apply(null,models.map(function(m){return parseFloat(m.x_min);}));
+  var xmax=Math.max.apply(null,models.map(function(m){return parseFloat(m.x_max);}));
+  if(!isFinite(xmin)){xmin=0;} if(!isFinite(xmax)||xmax<=xmin){xmax=xmin+1;}
+  function X(x){ return padL+(W-padL-padR)*((x-xmin)/((xmax-xmin)||1)); }
+  function Y(p){ return padT+(H-padT-padB)*(1-p); }
+  var svg='<svg width="100%" viewBox="0 0 '+W+' '+H+'" font-size="11" font-family="inherit" style="margin-top:8px">';
+  svg+='<text x="'+padL+'" y="13" font-weight="600" fill="#2b3340">'+esc(meta.mech)+' &mdash; '+models.length+' model'+(models.length>1?'s':'')+'</text>';
+  [0,0.25,0.5,0.75,1].forEach(function(p){ svg+='<line x1="'+padL+'" y1="'+Y(p)+'" x2="'+(W-padR)+'" y2="'+Y(p)+'" stroke="#eef2f7"/><text x="'+(padL-6)+'" y="'+(Y(p)+3)+'" text-anchor="end" fill="#9aa4b2">'+p+'</text>'; });
+  svg+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+Y(0)+'" stroke="#cdd5e0"/>';
+  var step=niceStep(xmax-xmin),xt=Math.ceil(xmin/step)*step;
+  for(;xt<=xmax+1e-6;xt+=step){ svg+='<line x1="'+X(xt)+'" y1="'+padT+'" x2="'+X(xt)+'" y2="'+Y(0)+'" stroke="#f4f7fb"/><text x="'+X(xt)+'" y="'+(Y(0)+16)+'" text-anchor="middle" fill="#9aa4b2">'+meta.fmt(xt)+'</text>'; }
+  svg+='<text x="'+((padL+W-padR)/2)+'" y="'+(H-6)+'" text-anchor="middle" fill="#5b6675">'+esc(meta.axis)+'</text>';
+  svg+='<text transform="translate(14,'+((padT+Y(0))/2)+') rotate(-90)" text-anchor="middle" fill="#5b6675">probability</text>';
+  models.forEach(function(m){
+    var x0=parseFloat(m.x_min),x1=parseFloat(m.x_max),pts=[];
+    for(var i=0;i<=60;i++){ var x=x0+(x1-x0)*i/60,p=probAt(m,x); if(p<0)p=0; if(p>1)p=1; pts.push(X(x).toFixed(1)+","+Y(p).toFixed(1)); }
+    svg+='<polyline points="'+pts.join(" ")+'" fill="none" stroke="'+colorFor(m.species)+'" stroke-width="2"'+drDash(m.response)+'><title>'+esc(m.species+" - "+m.response+" ["+m.form+"; "+m.citation_key+"]")+'</title></polyline>';
+  });
+  return svg+'</svg>';
+}
 function renderMiss(rows){
   var t=rows.length; var el=document.getElementById("missnote"); if(!t){ el.innerHTML=""; return; }
   function p(n){ return n+" ("+Math.round(100*n/t)+"%)"; }
@@ -644,7 +681,8 @@ function renderMiss(rows){
   el.innerHTML="<b>Data completeness ("+t+" shown):</b> life stage missing "+p(noLS)+" &middot; length missing "+p(noLen)+" &middot; mass missing "+p(noMass)+" &middot; family unresolved "+noFam+". A row may name the species yet omit stage / length / mass &mdash; those show as <i>(not provided)</i> in the filters.";
 }
 function renderDoseResponse(){
-  if(!DRM||!DRM.length){ document.getElementById("drplot").innerHTML='<div class="counts">No dose-response models.</div>'; return; }
+  var host=document.getElementById("drplot");
+  if(!DRM||!DRM.length){ host.innerHTML='<div class="counts">No dose-response models.</div>'; return; }
   var sel=document.getElementById("drresp").value;
   var models=DRM.filter(function(m){ return sel==="all"||m.response===sel; });
   if(FILT.species){ var k=spKey(FILT.species); models=models.filter(function(m){ return spKey(m.species)===k; }); }
@@ -653,32 +691,17 @@ function renderDoseResponse(){
     var msg="No fitted dose&ndash;response model for the current selection";
     if(FILT.species) msg+=" &mdash; <b>"+esc(FILT.species)+"</b> has only threshold / categorical data here (see the comparator &amp; table)";
     else if(FILT.family) msg+=" &mdash; no modelled species in <b>"+esc(FILT.family)+"</b>";
-    document.getElementById("drplot").innerHTML='<div class="counts">'+msg+'.</div>';
+    host.innerHTML='<div class="counts">'+msg+'.</div>';
     document.getElementById("drlegend").innerHTML=""; document.getElementById("drnote").innerHTML=""; return;
   }
-  var W=1080,H=300,padL=56,padR=16,padT=14,padB=40;
-  var xmin=Math.min.apply(null,models.map(function(m){return parseFloat(m.x_min);}));
-  var xmax=Math.max.apply(null,models.map(function(m){return parseFloat(m.x_max);}));
-  if(!isFinite(xmin)){xmin=0;} if(!isFinite(xmax)){xmax=2.7;}
-  function X(x){ return padL+(W-padL-padR)*((x-xmin)/((xmax-xmin)||1)); }
-  function Y(p){ return padT+(H-padT-padB)*(1-p); }
-  var svg='<svg width="100%" viewBox="0 0 '+W+' '+H+'" font-size="11" font-family="inherit">';
-  [0,0.25,0.5,0.75,1].forEach(function(p){ svg+='<line x1="'+padL+'" y1="'+Y(p)+'" x2="'+(W-padR)+'" y2="'+Y(p)+'" stroke="#eef2f7"/><text x="'+(padL-6)+'" y="'+(Y(p)+3)+'" text-anchor="end" fill="#9aa4b2">'+p+'</text>'; });
-  svg+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+Y(0)+'" stroke="#cdd5e0"/>';
-  var xt=xmin; while(xt<=xmax+0.001){ svg+='<text x="'+X(xt)+'" y="'+(Y(0)+16)+'" text-anchor="middle" fill="#9aa4b2">'+xt.toFixed(1)+'</text>'; xt+=0.5; }
-  svg+='<text x="'+((padL+W-padR)/2)+'" y="'+(H-6)+'" text-anchor="middle" fill="#5b6675">ln(RPC) = LRP</text>';
-  svg+='<text transform="translate(14,'+((padT+Y(0))/2)+') rotate(-90)" text-anchor="middle" fill="#5b6675">probability</text>';
-  models.forEach(function(m){
-    var b0=parseFloat(m.b0),b1=parseFloat(m.b1),x0=parseFloat(m.x_min),x1=parseFloat(m.x_max),pts=[];
-    for(var i=0;i<=40;i++){ var x=x0+(x1-x0)*i/40; pts.push(X(x).toFixed(1)+","+Y(logistic(b0,b1,x)).toFixed(1)); }
-    var dash=m.response==="injury"?' stroke-dasharray="4 3"':'';
-    svg+='<polyline points="'+pts.join(" ")+'" fill="none" stroke="'+colorFor(m.species)+'" stroke-width="2"'+dash+'><title>'+esc(m.species+" - "+m.response+" ["+m.citation_key+"]  logit(p)="+m.b0+"+"+m.b1+"*ln(RPC)")+'</title></polyline>';
-  });
-  svg+='</svg>';
-  document.getElementById("drplot").innerHTML=svg;
+  var html="",panels=0,known=DR_METRICS.map(function(d){return d.key;});
+  DR_METRICS.forEach(function(meta){ var mm=models.filter(function(m){return m.x_metric===meta.key;}); if(mm.length){ html+=drPanel(meta,mm); panels++; } });
+  var others={}; models.forEach(function(m){ if(known.indexOf(m.x_metric)<0)(others[m.x_metric]=others[m.x_metric]||[]).push(m); });
+  Object.keys(others).forEach(function(kk){ html+=drPanel({mech:kk,axis:kk,fmt:function(v){return v.toFixed(1);}},others[kk]); panels++; });
+  host.innerHTML=html;
   var sps=uniqSorted(models.map(function(m){return m.species;}));
   document.getElementById("drlegend").innerHTML=sps.map(function(s){ return '<span><i class="dot" style="background:'+colorFor(s)+'"></i>'+esc(s)+'</span>'; }).join("");
-  document.getElementById("drnote").innerHTML=models.length+" published logistic models on a shared x-axis (solid = mortal injury, dashed = injury), computed from <b>exact published coefficients</b> (PNNL Biological Response Models 2020, Tables 11&ndash;13; Zitek 2026 Table 3; Carlson 2012) &mdash; not digitized. x = ln(RPC) = LRP, so the curves are directly comparable. Use the Response selector and the Species/Family filters to focus.";
+  document.getElementById("drnote").innerHTML=models.length+" runnable models across "+panels+" mechanism panel(s), each on its own dose axis &mdash; computed from <b>exact published coefficients</b> (PNNL Biological Response Models 2020: barotrauma Eq 12 / blade strike Eq 8&ndash;10 / fluid shear Eq 14; Zitek 2026; Carlson 2012), not digitized. <b>Solid</b> = mortality-type endpoint, <b>dashed</b> = sub-lethal injury; colour = species. Blade curvilinear curves show the dominant log-logistic component (peak = whole-fish max, the high-velocity linear tail is omitted). Use the Response selector and the Species / Family filters to focus or compare across mechanisms.";
 }
 function render(){
   var rows=ROWS.filter(match);
@@ -691,6 +714,8 @@ document.getElementById("sub").innerHTML=META.n_rel+" relationships &middot; "+M
 document.getElementById("foot").innerHTML="Generated by scripts/build_stressor_response.py from data/stressor_response.csv + data/equations.csv + data/variables_units.csv. "
   +"No PDFs; metadata only. Demonstrator dataset &mdash; verify before citing.";
 buildFilters(); renderEqs(); renderVars();
+(function(){ var resps=uniqSorted((DRM||[]).map(function(m){return m.response;})); var s=document.getElementById("drresp");
+  if(s&&resps.length){ s.innerHTML='<option value="all">all responses</option>'+resps.map(function(r){return '<option value="'+esc(r)+'">'+esc(r)+'</option>';}).join(""); } })();
 document.getElementById("covdim").addEventListener("change",function(){ COVDIM=this.value; render(); });
 document.getElementById("drresp").addEventListener("change",render);
 render();

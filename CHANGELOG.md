@@ -3,6 +3,34 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.23.0] - 2026-07-01
+Extended the runnable dose–response layer from barotrauma to three mechanisms and generalised the
+explorer overlay to multiple dose axes.
+
+### Added
+- **Blade-strike models (11)** from the PNNL Biological Response Models report (Pflugrath 2020,
+  Tables 3–5): 7 whole-fish curvilinear (Eq 10), 2 logistic in strike velocity (Eq 9, bluegill), 2
+  MLR at L/t = 2 & 4 (Eq 8, rainbow trout). x-axis = strike velocity (m/s).
+- **Fluid-shear models (34)** (Tables 14–16, Eq 14): 11 injury, 9 major injury, 14 mortality across
+  ~17 species. x-axis = strain rate (1/s).
+- **21 landmark relationships** (7 blade E50, 14 shear S50) feeding the comparator, coverage matrix
+  and thresholds tables; **5 equations** (Eq 8/9/10/14/15) and **5 variables** (V, L/t, S, E50, S50).
+- `reviews/stressor_response_blade_shear.md` documenting the model forms, cross-check and caveats.
+
+### Changed
+- **Dose–response overlay is now multi-mechanism**: the explorer groups models by dose metric and
+  renders one panel per mechanism (barotrauma `ln(RPC)` · blade-strike velocity · shear strain rate),
+  each with its own axis and tick scale; a `probAt()` dispatcher evaluates logistic / log-logistic /
+  linear-survival forms. The Response selector is populated dynamically. **91 runnable models total.**
+- `data/dose_response_models.csv` gains `b2,b3,b4` columns for multi-coefficient forms.
+
+### QA
+- Coefficient cross-check (Python port of `probAt`) passed for all 45 new models: monotonic, bounded
+  [0,1]; blade Eq 10 `P(e)=f/2` verified (rainbow-trout ED50 7.06 ≈ report's 7.08); shear S50
+  130–1946 s⁻¹ (2 mortality models flagged as extrapolated beyond the ~1600 s⁻¹ test range). Explorer
+  JS validated with `node --check` and a DOM-stubbed runtime smoke test (all 3 panels render, no
+  exceptions).
+
 ## [0.22.0] - 2026-06-30
 Updated the stressor–response skill to current state and re-ran the barotrauma analysis under it.
 
