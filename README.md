@@ -20,7 +20,7 @@ It has two jobs:
 2. **Document a rigorous, repeatable methodology** for how the base is built,
    maintained and updated, so anyone can reproduce or extend it.
 
-> **Status:** v0.25.1. Three mechanism modules (barotrauma, collision, shear)
+> **Status:** v0.25.2. Three mechanism modules (barotrauma, collision, shear)
 > with reproducibility scorecards; a three-axis framework (mechanism × exposure
 > pathway × outcome timing) coded across all **255 analysed
 > papers**; a cross-mechanism synthesis and gap matrix; and a literature-discovery

@@ -3,6 +3,18 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.25.2] - 2026-07-01
+### Added
+- **`scripts/extract_relationships.py`** — the first-pass finder the `passage-stressor-response`
+  skill referenced but that did not exist (I had been doing the step by hand with `pdftotext` +
+  `grep`). Given a PDF or folder it ranks candidate **equations, threshold sentences and
+  dose–response captions / coefficient tables** by relevance, with page + score + snippet
+  (stdlib only; shells out to `pdftotext`; `--context`, `--csv`, `--types`, `--top`, `--min-score`).
+  Scanned PDFs with no text layer are reported as needing OCR. Validated against known sources —
+  it surfaces Saylor 2020 Table 1, PNNL Tables 14–16 and Pflugrath 2020b Table 4, and correctly
+  flags Neitzel 2004 as scanned. Usage documented in `references/extraction_playbook.md`; the
+  SKILL.md workflow step now resolves to a real script.
+
 ## [0.25.1] - 2026-07-01
 ### Fixed
 - **Coverage & gaps table listed `strain rate` and `strain_rate` as two separate rows** for the same

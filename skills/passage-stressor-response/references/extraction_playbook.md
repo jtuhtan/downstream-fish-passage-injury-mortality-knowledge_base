@@ -66,7 +66,15 @@ For each relationship, before writing the row, make sure you have:
   dose–response. Record the model and the dose–response it was coupled to separately.
 
 ## First-pass script
-`scripts/extract_relationships.py` flags candidate equations, threshold sentences
-and dose–response captions with page + snippet. It only points you to where to read;
-all structured rows are written by a human (or a careful pass) into the schema, with
-`confidence = Mined` until verified against the paper.
+`scripts/extract_relationships.py <pdf_or_folder>` ranks candidate equations, threshold
+sentences and dose–response captions / **coefficient tables** by relevance, with **page +
+score + snippet**. It only points you to where to read; all structured rows are written by
+a human (or a careful pass) into the schema, with `confidence = Mined` until verified.
+
+    python scripts/extract_relationships.py paper.pdf              # one paper, ranked hits
+    python scripts/extract_relationships.py folder/ --quiet        # triage a folder (summaries)
+    python scripts/extract_relationships.py paper.pdf --context --csv hits.csv
+
+Needs the `pdftotext` binary (poppler / Git-for-Windows). A **scanned PDF with no text layer
+is reported as such — OCR it first** (e.g. Neitzel 2004). `--types`, `--top`, `--min-score`
+tune the output.
