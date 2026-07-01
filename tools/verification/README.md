@@ -73,16 +73,43 @@ table and compare a few numbers — so this tool is optimised for that:
 python tools/verification/verify_models.py      # opens http://127.0.0.1:8010
 ```
 
-- **Jumps the PDF to the coefficient table** — searches the paper's text for your
-  `b0/b1` values and the `source_location` table, and opens the PDF at that page.
-- **Compute-and-compare** — shows the extracted coefficients, the derived landmark
-  (E50 / S50 / V50 / A50 / RPC50), a **live curve**, and the source snippet, so
-  verifying = "do these match the table?".
+- **Shows the source page as an image** — it renders the coefficient-table page with
+  `pdftoppm` and displays it as an `<img>`, so it works in any browser (no dependence on
+  the browser's PDF viewer, download settings, or WSL localhost quirks). Prev/next page
+  nav + a raw-PDF fallback (with HTTP Range) are provided.
+- **Highlights the coefficient values in yellow** on that page — word boxes from
+  `pdftotext -bbox`, matched to your `b0/b1/…` by exact numeric value and positioned as a
+  percentage of the page, so you see instantly where the data came from.
+- **Auto-jumps to the coefficient table** (searches for your values + the
+  `source_location` table). A "N coefficient hit(s)" label shows how many matched — **0
+  hits** on the target page is a signal the citation may not literally contain the numbers.
+- **Compute-and-compare** — extracted coefficients, the derived landmark
+  (E50 / S50 / V50 / A50 / RPC50), a **live curve**, and the source snippet.
 - **Batches by paper** and is **keyboard-driven**: `V` verify · `F` flag · `N` next.
 
 It resolves each model's PDF via `data/vocab/source_pdf_map.csv` (which links the
 stressor-response citation keys to the corpus) plus a recursive filename search under
-your **library root** (asked once, stored in the git-ignored `config.json`). Needs the
-`pdftotext` binary (`sudo apt install poppler-utils` on Debian/Ubuntu). Marking
-Verified writes `confidence = Verified` back to `dose_response_models.csv` and logs to
+your **library root** (asked once, stored in the git-ignored `config.json`). Needs
+`pdftotext` **and** `pdftoppm` (`sudo apt install poppler-utils`). Marking Verified writes
+`confidence = Verified` back to `dose_response_models.csv` and logs to
 `data/model_verification_log.csv`.
+
+### Preparing the PDFs (staging + OCR)
+
+The library isn't in the repo (PDFs are never committed), so two helper scripts get the
+source papers into a shape the verifier can read:
+
+```
+# 1) copy just the model-source PDFs (8 papers -> all 104 models) into a flat folder.
+#    Run where the library reads normally (native Windows for a OneDrive library) --
+#    WSL can't enumerate OneDrive reparse-point placeholders on /mnt/c:
+python scripts/stage_source_pdfs.py --library "<library root>" --dest <dir>
+
+# 2) OCR any scanned, image-only papers (e.g. Neitzel 2004) so they become searchable.
+#    Needs OCRmyPDF:  sudo apt install ocrmypdf
+python scripts/ocr_pdf.py <dir> --out <dir_ocr>       # copies text PDFs, OCRs scanned ones
+```
+
+Then point the verifier's `library_root` at the staged (and, if used, OCR'd) folder. OCR
+adds a real text layer via Tesseract; because OCR can misread digits in tables, treat it
+as a **confirmation** aid and cross-check any extracted value against a trusted source.

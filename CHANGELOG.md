@@ -3,6 +3,29 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.26.0] - 2026-07-01
+Model-coefficient **verification toolchain** — confirm each fitted model against its source PDF,
+including scanned papers. All three tools were built in the WSL clone and tested end-to-end before
+this release (stage → OCR → verify).
+
+### Added
+- **`tools/verification/verify_models.py`** matured into a robust reviewer for
+  `data/dose_response_models.csv`: it renders the **source page as an image** (`pdftoppm`) so it
+  displays in any browser regardless of PDF-viewer / WSL-forwarding quirks; **highlights the coefficient
+  values in yellow** on that page (word boxes from `pdftotext -bbox`, positioned as % of the page, so
+  DPI-independent); auto-jumps to the coefficient table; shows the derived landmark + live curve beside
+  the source snippet; and adds prev/next page nav, a raw-PDF fallback (with HTTP **Range** support),
+  keyboard **V/F/N**, and broken-pipe hardening. Writes `confidence = Verified` and logs to
+  `data/model_verification_log.csv`.
+- **`scripts/stage_source_pdfs.py`** — copies just the PDFs the models cite (8 papers → all 104 models)
+  into one flat folder, so the verifier can read them when the full library isn't directly readable
+  (e.g. a OneDrive library seen from WSL, where reparse-point placeholders don't enumerate on `/mnt/c`).
+- **`scripts/ocr_pdf.py`** — adds a searchable text layer to **scanned** source PDFs with **OCRmyPDF**
+  (Tesseract), so image-only papers (e.g. Neitzel 2004) become findable / highlightable / verifiable.
+  Validated: Neitzel 2004 now carries a text layer.
+- `tools/verification/README.md` documents the model verifier, the WSL/OneDrive staging workaround, and
+  the OCR step.
+
 ## [0.25.3] - 2026-07-01
 ### Added
 - **`tools/verification/verify_models.py`** — an offline verifier for the dose–response **model

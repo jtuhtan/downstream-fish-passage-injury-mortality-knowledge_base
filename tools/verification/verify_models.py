@@ -16,7 +16,7 @@ and logs to data/model_verification_log.csv.
 
     python tools/verification/verify_models.py     # opens http://127.0.0.1:8010
 """
-import csv, json, os, re, math, html, datetime, threading, webbrowser, urllib.parse, subprocess, shutil
+import csv, json, os, re, math, html, datetime, tempfile, threading, webbrowser, urllib.parse, subprocess, shutil
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -32,7 +32,10 @@ EDIT = ["b0", "b1", "b2", "b3", "b4", "source_location", "notes"]
 
 _PAGES = {}          # pdf path -> [page text]
 _PDFIDX = {}         # filename -> full path
-_PT = None
+_PT = None           # pdftotext path
+_PP = None           # pdftoppm path
+_IMG = {}            # (path, page, dpi) -> png bytes
+_BOX = {}            # (path, page, model_id) -> [(left%,top%,w%,h%)] coeff highlights
 
 
 # ------------------------------------------------------------------ data/io
@@ -88,6 +91,16 @@ def find_pdftotext():
     return None
 
 
+def find_pdftoppm():
+    exe = shutil.which("pdftoppm")
+    if exe:
+        return exe
+    for c in ["/usr/bin/pdftoppm", r"C:\Program Files\Git\mingw64\bin\pdftoppm.exe"]:
+        if os.path.exists(c):
+            return c
+    return None
+
+
 def build_pdf_index(root):
     idx = {}
     if root and os.path.isdir(root):
@@ -114,6 +127,24 @@ def pdf_pages(path):
             pages = r.stdout.decode("utf-8", "replace").split("\f")
     _PAGES[path] = pages
     return pages
+
+
+def page_png(path, page, dpi=130):
+    key = (path, page, dpi)
+    if key in _IMG:
+        return _IMG[key]
+    png = b""
+    if _PP and path and os.path.exists(path):
+        with tempfile.TemporaryDirectory() as td:
+            out = os.path.join(td, "pg")
+            r = subprocess.run([_PP, "-png", "-f", str(page), "-l", str(page),
+                                "-singlefile", "-r", str(dpi), path, out], capture_output=True)
+            fn = out + ".png"
+            if r.returncode == 0 and os.path.exists(fn):
+                with open(fn, "rb") as fh:
+                    png = fh.read()
+    _IMG[key] = png
+    return png
 
 
 def coeff_variants(v):
@@ -161,6 +192,46 @@ def find_page(path, m):
     if best:
         return best, best_lines
     return 1, []
+
+
+def highlight_boxes(path, page, m):
+    """Boxes (as % of page w/h) around words matching this model's coefficients."""
+    if not (_PT and path and os.path.exists(path)):
+        return []
+    key = (path, page, m["model_id"])
+    if key in _BOX:
+        return _BOX[key]
+    r = subprocess.run([_PT, "-bbox", "-f", str(page), "-l", str(page), path, "-"], capture_output=True)
+    boxes = []
+    if r.returncode == 0:
+        xml = r.stdout.decode("utf-8", "replace")
+        pm = re.search(r'<page width="([\d.]+)" height="([\d.]+)"', xml)
+        wants = set()
+        for f in ("b0", "b1", "b2", "b3", "b4"):
+            try:
+                a = abs(float(m.get(f)))
+            except (TypeError, ValueError):
+                continue
+            s = ("%f" % a).rstrip("0").rstrip(".")   # exact value only (e.g. 0.0125, 12.6)
+            if s and s not in ("0", "0.0"):
+                wants.add(s)
+        if pm and wants:
+            pw, ph = float(pm.group(1)), float(pm.group(2))
+            for wm in re.finditer(
+                    r'<word xMin="([\d.]+)" yMin="([\d.]+)" xMax="([\d.]+)" yMax="([\d.]+)">([^<]*)</word>', xml):
+                x0, y0, x1, y1, txt = wm.groups()
+                mnum = re.search(r'-?\d+(?:\.\d+)?', html.unescape(txt))
+                if not mnum:
+                    continue
+                try:
+                    cs = ("%f" % abs(float(mnum.group(0)))).rstrip("0").rstrip(".")
+                except ValueError:
+                    continue
+                if cs in wants:   # exact numeric value (ignores sign & trailing zeros)
+                    boxes.append((float(x0) / pw * 100, float(y0) / ph * 100,
+                                  (float(x1) - float(x0)) / pw * 100, (float(y1) - float(y0)) / ph * 100))
+    _BOX[key] = boxes[:60]
+    return _BOX[key]
 
 
 # ------------------------------------------------------------------ math
@@ -264,7 +335,7 @@ def ordered(rows, smap):
     return sorted(rows, key=lambda r: (smap.get(r["citation_key"], r["citation_key"]), r["model_id"]))
 
 
-def page(cfg, rows, fields, corp, smap, mid=None, skip=None):
+def page(cfg, rows, fields, corp, smap, mid=None, skip=None, imgpg=None):
     order = ordered(rows, smap)
     total = len(order); done = sum(1 for r in order if r.get("confidence") == "Verified")
     seq = [r["model_id"] for r in order]
@@ -284,13 +355,35 @@ def page(cfg, rows, fields, corp, smap, mid=None, skip=None):
     same = [r for r in order if smap.get(r["citation_key"], r["citation_key"]) == ck]
     pos = same.index(m) + 1
     if path:
-        pg, snips = find_page(path, m)
-        pdfpane = f'<iframe class=pdf src="/pdf?id={urllib.parse.quote(mid)}#page={pg}"></iframe>'
+        dpg, snips = find_page(path, m)
+        try:
+            pg = int(imgpg) if imgpg else dpg
+        except (TypeError, ValueError):
+            pg = dpg
+        npages = len(pdf_pages(path)) or pg
+        pg = max(1, min(pg, npages))
+        q = urllib.parse.quote(mid)
+        boxes = highlight_boxes(path, pg, m)
+        ov = "".join(
+            '<div style="position:absolute;left:%.2f%%;top:%.2f%%;width:%.2f%%;height:%.2f%%;'
+            'background:rgba(255,232,0,.5);mix-blend-mode:multiply;border-radius:2px;'
+            'box-shadow:0 0 0 1px rgba(230,180,0,.6)"></div>' % (max(0, L - 0.3), max(0, T - 0.3), W + 0.6, H + 0.6)
+            for (L, T, W, H) in boxes)
+        hi = f' &nbsp;|&nbsp; <b style="background:rgba(255,232,0,.6);padding:0 3px">{len(boxes)}</b> coefficient hit(s) highlighted' if boxes else ''
+        nav = (f'<a href="/?id={q}&amp;pg={pg-1}">&lsaquo; prev</a> &nbsp;'
+               f'<b>page {pg}</b> / {npages} &nbsp;'
+               f'<a href="/?id={q}&amp;pg={pg+1}">next &rsaquo;</a>'
+               f' &nbsp;|&nbsp; <a href="/pdf?id={q}" target=_blank>open raw PDF &nearr;</a>{hi}')
+        pdfpane = ('<div class=pdf style="display:flex;flex-direction:column">'
+                   f'<div style="background:#eef2f5;padding:6px 10px;font-size:12px;border-bottom:1px solid #dde5e9">{nav}</div>'
+                   '<div style="flex:1;overflow:auto;background:#525659;text-align:center;padding:6px">'
+                   '<div style="position:relative;display:inline-block;width:100%;max-width:920px">'
+                   f'<img src="/pageimg?id={q}&amp;pg={pg}" style="width:100%;display:block;background:#fff" alt="page {pg}">'
+                   f'{ov}</div></div></div>')
         srcbox = (f'<div class=src><b>source_location:</b> {esc(m["source_location"])} '
-                  f'&nbsp;|&nbsp; jumped to <b>p{pg}</b> of {esc(fn)} '
-                  f'&nbsp;<a href="/pdf?id={urllib.parse.quote(mid)}#page={pg}" target=_blank>open&nearr;</a>'
+                  f'&nbsp;|&nbsp; auto-jumped to <b>p{dpg}</b> of {esc(fn)}'
                   + ("".join(f'<span class=snip>{esc(s)}</span>' for s in snips) if snips
-                     else '<span class=snip>(coefficient values not located on a page — check the table manually)</span>')
+                     else '<span class=snip>(values not auto-located — use prev/next to find the table)</span>')
                   + '</div>')
     else:
         pdfpane = f'<div class=pdf style="padding:24px;background:#fff"><div class=warn><b>PDF not found</b> for {esc(m["citation_key"])} → {esc(ck)} ({esc(fn) or "no filename"}). Check data/vocab/source_pdf_map.csv.</div></div>'
@@ -329,27 +422,74 @@ def page(cfg, rows, fields, corp, smap, mid=None, skip=None):
 class H(BaseHTTPRequestHandler):
     def _send(self, body, ctype="text/html; charset=utf-8", code=200):
         b = body.encode("utf-8") if isinstance(body, str) else body
-        self.send_response(code); self.send_header("Content-Type", ctype)
-        self.send_header("Content-Length", str(len(b))); self.end_headers(); self.wfile.write(b)
+        try:
+            self.send_response(code); self.send_header("Content-Type", ctype)
+            self.send_header("Content-Length", str(len(b))); self.end_headers(); self.wfile.write(b)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
 
     def log_message(self, *a):
         pass
 
+    def _serve_pdf(self, path):
+        """Serve a PDF with HTTP Range support (Chrome/Edge PDF viewers require it)."""
+        size = os.path.getsize(path)
+        rng = self.headers.get("Range", "")
+        start, end, partial = 0, size - 1, False
+        if rng.startswith("bytes="):
+            partial = True
+            a, _, b = rng[6:].partition("-")
+            try:
+                start = int(a) if a else 0
+                end = int(b) if b else size - 1
+            except ValueError:
+                start, end = 0, size - 1
+            end = min(end, size - 1)
+            if start > end or start < 0:
+                start, end, partial = 0, size - 1, False
+        with open(path, "rb") as fh:
+            fh.seek(start)
+            body = fh.read(end - start + 1)
+        self.send_response(206 if partial else 200)
+        self.send_header("Content-Type", "application/pdf")
+        self.send_header("Accept-Ranges", "bytes")
+        self.send_header("Content-Disposition", "inline")
+        if partial:
+            self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        try:
+            self.wfile.write(body)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
+
     def do_GET(self):
         u = urllib.parse.urlparse(self.path); q = urllib.parse.parse_qs(u.query)
         cfg = load_cfg()
-        if u.path == "/pdf":
+        if u.path == "/favicon.ico":
+            self.send_response(204); self.end_headers(); return
+        if u.path in ("/pdf", "/pageimg"):
             rows, _ = read_csv(DRM); corp = corpus_index(); smap = smap_index()
             m = next((r for r in rows if r["model_id"] == q.get("id", [""])[0]), None)
             path = model_pdf(cfg, corp, smap, m)[0] if m else None
-            if path and os.path.exists(path):
-                self._send(open(path, "rb").read(), "application/pdf"); return
-            self._send("PDF not found", code=404); return
+            if not (path and os.path.exists(path)):
+                self._send("PDF not found", code=404); return
+            if u.path == "/pdf":
+                self._serve_pdf(path); return
+            try:
+                pg = max(1, int(q.get("pg", ["1"])[0]))
+            except ValueError:
+                pg = 1
+            png = page_png(path, pg)
+            if png:
+                self._send(png, "image/png"); return
+            self._send("render failed (pdftoppm)", code=500); return
         if not cfg.get("library_root"):
             self._send(setup_page("Point the tool at your PDF library root.")); return
         rows, fields = read_csv(DRM); corp = corpus_index(); smap = smap_index()
         self._send(page(cfg, rows, fields, corp, smap,
-                        mid=q.get("id", [None])[0], skip=q.get("skip", [None])[0]))
+                        mid=q.get("id", [None])[0], skip=q.get("skip", [None])[0],
+                        imgpg=q.get("pg", [None])[0]))
 
     def do_POST(self):
         ln = int(self.headers.get("Content-Length", 0))
@@ -390,11 +530,13 @@ def open_browser(url):
 
 
 def main():
-    global _PT, _PDFIDX
+    global _PT, _PP, _PDFIDX
     _PT = find_pdftotext()
-    if not _PT:
-        print("WARNING: pdftotext not found -- jump-to-page/snippets disabled (curves & compare still work).\n"
-              "  Install poppler-utils:  sudo apt install poppler-utils  (Debian/Ubuntu)")
+    _PP = find_pdftoppm()
+    if not _PT or not _PP:
+        print("WARNING: poppler tools missing (pdftotext=%s, pdftoppm=%s).\n"
+              "  The PDF page image needs pdftoppm; install:  sudo apt install poppler-utils"
+              % (bool(_PT), bool(_PP)))
     cfg = load_cfg()
     if cfg.get("library_root"):
         print("Indexing PDFs under", cfg["library_root"], "...")
