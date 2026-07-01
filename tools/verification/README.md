@@ -59,3 +59,30 @@ After a verification session, rebuild the artefacts and dashboard:
 python scripts/build_outputs.py
 python scripts/build_dashboard.py
 ```
+
+---
+
+## `verify_models.py` — verifying the dose–response MODELS (coefficients)
+
+A second verifier, for the **fitted-model coefficients** in
+`data/dose_response_models.csv` (barotrauma / blade-strike / fluid-shear `b0/b1/…`).
+Verifying a coefficient is a faster job than reading a whole paper — you jump to one
+table and compare a few numbers — so this tool is optimised for that:
+
+```
+python tools/verification/verify_models.py      # opens http://127.0.0.1:8010
+```
+
+- **Jumps the PDF to the coefficient table** — searches the paper's text for your
+  `b0/b1` values and the `source_location` table, and opens the PDF at that page.
+- **Compute-and-compare** — shows the extracted coefficients, the derived landmark
+  (E50 / S50 / V50 / A50 / RPC50), a **live curve**, and the source snippet, so
+  verifying = "do these match the table?".
+- **Batches by paper** and is **keyboard-driven**: `V` verify · `F` flag · `N` next.
+
+It resolves each model's PDF via `data/vocab/source_pdf_map.csv` (which links the
+stressor-response citation keys to the corpus) plus a recursive filename search under
+your **library root** (asked once, stored in the git-ignored `config.json`). Needs the
+`pdftotext` binary (`sudo apt install poppler-utils` on Debian/Ubuntu). Marking
+Verified writes `confidence = Verified` back to `dose_response_models.csv` and logs to
+`data/model_verification_log.csv`.

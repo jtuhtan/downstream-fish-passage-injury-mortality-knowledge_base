@@ -3,6 +3,24 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.25.3] - 2026-07-01
+### Added
+- **`tools/verification/verify_models.py`** — an offline verifier for the dose–response **model
+  coefficients** (`data/dose_response_models.csv`), complementing the study-level `verify.py`. It
+  **jumps the PDF to the coefficient table** (searches the text for the `b0/b1` values + the
+  `source_location` table), shows the extracted coefficients with the **derived landmark**
+  (E50/S50/V50/A50/RPC50), a **live curve** and the source snippet, **batches by paper**, and is
+  **keyboard-driven** (V/F/N). Writes `confidence = Verified` back to the CSV and logs to
+  `data/model_verification_log.csv`.
+- **`data/vocab/source_pdf_map.csv`** — links the stressor-response citation keys (AuthorYear, e.g.
+  `Pflugrath2020b`) to the corpus keys (`Year_Author`) so each model resolves to its PDF. All 104
+  models resolve. (The two key schemes diverging is a known wart; this map bridges it.)
+
+### Fixed
+- Both verifiers now open the browser best-effort and **silence backend chatter** (e.g. Linux
+  `gio: … Operation not supported`) and always print the URL to paste manually — the server was
+  always fine, the message was just alarming.
+
 ## [0.25.2] - 2026-07-01
 ### Added
 - **`scripts/extract_relationships.py`** — the first-pass finder the `passage-stressor-response`

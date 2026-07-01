@@ -226,11 +226,25 @@ class H(BaseHTTPRequestHandler):
         self._send("not found", code=404)
 
 
+def open_browser(url):
+    """Best-effort browser open; silences backend chatter (e.g. Linux `gio`)."""
+    try:
+        dn = os.open(os.devnull, os.O_WRONLY); old = os.dup(2); os.dup2(dn, 2)
+        try:
+            webbrowser.open(url)
+        finally:
+            os.dup2(old, 2); os.close(old); os.close(dn)
+    except Exception:
+        pass
+
+
 def main():
     srv = ThreadingHTTPServer(("127.0.0.1", PORT), H)
     url = f"http://127.0.0.1:{PORT}"
-    print(f"Verification tool running at {url}  (Ctrl+C to stop)")
-    threading.Timer(0.8, lambda: webbrowser.open(url)).start()
+    bar = "=" * 60
+    print(f"\n{bar}\n  Verification tool running — open in your browser:\n    {url}\n"
+          f"  (Ctrl+C to stop. If no browser opens, paste the URL yourself.)\n{bar}")
+    threading.Timer(0.8, lambda: open_browser(url)).start()
     try:
         srv.serve_forever()
     except KeyboardInterrupt:
