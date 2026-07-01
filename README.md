@@ -4,7 +4,7 @@
 [![Stressor-response explorer](https://img.shields.io/badge/Stressor--response_explorer-Open_in_browser-2563eb?style=for-the-badge)](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/stressor_response.html)
 
 > 📊 **[Open the interactive dashboard →](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/)** — browse the evidence, charts and reproducibility tiers in your browser.
-> 🔬 **[Open the stressor–response explorer →](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/stressor_response.html)** — thresholds, dose–response and equations linking physical stressors (pressure, shear, blade strike…) to injury and mortality; **100 runnable dose–response models across barotrauma, blade strike & fluid shear** (blade strike from 6 primary studies + the PNNL synthesis), each on its own dose axis.
+> 🔬 **[Open the stressor–response explorer →](https://jtuhtan.github.io/downstream-fish-passage-injury-mortality-knowledge_base/stressor_response.html)** — thresholds, dose–response and equations linking physical stressors (pressure, shear, blade strike…) to injury and mortality; **104 runnable dose–response models across barotrauma, blade strike & fluid shear** — from primary studies + the PNNL synthesis — on **5 dose axes** (ln RPC · strike velocity · Von Raben fish-length · strain rate · acceleration).
 > *(Clicking a `docs/*.html` file inside the repo only shows its source code — use these links to actually run them. No download or GitHub account needed.)*
 
 A community knowledge base on **how fish are injured and killed during downstream
@@ -20,7 +20,7 @@ It has two jobs:
 2. **Document a rigorous, repeatable methodology** for how the base is built,
    maintained and updated, so anyone can reproduce or extend it.
 
-> **Status:** v0.24.0. Three mechanism modules (barotrauma, collision, shear)
+> **Status:** v0.25.0. Three mechanism modules (barotrauma, collision, shear)
 > with reproducibility scorecards; a three-axis framework (mechanism × exposure
 > pathway × outcome timing) coded across all **255 analysed
 > papers**; a cross-mechanism synthesis and gap matrix; and a literature-discovery

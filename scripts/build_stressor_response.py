@@ -642,6 +642,7 @@ function probAt(m,x){
   var b0=parseFloat(m.b0),b1=parseFloat(m.b1);
   if(m.form==="loglogistic"){ var e=parseFloat(m.b1),f=parseFloat(m.b2),b=parseFloat(m.b0); if(x<=0)return 0; return f/(1+Math.pow(x/e,b)); }
   if(m.form==="linear_survival"){ var ps=1+b1*(x-b0); if(ps>1)ps=1; if(ps<0)ps=0; return 1-ps; }
+  if(m.form==="loglinear"){ if(x<=0)return Math.max(0,Math.min(1,b0)); var p=b0+b1*Math.log(x); return p<0?0:(p>1?1:p); }
   return logistic(b0,b1,x);
 }
 function drDash(resp){ return (/injur/i.test(resp)&&!/mortal/i.test(resp))?' stroke-dasharray="4 3"':''; }
@@ -649,8 +650,10 @@ function niceStep(range){ var raw=(range||1)/8, p=Math.pow(10,Math.floor(Math.lo
 // one panel per dose axis (x_metric), in this order
 var DR_METRICS=[
   {key:"ln(RPC)", mech:"Barotrauma", axis:"barotrauma dose  ln(RPC) = LRP", fmt:function(v){return v.toFixed(1);}},
-  {key:"strike velocity (m/s)", mech:"Blade strike", axis:"strike velocity (m s⁻¹)", fmt:function(v){return v.toFixed(0);}},
-  {key:"strain rate (1/s)", mech:"Fluid shear", axis:"strain rate (s⁻¹)", fmt:function(v){return v.toFixed(0);}}
+  {key:"strike velocity (m/s)", mech:"Blade strike (velocity)", axis:"strike velocity (m s⁻¹)", fmt:function(v){return v.toFixed(0);}},
+  {key:"fish length (cm)", mech:"Blade strike (Von Raben mutilation)", axis:"fish total length (cm)", fmt:function(v){return v.toFixed(0);}},
+  {key:"strain rate (1/s)", mech:"Fluid shear (strain rate)", axis:"strain rate (s⁻¹)", fmt:function(v){return v.toFixed(0);}},
+  {key:"acceleration (m/s2)", mech:"Fluid shear (acceleration)", axis:"acceleration (m s⁻²)", fmt:function(v){return v.toFixed(0);}}
 ];
 function drPanel(meta,models){
   var W=1080,H=250,padL=56,padR=16,padT=22,padB=42;
@@ -709,7 +712,7 @@ function renderDoseResponse(){
   host.innerHTML=html;
   var sps=uniqSorted(models.map(function(m){return m.species;}));
   document.getElementById("drlegend").innerHTML=sps.map(function(s){ return '<span><i class="dot" style="background:'+colorFor(s)+'"></i>'+esc(s)+'</span>'; }).join("");
-  document.getElementById("drnote").innerHTML=models.length+" runnable models across "+panels+" mechanism panel(s), each on its own dose axis &mdash; computed from <b>exact published coefficients</b> (PNNL Biological Response Models 2020: barotrauma Eq 12 / blade strike Eq 8&ndash;10 / fluid shear Eq 14; Zitek 2026; Carlson 2012), not digitized. <b>Solid</b> = mortality-type endpoint, <b>dashed</b> = sub-lethal injury; colour = species. Blade curvilinear curves show the dominant log-logistic component (peak = whole-fish max, the high-velocity linear tail is omitted). Use the Response selector and the Species / Family filters to focus or compare across mechanisms.";
+  document.getElementById("drnote").innerHTML=models.length+" runnable models across "+panels+" dose-axis panel(s) &mdash; computed from <b>exact published coefficients</b>, not digitized. Sources include the PNNL synthesis (Pflugrath 2020) <b>and the primary studies behind it</b>: blade strike (Saylor 2019/2020 log-logistic; Bevelhimer 2019; Amaral) and fluid shear (Pflugrath 2020b; Colotelo 2018; Neitzel 2004). Dose axes: barotrauma <b>ln(RPC)</b>, blade-strike <b>velocity</b> &amp; Von&nbsp;Raben <b>length</b> (mutilation ratio), shear <b>strain rate</b> &amp; <b>acceleration</b>. <b>Solid</b> = mortality-type endpoint, <b>dashed</b> = sub-lethal injury; colour = species. Use the Response selector and the Species / Family filters to focus or compare.";
 }
 function render(){
   var rows=ROWS.filter(match);

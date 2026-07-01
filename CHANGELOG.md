@@ -3,6 +3,34 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.25.0] - 2026-07-01
+Fluid-shear **primary-source pass** + **Turnpenny (Von Raben) strike model as a new class**.
+
+### Added
+- **Fluid-shear primary re-attribution & confirmation.** Read the studies behind synthesis Tables
+  14–16: **Pflugrath 2020b** (American shad) and **Colotelo 2018** (blue gourami, iridescent shark)
+  reproduce the synthesis coefficients exactly (Colotelo sign-flipped), so those 7 models + landmarks
+  are **re-keyed to the primary sources** and thereby validated. Neitzel 2004 (salmonids) is a scanned
+  PDF — kept on the synthesis attribution, flagged for OCR.
+- **3 American-shad acceleration models** (Pflugrath 2020b Table 4) on a new **acceleration (m s⁻²)**
+  dose axis — the Sensor-Fish metric, not in the synthesis (A50 = 341/516/682 m s⁻²).
+- **Turnpenny 2000 — a new blade-strike model class** (geometry/length-based collision, not velocity
+  dose–response): Von Raben strike-probability (`P=L_f/L_w`, water-length from blades×rpm×discharge);
+  **mutilation-ratio regression** `MR=0.1533·ln(L)+0.0125` added as a **runnable model on a fish-length
+  dose axis**; compound-mortality combiner; and Turnpenny's classic barotrauma pressure regressions.
+- New citation keys: Pflugrath2020b, Colotelo2018, Turnpenny2000.
+
+### Changed
+- Explorer overlay now supports **5 dose axes**: barotrauma ln(RPC); blade-strike velocity **and**
+  Von Raben fish-length (mutilation); shear strain-rate **and** acceleration. New `probAt` form
+  `loglinear` (`b0+b1·ln x`). **104 runnable models total**; coverage 45 cells (32 quantified/modelled),
+  38 threshold groups.
+
+### QA
+- New models cross-checked: acceleration A50s ordered injury<major<mortality; Von Raben MR monotonic,
+  bounded, ≈0.43 near 15 cm (matches Von Raben's constant). `node --check` + DOM runtime test pass
+  (default 5 panels; per-mechanism barotrauma 1 / blade strike 2 / shear 2, no cross-mechanism leak).
+
 ## [0.24.0] - 2026-07-01
 Blade-strike **primary-source pass**: ingested the studies behind the PNNL synthesis directly, so
 blade strike no longer rests on `Pflugrath2020c` alone.

@@ -82,6 +82,38 @@ Turnpenny (2000) was reviewed but **not** ingested here: its blade-strike model 
 *strike-probability* model (runner geometry × fish length × rpm) combined with a mutilation ratio, a
 different paradigm from velocity dose–response — flagged as a distinct model class to add later.
 
+## Primary fluid-shear sources (confirmation + re-attribution)
+
+The shear pass read the primary studies behind the synthesis Tables 14–16. Unlike blade strike (where
+the primaries yielded *new* single-strike curves), the shear coefficients are **identical** to the
+synthesis — so this pass **validated** the earlier extraction and **re-attributed** the models to
+their sources:
+
+| Study | Species | Result |
+|---|---|---|
+| **Pflugrath 2020b** (Water) | American shad | Table 4 strain-rate coefficients **match the synthesis exactly** (−8.418/0.023 etc.); re-keyed to primary |
+| **Colotelo 2018** | blue gourami, iridescent shark | Table 3 (sign-flipped: synthesis β = −Colotelo b) **matches exactly** (gourami injury 0.007, shark injury 0.016 …); re-keyed to primary |
+| **Neitzel 2004** | Chinook, rainbow trout, steelhead | scanned PDF (no text layer) — kept synthesis attribution, flagged for OCR |
+
+Pflugrath 2020b additionally gives **3 American-shad models on an ACCELERATION axis** (m s⁻², the
+quantity Sensor Fish actually measure) — new data absent from the synthesis, added as a fifth dose
+panel (A50 = 341 / 516 / 682 m s⁻² for injury / major injury / mortality).
+
+## Turnpenny (2000) — a new blade-strike model class
+
+Turnpenny's STRIKER model is a **geometry-based collision** model, a different paradigm from velocity
+dose–response, now ingested as its own class:
+
+- **Von Raben strike probability** — `P_strike = L_f / L_w`, water-length `L_w = V_a /(cos α · Z·N/60)`,
+  axial velocity `V_a = Q / A_swept` (Z blades, N rpm, Q discharge). Strike rate rises with **fish
+  length**; field-validated (5.9% predicted vs 4.4% observed strike at full load).
+- **Mutilation ratio** (damage | strike) — `MR = 0.1533·ln(L) + 0.0125` (L in cm), refining Von Raben's
+  fixed 0.43. Added as a **runnable model on a fish-length dose axis** — the framework's first
+  length-based curve (MR rises 0.01 → 0.64 over 1–60 cm).
+- **Compound mortality** — `P = 1 − (1−P_pressure)(1−P_shear)(1−P_strike)` (cross-mechanism combiner),
+  plus Turnpenny's classic **barotrauma** regressions (physoclist vs physostome mortality vs Pₑ/Pₐ),
+  captured in `equations.csv`.
+
 ## Caveats
 
 - **Blade Eq 10** is a piecewise **log-logistic + linear** model; the explorer plots the dominant
