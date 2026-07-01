@@ -31,7 +31,11 @@ barotrauma,swimbladder,mortality,3,3,3,qualitative,Colotelo2012;Boys2016;Brown20
 barotrauma,swimbladder,mortality_mortal_injury,2,1,2,qualitative,Zitek2026
 barotrauma,tdg,injury,1,1,2,qualitative,Abernethy2002
 barotrauma,tdg,mortality,1,1,2,qualitative,Abernethy2002
-blade strike,strike velocity,mortality,7,1,7,quantitative,Pflugrath2020c
+blade strike,L/t ratio,injury,1,1,1,qualitative,Amaral2011
+blade strike,blade leading-edge thickness,mortality,1,1,3,qualitative,Bevelhimer2019
+blade strike,strike velocity,immediate mortality,1,1,1,quantitative,Meng2022
+blade strike,strike velocity,mortality,14,3,7,quantitative,Pflugrath2020c; Saylor2019; Saylor2020
+blade strike,strike velocity,survival,4,1,1,quantitative,Amaral2020
 shear,strain rate,mortality,14,1,14,quantitative,Pflugrath2020c
 shear,strain_rate,injury,1,1,1,quantitative,Pflugrath2020
 shear,strain_rate,mortality,2,1,2,quantitative,Boys2014

@@ -54,6 +54,34 @@ bounded in [0, 1]:
   mortality models (blue gourami 1946, brown trout 1696)** have S50 beyond the ~1600 s⁻¹ test range —
   flagged as extrapolations, not errors.
 
+## Primary blade-strike sources (beyond the synthesis)
+
+The first blade-strike pass took every model from the PNNL synthesis report (`Pflugrath2020c`). A
+second pass read the **underlying primary studies** directly, so blade strike now stands on six
+primary citations, not one:
+
+| Study | Contribution | Extracted |
+|---|---|---|
+| **Saylor 2019** | bluegill (small/medium × observed/combined mortality) | 4 log-logistic models + 2 E50 |
+| **Saylor 2020** | large & small rainbow trout, brook trout, gizzard shad, Alosa spp. | 5 log-logistic models + 5 ED50 (Table 1) |
+| **Bevelhimer 2019** | blade-thickness effect, 3 species, 950 fish | thickness→mortality relationship |
+| **Amaral 2020** | blade slant & within-body strike location (rainbow trout) | 98% vs 26.8% survival at L/t=2; 68% vs 7.9% by location |
+| **Amaral 2011** | L/t ratio design threshold | L/t ≤ 1 → sharply higher injury |
+| **Meng 2022** | fish-friendly turbine, crucian carp | gross immediate mortality 10.9%, injury 80.5% |
+
+The **9 primary models** are the **mid-body lateral 90° single-strike** form
+`P(M) = 1/(1+(V/e)^b)` with the upper bound fixed at **1** — so `e` is a *true* LD50 (P(e)=0.5) and
+these are the worst-case, per-strike-location curves. They are deliberately kept **alongside** the
+7 PNNL **whole-fish** curvilinear models (which integrate all 36 strike area/angle combinations and
+therefore peak at `f` ≈ 0.4–0.55): the pair lets you compare the severity of a single square hit
+against the fleet-averaged outcome for the same species. Cross-check confirmed every primary ED50
+against its source table (rainbow trout 6.59 / 7.08, brook trout 5.99, gizzard shad 5.66, Alosa 7.87,
+bluegill 5.68 / 6.43 m s⁻¹).
+
+Turnpenny (2000) was reviewed but **not** ingested here: its blade-strike model is a geometry-based
+*strike-probability* model (runner geometry × fish length × rpm) combined with a mutilation ratio, a
+different paradigm from velocity dose–response — flagged as a distinct model class to add later.
+
 ## Caveats
 
 - **Blade Eq 10** is a piecewise **log-logistic + linear** model; the explorer plots the dominant

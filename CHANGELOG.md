@@ -3,6 +3,35 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.24.0] - 2026-07-01
+Blade-strike **primary-source pass**: ingested the studies behind the PNNL synthesis directly, so
+blade strike no longer rests on `Pflugrath2020c` alone.
+
+### Added
+- **9 primary blade-strike log-logistic models** from the source studies — Saylor 2019 (bluegill:
+  small/medium × observed/combined mortality) and Saylor 2020 (large & small rainbow trout, brook
+  trout, gizzard shad, Alosa spp.). These are **mid-body 90° single-strike** models
+  `P(M)=1/(1+(V/e)^b)` with the upper bound fixed at **1** (so `e` is a true LD50), kept alongside the
+  7 PNNL **whole-fish** curvilinear models (max < 1) for single-hit-vs-fleet-average comparison.
+- **14 primary reported relationships**: Saylor 2019/2020 E50 landmarks; Amaral 2020 blade-slant &
+  within-body strike-location survival (98% vs 26.8% at L/t = 2; 68% vs 7.9% by strike location);
+  Bevelhimer 2019 blade-thickness effect (950 fish, 3 species); Meng 2022 fish-friendly-turbine gross
+  rates (crucian carp); Amaral 2011 L/t ≤ 1 injury threshold.
+- Saylor 2020 primary equation form (log-logistic single strike); gizzard shad + hybrid striped bass
+  added to `data/vocab/species.csv`.
+
+### Changed
+- Blade-strike now spans **6 primary studies** (Saylor2019, Saylor2020, Bevelhimer2019, Amaral2020,
+  Amaral2011, Meng2022) plus the PNNL synthesis. **100 runnable models total**; coverage 41 cells
+  (28 quantified/modelled), 35 threshold groups.
+
+### QA
+- Cross-check: all 9 new models verified P(e)=0.5 (max=1), monotonic, bounded [0,1]; primary ED50s
+  match the source tables (RBT 6.59/7.08, brook 5.99, gizzard 5.66, Alosa 7.87, bluegill 5.68/6.43 m/s)
+  and are consistent with the synthesis. `node --check` + DOM-stubbed runtime test pass.
+- Turnpenny (2000) reviewed but not ingested — its blade model is a geometry-based strike-probability
+  model (a distinct class), flagged for a later pass.
+
 ## [0.23.1] - 2026-07-01
 ### Fixed
 - The **Mechanism** selector now filters *every* section of the stressor–response explorer, not just
