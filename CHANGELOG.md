@@ -3,6 +3,18 @@
 All notable changes to this knowledge base are recorded here. Dates are ISO 8601.
 The knowledge base follows a simple MAJOR.MINOR.PATCH scheme (data + methodology).
 
+## [0.23.1] - 2026-07-01
+### Fixed
+- The **Mechanism** selector now filters *every* section of the stressor–response explorer, not just
+  the relationships / comparator / coverage: choosing a mechanism (barotrauma · blade strike · fluid
+  shear) also narrows the **dose–response panels**, the **equations registry**, and the **variables &
+  physical units** table to that mechanism (cross-cutting quantities — length, mass, head, discharge,
+  operating point, tag burden — are kept). The dose–response **Response** dropdown now lists only the
+  responses that exist for the selected mechanism. `renderEqs` / `renderVars` refresh on every filter
+  change.
+- Added a `mechanism` column to `data/variables_units.csv`; repaired the `shear_stress` row whose
+  notes held an unquoted comma (it had been silently spilling into an extra column).
+
 ## [0.23.0] - 2026-07-01
 Extended the runnable dose–response layer from barotrauma to three mechanisms and generalised the
 explorer overlay to multiple dose axes.
